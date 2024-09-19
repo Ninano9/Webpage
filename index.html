@@ -3,22 +3,36 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>first page</title>
-    <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="HTML Intro">
-    <meta property="og:description" content="This is the introduction page for HTML examples.">
-    <meta property="og:image" content="https://example.com/path/to/thumbnail.jpg">
-    <meta property="og:url" content="https://example.com/index.html">
-    <meta property="og:type" content="website">
+    <title>HTML Intro</title>
+    <style>
+        .thumbnail {
+            display: block;
+            width: 200px; /* 썸네일 너비 설정 */
+            height: auto; /* 비율 유지 */
+            margin-bottom: 10px; /* 이미지와 텍스트 사이 간격 설정 */
+        }
+    </style>
 </head>
 
 <body>
     <h1>hello world</h1>
-    Go to <a href="first.html">First Page</a>
+    <!-- Link to First Page with Thumbnail -->
+    <a href="first.html">
+        <img src="https://example.com/path/to/first-thumbnail.jpg" alt="First Page Thumbnail" class="thumbnail">
+        First Page
+    </a>
     <br>
-    Go to <a href="public/second.html">Second Page</a>
-    <br>
-    Go to <a href="third.html">Third Page</a>
+    <!-- Link to Second Page with Thumbnail -->
+    <a href="public/second.html">
+        <img src="https://example.com/path/to/second-thumbnail.jpg" alt="Second Page Thumbnail" class="thumbnail">
+        Second Page
+    </a>
+    <br><br>
+    <!-- Link to Third Page with Thumbnail -->
+    <a href="third.html">
+        <img src="https://example.com/path/to/third-thumbnail.jpg" alt="Third Page Thumbnail" class="thumbnail">
+        Third Page
+    </a>
 </body>
 
 </html>
