@@ -40,6 +40,11 @@
 <body>
     <h1>hello world</h1>
 
+    <div class="controls">
+        <button onclick="sortLinks('newest')">최신순 정렬</button>
+        <button onclick="sortLinks('oldest')">오래된 순 정렬</button>
+    </div>
+
     <div class="link-container" id="link-container">
         <!-- Links will be dynamically generated here -->
     </div>
@@ -49,20 +54,20 @@
     </div>
 
     <script>
-        // 파일 URL과 썸네일 이미지만 저장된 배열
+        // 파일 URL, 썸네일 이미지, 페이지 이름을 저장한 배열
         const links = [
-            { url: 'first.html', img: 'https://example.com/path/to/first-thumbnail.jpg' },
-            { url: 'public/second.html', img: 'https://example.com/path/to/second-thumbnail.jpg' },
-            { url: 'third.html', img: 'https://example.com/path/to/third-thumbnail.jpg' },
-            { url: 'fourth.html', img: 'https://example.com/path/to/fourth-thumbnail.jpg' },
-            { url: 'fifth.html', img: 'https://example.com/path/to/fifth-thumbnail.jpg' },
-            { url: 'sixth.html', img: 'https://example.com/path/to/sixth-thumbnail.jpg' },
-            { url: 'seventh.html', img: 'https://example.com/path/to/seventh-thumbnail.jpg' },
-            { url: 'eighth.html', img: 'https://example.com/path/to/eighth-thumbnail.jpg' },
-            { url: 'ninth.html', img: 'https://example.com/path/to/ninth-thumbnail.jpg' },
-            { url: 'tenth.html', img: 'https://example.com/path/to/tenth-thumbnail.jpg' },
-            { url: 'eleventh.html', img: 'https://example.com/path/to/eleventh-thumbnail.jpg' },
-            { url: 'twelfth.html', img: 'https://example.com/path/to/twelfth-thumbnail.jpg' }
+            { url: 'first.html', img: 'https://example.com/path/to/first-thumbnail.jpg', name: 'First Page' },
+            { url: 'public/second.html', img: 'https://example.com/path/to/second-thumbnail.jpg', name: 'Second Page' },
+            { url: 'third.html', img: 'https://example.com/path/to/third-thumbnail.jpg', name: 'Third Page' },
+            { url: 'fourth.html', img: 'https://example.com/path/to/fourth-thumbnail.jpg', name: 'Fourth Page' },
+            { url: 'fifth.html', img: 'https://example.com/path/to/fifth-thumbnail.jpg', name: 'Fifth Page' },
+            { url: 'sixth.html', img: 'https://example.com/path/to/sixth-thumbnail.jpg', name: 'Sixth Page' },
+            { url: 'seventh.html', img: 'https://example.com/path/to/seventh-thumbnail.jpg', name: 'Seventh Page' },
+            { url: 'eighth.html', img: 'https://example.com/path/to/eighth-thumbnail.jpg', name: 'Eighth Page' },
+            { url: 'ninth.html', img: 'https://example.com/path/to/ninth-thumbnail.jpg', name: 'Ninth Page' },
+            { url: 'tenth.html', img: 'https://example.com/path/to/tenth-thumbnail.jpg', name: 'Tenth Page' },
+            { url: 'eleventh.html', img: 'https://example.com/path/to/eleventh-thumbnail.jpg', name: 'Eleventh Page' },
+            { url: 'twelfth.html', img: 'https://example.com/path/to/twelfth-thumbnail.jpg', name: 'Twelfth Page' }
         ];
 
         let currentPage = 1;
@@ -82,6 +87,7 @@
                     <div class="link-item">
                         <a href="${link.url}">
                             <img src="${link.img}" alt="Thumbnail" class="thumbnail">
+                            ${link.name} <!-- 페이지 이름 표시 -->
                         </a>
                     </div>
                 `;
@@ -104,6 +110,17 @@
 
         function goToPage(pageNumber) {
             currentPage = pageNumber;
+            displayLinks();
+        }
+
+        // 최신순 또는 오래된 순으로 정렬하는 함수
+        function sortLinks(order) {
+            if (order === 'newest') {
+                sortedLinks = [...links].reverse(); // 최신순 정렬 (배열을 반전시킴)
+            } else if (order === 'oldest') {
+                sortedLinks = [...links]; // 오래된 순 정렬 (원래 순서로 복구)
+            }
+            currentPage = 1; // 첫 페이지로 이동
             displayLinks();
         }
 
