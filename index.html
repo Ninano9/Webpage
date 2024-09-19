@@ -21,11 +21,11 @@
             height: auto;
             margin-bottom: 10px;
         }
-        .pagination {
+        .controls {
             text-align: center;
-            margin-top: 20px;
+            margin-bottom: 20px;
         }
-        .pagination button {
+        .controls button {
             padding: 10px;
             margin: 5px;
             cursor: pointer;
@@ -34,6 +34,12 @@
 </head>
 <body>
     <h1>hello world</h1>
+
+    <div class="controls">
+        <button onclick="sortLinks('newest')">최신순 정렬</button>
+        <button onclick="sortLinks('oldest')">오래된 순 정렬</button>
+    </div>
+
     <div class="link-container" id="link-container">
         <!-- Links will be dynamically generated here -->
     </div>
@@ -45,37 +51,39 @@
 
     <script>
         const links = [
-            { url: 'first.html', img: 'https://example.com/path/to/first-thumbnail.jpg', text: 'First Page' },
-            { url: 'public/second.html', img: 'https://example.com/path/to/second-thumbnail.jpg', text: 'Second Page' },
-            { url: 'third.html', img: 'https://example.com/path/to/third-thumbnail.jpg', text: 'Third Page' },
-            { url: 'fourth.html', img: 'https://example.com/path/to/fourth-thumbnail.jpg', text: 'Fourth Page' },
-            { url: 'fifth.html', img: 'https://example.com/path/to/fifth-thumbnail.jpg', text: 'Fifth Page' },
-            { url: 'sixth.html', img: 'https://example.com/path/to/sixth-thumbnail.jpg', text: 'Sixth Page' },
-            { url: 'seventh.html', img: 'https://example.com/path/to/seventh-thumbnail.jpg', text: 'Seventh Page' },
-            { url: 'eighth.html', img: 'https://example.com/path/to/eighth-thumbnail.jpg', text: 'Eighth Page' },
-            { url: 'ninth.html', img: 'https://example.com/path/to/ninth-thumbnail.jpg', text: 'Ninth Page' },
-            { url: 'tenth.html', img: 'https://example.com/path/to/tenth-thumbnail.jpg', text: 'Tenth Page' },
-            { url: 'eleventh.html', img: 'https://example.com/path/to/eleventh-thumbnail.jpg', text: 'Eleventh Page' },
-            { url: 'twelfth.html', img: 'https://example.com/path/to/twelfth-thumbnail.jpg', text: 'Twelfth Page' }
+            { url: 'first.html', img: 'https://example.com/path/to/first-thumbnail.jpg', text: 'First Page', date: '2023-09-15' },
+            { url: 'public/second.html', img: 'https://example.com/path/to/second-thumbnail.jpg', text: 'Second Page', date: '2023-09-13' },
+            { url: 'third.html', img: 'https://example.com/path/to/third-thumbnail.jpg', text: 'Third Page', date: '2023-09-12' },
+            { url: 'fourth.html', img: 'https://example.com/path/to/fourth-thumbnail.jpg', text: 'Fourth Page', date: '2023-09-17' },
+            { url: 'fifth.html', img: 'https://example.com/path/to/fifth-thumbnail.jpg', text: 'Fifth Page', date: '2023-09-11' },
+            { url: 'sixth.html', img: 'https://example.com/path/to/sixth-thumbnail.jpg', text: 'Sixth Page', date: '2023-09-10' },
+            { url: 'seventh.html', img: 'https://example.com/path/to/seventh-thumbnail.jpg', text: 'Seventh Page', date: '2023-09-09' },
+            { url: 'eighth.html', img: 'https://example.com/path/to/eighth-thumbnail.jpg', text: 'Eighth Page', date: '2023-09-08' },
+            { url: 'ninth.html', img: 'https://example.com/path/to/ninth-thumbnail.jpg', text: 'Ninth Page', date: '2023-09-07' },
+            { url: 'tenth.html', img: 'https://example.com/path/to/tenth-thumbnail.jpg', text: 'Tenth Page', date: '2023-09-06' },
+            { url: 'eleventh.html', img: 'https://example.com/path/to/eleventh-thumbnail.jpg', text: 'Eleventh Page', date: '2023-09-05' },
+            { url: 'twelfth.html', img: 'https://example.com/path/to/twelfth-thumbnail.jpg', text: 'Twelfth Page', date: '2023-09-04' }
         ];
 
         let currentPage = 1;
         const itemsPerPage = 9;
+        let sortedLinks = [...links]; // 정렬된 링크를 저장
 
         function displayLinks() {
             const linkContainer = document.getElementById('link-container');
             linkContainer.innerHTML = ''; // Clear existing content
 
             const startIndex = (currentPage - 1) * itemsPerPage;
-            const endIndex = Math.min(startIndex + itemsPerPage, links.length);
+            const endIndex = Math.min(startIndex + itemsPerPage, sortedLinks.length);
 
             for (let i = startIndex; i < endIndex; i++) {
-                const link = links[i];
+                const link = sortedLinks[i];
                 linkContainer.innerHTML += `
                     <div class="link-item">
                         <a href="${link.url}">
                             <img src="${link.img}" alt="${link.text} Thumbnail" class="thumbnail">
-                            ${link.text}
+                            ${link.text}<br>
+                            <small>${link.date}</small>
                         </a>
                     </div>
                 `;
@@ -90,10 +98,21 @@
         }
 
         function nextPage() {
-            if (currentPage * itemsPerPage < links.length) {
+            if (currentPage * itemsPerPage < sortedLinks.length) {
                 currentPage++;
                 displayLinks();
             }
+        }
+
+        function sortLinks(order) {
+            sortedLinks = [...links]; // Reset the sortedLinks array
+            if (order === 'newest') {
+                sortedLinks.sort((a, b) => new Date(b.date) - new Date(a.date));
+            } else if (order === 'oldest') {
+                sortedLinks.sort((a, b) => new Date(a.date) - new Date(b.date));
+            }
+            currentPage = 1; // Reset to the first page
+            displayLinks();
         }
 
         // 초기 링크 표시
