@@ -1,39 +1,49 @@
 <!DOCTYPE html>
 <html lang="ko">
-
 <head>
     <meta charset="UTF-8">
     <title>HTML Intro</title>
     <style>
+        .link-container {
+            display: flex; /* Flexbox를 사용하여 가로로 정렬 */
+            justify-content: space-around; /* 아이템 사이에 동일한 간격을 설정 */
+            align-items: center; /* 아이템을 수직으로 중앙 정렬 */
+            flex-wrap: wrap; /* 필요에 따라 줄 바꿈 허용 */
+        }
+        .link-item {
+            text-align: center; /* 링크와 이미지 텍스트를 중앙 정렬 */
+            margin: 10px; /* 아이템 사이의 간격 설정 */
+        }
         .thumbnail {
+            border: 1px solid #ccc;
             display: block;
-            width: 200px; /* 썸네일 너비 설정 */
+            width: 150px; /* 썸네일 너비 설정 */
             height: auto; /* 비율 유지 */
             margin-bottom: 10px; /* 이미지와 텍스트 사이 간격 설정 */
-            margin-right: 20px;
         }
     </style>
 </head>
-
 <body>
     <h1>hello world</h1>
-    <!-- Link to First Page with Thumbnail -->
-    <a href="first.html">
-        <img src="https://example.com/path/to/first-thumbnail.jpg" alt="First Page Thumbnail" class="thumbnail">
-        First Page
-    </a>
-  
-    <!-- Link to Second Page with Thumbnail -->
-    <a href="public/second.html">
-        <img src="https://example.com/path/to/second-thumbnail.jpg" alt="Second Page Thumbnail" class="thumbnail">
-        Second Page
-    </a>
-    
-    <!-- Link to Third Page with Thumbnail -->
-    <a href="third.html">
-        <img src="https://example.com/path/to/third-thumbnail.jpg" alt="Third Page Thumbnail" class="thumbnail">
-        Third Page
-    </a>
+    <div class="link-container">
+        <div class="link-item">
+            <a href="first.html">
+                <img src="https://example.com/path/to/first-thumbnail.jpg" alt="First Page Thumbnail" class="thumbnail">
+                First Page
+            </a>
+        </div>
+        <div class="link-item">
+            <a href="public/second.html">
+                <img src="https://example.com/path/to/second-thumbnail.jpg" alt="Second Page Thumbnail" class="thumbnail">
+                Second Page
+            </a>
+        </div>
+        <div class="link-item">
+            <a href="third.html">
+                <img src="https://example.com/path/to/third-thumbnail.jpg" alt="Third Page Thumbnail" class="thumbnail">
+                Third Page
+            </a>
+        </div>
+    </div>
 </body>
-
 </html>
