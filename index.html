@@ -21,48 +21,48 @@
             height: auto;
             margin-bottom: 10px;
         }
-        .controls {
+        .pagination {
             text-align: center;
-            margin-bottom: 20px;
+            margin-top: 20px;
         }
-        .controls button {
+        .pagination span {
             padding: 10px;
             margin: 5px;
             cursor: pointer;
+            border: 1px solid #ccc;
+        }
+        .active-page {
+            font-weight: bold;
+            background-color: #ddd;
         }
     </style>
 </head>
 <body>
     <h1>hello world</h1>
 
-    <div class="controls">
-        <button onclick="sortLinks('newest')">최신순 정렬</button>
-        <button onclick="sortLinks('oldest')">오래된 순 정렬</button>
-    </div>
-
     <div class="link-container" id="link-container">
         <!-- Links will be dynamically generated here -->
     </div>
 
-    <div class="pagination">
-        <button onclick="prevPage()">Previous</button>
-        <button onclick="nextPage()">Next</button>
+    <div class="pagination" id="pagination">
+        <!-- Page numbers will be dynamically generated here -->
     </div>
 
     <script>
+        // 파일 URL과 썸네일 이미지만 저장된 배열
         const links = [
-            { url: 'first.html', img: 'https://example.com/path/to/first-thumbnail.jpg', text: 'First Page', date: '2023-09-15' },
-            { url: 'public/second.html', img: 'https://example.com/path/to/second-thumbnail.jpg', text: 'Second Page', date: '2023-09-13' },
-            { url: 'third.html', img: 'https://example.com/path/to/third-thumbnail.jpg', text: 'Third Page', date: '2023-09-12' },
-            { url: 'fourth.html', img: 'https://example.com/path/to/fourth-thumbnail.jpg', text: 'Fourth Page', date: '2023-09-17' },
-            { url: 'fifth.html', img: 'https://example.com/path/to/fifth-thumbnail.jpg', text: 'Fifth Page', date: '2023-09-11' },
-            { url: 'sixth.html', img: 'https://example.com/path/to/sixth-thumbnail.jpg', text: 'Sixth Page', date: '2023-09-10' },
-            { url: 'seventh.html', img: 'https://example.com/path/to/seventh-thumbnail.jpg', text: 'Seventh Page', date: '2023-09-09' },
-            { url: 'eighth.html', img: 'https://example.com/path/to/eighth-thumbnail.jpg', text: 'Eighth Page', date: '2023-09-08' },
-            { url: 'ninth.html', img: 'https://example.com/path/to/ninth-thumbnail.jpg', text: 'Ninth Page', date: '2023-09-07' },
-            { url: 'tenth.html', img: 'https://example.com/path/to/tenth-thumbnail.jpg', text: 'Tenth Page', date: '2023-09-06' },
-            { url: 'eleventh.html', img: 'https://example.com/path/to/eleventh-thumbnail.jpg', text: 'Eleventh Page', date: '2023-09-05' },
-            { url: 'twelfth.html', img: 'https://example.com/path/to/twelfth-thumbnail.jpg', text: 'Twelfth Page', date: '2023-09-04' }
+            { url: 'first.html', img: 'https://example.com/path/to/first-thumbnail.jpg' },
+            { url: 'public/second.html', img: 'https://example.com/path/to/second-thumbnail.jpg' },
+            { url: 'third.html', img: 'https://example.com/path/to/third-thumbnail.jpg' },
+            { url: 'fourth.html', img: 'https://example.com/path/to/fourth-thumbnail.jpg' },
+            { url: 'fifth.html', img: 'https://example.com/path/to/fifth-thumbnail.jpg' },
+            { url: 'sixth.html', img: 'https://example.com/path/to/sixth-thumbnail.jpg' },
+            { url: 'seventh.html', img: 'https://example.com/path/to/seventh-thumbnail.jpg' },
+            { url: 'eighth.html', img: 'https://example.com/path/to/eighth-thumbnail.jpg' },
+            { url: 'ninth.html', img: 'https://example.com/path/to/ninth-thumbnail.jpg' },
+            { url: 'tenth.html', img: 'https://example.com/path/to/tenth-thumbnail.jpg' },
+            { url: 'eleventh.html', img: 'https://example.com/path/to/eleventh-thumbnail.jpg' },
+            { url: 'twelfth.html', img: 'https://example.com/path/to/twelfth-thumbnail.jpg' }
         ];
 
         let currentPage = 1;
@@ -71,7 +71,7 @@
 
         function displayLinks() {
             const linkContainer = document.getElementById('link-container');
-            linkContainer.innerHTML = ''; // Clear existing content
+            linkContainer.innerHTML = ''; // 기존 내용을 초기화
 
             const startIndex = (currentPage - 1) * itemsPerPage;
             const endIndex = Math.min(startIndex + itemsPerPage, sortedLinks.length);
@@ -81,37 +81,29 @@
                 linkContainer.innerHTML += `
                     <div class="link-item">
                         <a href="${link.url}">
-                            <img src="${link.img}" alt="${link.text} Thumbnail" class="thumbnail">
-                            ${link.text}<br>
-                            <small>${link.date}</small>
+                            <img src="${link.img}" alt="Thumbnail" class="thumbnail">
                         </a>
                     </div>
                 `;
             }
+            updatePagination();
         }
 
-        function prevPage() {
-            if (currentPage > 1) {
-                currentPage--;
-                displayLinks();
+        function updatePagination() {
+            const pagination = document.getElementById('pagination');
+            pagination.innerHTML = ''; // 기존 페이지네이션 초기화
+
+            const totalPages = Math.ceil(sortedLinks.length / itemsPerPage);
+
+            for (let i = 1; i <= totalPages; i++) {
+                pagination.innerHTML += `
+                    <span class="${i === currentPage ? 'active-page' : ''}" onclick="goToPage(${i})">${i}</span>
+                `;
             }
         }
 
-        function nextPage() {
-            if (currentPage * itemsPerPage < sortedLinks.length) {
-                currentPage++;
-                displayLinks();
-            }
-        }
-
-        function sortLinks(order) {
-            sortedLinks = [...links]; // Reset the sortedLinks array
-            if (order === 'newest') {
-                sortedLinks.sort((a, b) => new Date(b.date) - new Date(a.date));
-            } else if (order === 'oldest') {
-                sortedLinks.sort((a, b) => new Date(a.date) - new Date(b.date));
-            }
-            currentPage = 1; // Reset to the first page
+        function goToPage(pageNumber) {
+            currentPage = pageNumber;
             displayLinks();
         }
 
