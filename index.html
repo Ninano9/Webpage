@@ -5,45 +5,99 @@
     <title>HTML Intro</title>
     <style>
         .link-container {
-            display: flex; /* Flexbox를 사용하여 가로로 정렬 */
-            justify-content: space-around; /* 아이템 사이에 동일한 간격을 설정 */
-            align-items: center; /* 아이템을 수직으로 중앙 정렬 */
-            flex-wrap: wrap; /* 필요에 따라 줄 바꿈 허용 */
+            display: flex;
+            flex-wrap: wrap; /* 여러 줄로 배치 */
+            justify-content: space-around;
         }
         .link-item {
-            text-align: center; /* 링크와 이미지 텍스트를 중앙 정렬 */
-            margin: 10px; /* 아이템 사이의 간격 설정 */
+            width: 30%; /* 각 아이템이 3개씩 한 줄에 배치되도록 설정 */
+            text-align: center;
+            margin-bottom: 20px;
         }
         .thumbnail {
             border: 1px solid #ccc;
             display: block;
-            width: 150px; /* 썸네일 너비 설정 */
-            height: auto; /* 비율 유지 */
-            margin-bottom: 10px; /* 이미지와 텍스트 사이 간격 설정 */
+            width: 150px;
+            height: auto;
+            margin-bottom: 10px;
+        }
+        .pagination {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .pagination button {
+            padding: 10px;
+            margin: 5px;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
     <h1>hello world</h1>
-    <div class="link-container">
-        <div class="link-item">
-            <a href="first.html">
-                <img src="https://example.com/path/to/first-thumbnail.jpg" alt="First Page Thumbnail" class="thumbnail">
-                First Page
-            </a>
-        </div>
-        <div class="link-item">
-            <a href="public/second.html">
-                <img src="https://example.com/path/to/second-thumbnail.jpg" alt="Second Page Thumbnail" class="thumbnail">
-                Second Page
-            </a>
-        </div>
-        <div class="link-item">
-            <a href="third.html">
-                <img src="https://example.com/path/to/third-thumbnail.jpg" alt="Third Page Thumbnail" class="thumbnail">
-                Third Page
-            </a>
-        </div>
+    <div class="link-container" id="link-container">
+        <!-- Links will be dynamically generated here -->
     </div>
+
+    <div class="pagination">
+        <button onclick="prevPage()">Previous</button>
+        <button onclick="nextPage()">Next</button>
+    </div>
+
+    <script>
+        const links = [
+            { url: 'first.html', img: 'https://example.com/path/to/first-thumbnail.jpg', text: 'First Page' },
+            { url: 'public/second.html', img: 'https://example.com/path/to/second-thumbnail.jpg', text: 'Second Page' },
+            { url: 'third.html', img: 'https://example.com/path/to/third-thumbnail.jpg', text: 'Third Page' },
+            { url: 'fourth.html', img: 'https://example.com/path/to/fourth-thumbnail.jpg', text: 'Fourth Page' },
+            { url: 'fifth.html', img: 'https://example.com/path/to/fifth-thumbnail.jpg', text: 'Fifth Page' },
+            { url: 'sixth.html', img: 'https://example.com/path/to/sixth-thumbnail.jpg', text: 'Sixth Page' },
+            { url: 'seventh.html', img: 'https://example.com/path/to/seventh-thumbnail.jpg', text: 'Seventh Page' },
+            { url: 'eighth.html', img: 'https://example.com/path/to/eighth-thumbnail.jpg', text: 'Eighth Page' },
+            { url: 'ninth.html', img: 'https://example.com/path/to/ninth-thumbnail.jpg', text: 'Ninth Page' },
+            { url: 'tenth.html', img: 'https://example.com/path/to/tenth-thumbnail.jpg', text: 'Tenth Page' },
+            { url: 'eleventh.html', img: 'https://example.com/path/to/eleventh-thumbnail.jpg', text: 'Eleventh Page' },
+            { url: 'twelfth.html', img: 'https://example.com/path/to/twelfth-thumbnail.jpg', text: 'Twelfth Page' }
+        ];
+
+        let currentPage = 1;
+        const itemsPerPage = 9;
+
+        function displayLinks() {
+            const linkContainer = document.getElementById('link-container');
+            linkContainer.innerHTML = ''; // Clear existing content
+
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = Math.min(startIndex + itemsPerPage, links.length);
+
+            for (let i = startIndex; i < endIndex; i++) {
+                const link = links[i];
+                linkContainer.innerHTML += `
+                    <div class="link-item">
+                        <a href="${link.url}">
+                            <img src="${link.img}" alt="${link.text} Thumbnail" class="thumbnail">
+                            ${link.text}
+                        </a>
+                    </div>
+                `;
+            }
+        }
+
+        function prevPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                displayLinks();
+            }
+        }
+
+        function nextPage() {
+            if (currentPage * itemsPerPage < links.length) {
+                currentPage++;
+                displayLinks();
+            }
+        }
+
+        // 초기 링크 표시
+        displayLinks();
+    </script>
 </body>
 </html>
