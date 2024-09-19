@@ -20,6 +20,7 @@
             text-align: center;
             margin-bottom: 20px;
             display: block;
+            align-items: center;
 
         }
         .link-item a {
@@ -27,6 +28,7 @@
             height: 165px;
             display: block;
             margin-bottom: 2em;
+            text-decoration: none;
         }
 
         .thumbnail {
@@ -36,6 +38,7 @@
             height: 100%;
             object-fit: contain;
             margin-bottom: 10px;
+            margin-right: 10px;
         }
         .pagination {
             text-align: center;
@@ -50,6 +53,10 @@
         .active-page {
             font-weight: bold;
             background-color: #ddd;
+        }
+        .description {
+            flex: 1; /* 남은 공간을 차지 */
+            padding: 10px; /* 여백 추가 */
         }
 
     </style>
@@ -104,7 +111,7 @@
                     <div class="link-item">
                         <a href="${link.url}">
                             <img src="${link.img}" alt="Thumbnail" class="thumbnail">
-                            ${link.name} <!-- 페이지 이름 표시 -->
+                            <div class="description">${link.name}</div>
                         </a>
                     </div>
                 `;
