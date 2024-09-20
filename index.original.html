@@ -1,0 +1,155 @@
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Ninano</title>
+    <style>
+        .controls {
+            margin-bottom: 2em;
+        }
+        .link-container {
+            display: flex;
+            flex-wrap: wrap; /* 여러 줄로 배치 */
+            justify-content: space-around;
+        }
+        .link-item {
+            width: 47%; /* 각 아이템이 3개씩 한 줄에 배치되도록 설정 */
+            text-align: center;
+            margin-bottom: 20px;
+            display: block;
+            align-items: center;
+
+        }
+        .link-item a {
+            width: 150px;
+            height: 165px;
+            display: block;
+            margin-bottom: 2em;
+            text-decoration: none;
+        }
+
+        .thumbnail {
+            border: 1px solid #ccc;
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            margin-bottom: 10px;
+            margin-right: 10px;
+        }
+        .pagination {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .pagination span {
+            padding: 10px;
+            margin: 5px;
+            cursor: pointer;
+            border: 1px solid #ccc;
+        }
+        .active-page {
+            font-weight: bold;
+            background-color: #ddd;
+        }
+        .description {
+            flex: 1; /* 남은 공간을 차지 */
+            padding: 10px; /* 여백 추가 */
+        }
+
+    </style>
+</head>
+<body>
+    <h1 style="margin-left: 5px;">My Page</h1>
+
+    <div class="controls" style="margin-left: 5px; margin-top: 1em;">
+        <button onclick="sortLinks('newest')">lastest</button>
+        <button onclick="sortLinks('oldest')">oldest</button>
+    </div>
+
+    <div class="link-container" id="link-container">
+        <!-- Links will be dynamically generated here -->
+    </div>
+
+    <div class="pagination" id="pagination">
+        <!-- Page numbers will be dynamically generated here -->
+    </div>
+
+    <script>
+        // 파일 URL, 썸네일 이미지, 페이지 이름을 저장한 배열
+        const links = [
+            { url: 'first.html', img: 'image/adminPage/fisrt.png', name: 'First Page' },
+            { url: 'public/second.html', img: 'image/adminPage/second.png', name: 'Second Page' },
+            { url: 'adminPage/adminPage.html', img: 'image/adminPage/adminPage.png', name: 'adminPage' },
+            { url: 'fourth.html', img: 'https://example.com/path/to/fourth-thumbnail.jpg', name: 'Fourth Page' },
+            { url: 'fifth.html', img: 'https://example.com/path/to/fifth-thumbnail.jpg', name: 'Fifth Page' },
+            { url: 'sixth.html', img: 'https://example.com/path/to/sixth-thumbnail.jpg', name: 'Sixth Page' },
+            { url: 'seventh.html', img: 'https://example.com/path/to/seventh-thumbnail.jpg', name: 'Seventh Page' },
+            { url: 'eighth.html', img: 'https://example.com/path/to/eighth-thumbnail.jpg', name: 'Eighth Page' },
+            { url: 'ninth.html', img: 'https://example.com/path/to/ninth-thumbnail.jpg', name: 'Ninth Page' },
+            { url: 'tenth.html', img: 'https://example.com/path/to/tenth-thumbnail.jpg', name: 'Tenth Page' },
+            { url: 'eleventh.html', img: 'https://example.com/path/to/eleventh-thumbnail.jpg', name: 'Eleventh Page' },
+            { url: 'twelfth.html', img: 'https://example.com/path/to/twelfth-thumbnail.jpg', name: 'Twelfth Page' }
+        ];
+
+        let currentPage = 1;
+        const itemsPerPage = 8;
+        let sortedLinks = [...links]; // 정렬된 링크를 저장
+
+        function displayLinks() {
+            const linkContainer = document.getElementById('link-container');
+            linkContainer.innerHTML = ''; // 기존 내용을 초기화
+
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = Math.min(startIndex + itemsPerPage, sortedLinks.length);
+
+            for (let i = startIndex; i < endIndex; i++) {
+                const link = sortedLinks[i];
+                linkContainer.innerHTML += `
+                    <div class="link-item">
+                        <a href="${link.url}">
+                            <img src="${link.img}" alt="Thumbnail" class="thumbnail">
+                            <div class="description">${link.name}</div>
+                        </a>
+                    </div>
+                `;
+            }
+            updatePagination();
+        }
+
+        function updatePagination() {
+            const pagination = document.getElementById('pagination');
+            pagination.innerHTML = ''; // 기존 페이지네이션 초기화
+
+            const totalPages = Math.ceil(sortedLinks.length / itemsPerPage);
+
+            for (let i = 1; i <= totalPages; i++) {
+                pagination.innerHTML += `
+                    <span class="${i === currentPage ? 'active-page' : ''}" onclick="goToPage(${i})">${i}</span>
+                `;
+            }
+        }
+
+        function goToPage(pageNumber) {
+            currentPage = pageNumber;
+            displayLinks();
+        }
+
+        // 최신순 또는 오래된 순으로 정렬하는 함수
+        function sortLinks(order) {
+            if (order === 'newest') {
+                sortedLinks = [...links].reverse(); // 최신순 정렬 (배열을 반전시킴)
+            } else if (order === 'oldest') {
+                sortedLinks = [...links]; // 오래된 순 정렬 (원래 순서로 복구)
+            }
+            currentPage = 1; // 첫 페이지로 이동
+            displayLinks();
+        }
+
+        // 초기 링크 표시
+        displayLinks();
+    </script>
+</body>
+</html>
