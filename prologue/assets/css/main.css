@@ -2331,14 +2331,14 @@ button:active,
 }
 
 .aboutMeSection img {
-	width: 280px;
+	width: 330px;
 	float: left;
 	margin-right: 0;
 }
 
 .aboutMeTable {
 	float: right;
-	width: calc(100% - 310px);
+	width: calc(100% - 365px);
 	border-collapse: collapse;
 	border-spacing: 0;
 	margin-left: 0;
