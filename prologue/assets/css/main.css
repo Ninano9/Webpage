@@ -2334,7 +2334,6 @@ button:active,
 	width: 280px;
 	float: left;
 	margin-right: 0;
-	margin-top: 37px;
 }
 
 .aboutMeTable {
@@ -2361,13 +2360,13 @@ button:active,
 }
 
 .aboutMeTable td {
-	text-align: left;
+	text-align: center;
 	width: 200px;
 }
 
 .aboutMeTable td p {
 	font-size: 16px;
-	margin-bottom: 1px;
+	margin-bottom: 0.5px;
 }
 
 
