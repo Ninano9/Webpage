@@ -2338,7 +2338,7 @@ button:active,
 
 .aboutMeTable {
 	float: right;
-	width: calc(100% - 285px);
+	width: calc(100% - 310px);
 	border-collapse: collapse;
 	border-spacing: 0;
 	margin-left: 0;
@@ -2355,18 +2355,18 @@ button:active,
 .aboutMeTable th {
 	color: inherit;
 	font-weight: bold;
-	text-align: center;
+	text-align: left;
 	width: 80px;
 }
 
 .aboutMeTable td {
-	text-align: center;
+	text-align: left;
 	width: 200px;
 }
 
 .aboutMeTable td p {
 	font-size: 16px;
-	margin-bottom: 0.5px;
+	margin-bottom: -5px;
 }
 
 
