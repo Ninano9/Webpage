@@ -2342,7 +2342,7 @@ button:active,
 }
 @media (max-width: 600px) {
     .skillsTd p {
-        font-size: 18px; 
+        font-size: 16px; 
         white-space: nowrap; 
         overflow: hidden; 
         text-overflow: ellipsis; 
