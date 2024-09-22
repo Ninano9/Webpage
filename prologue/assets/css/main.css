@@ -2237,28 +2237,26 @@ button:active,
 
 /* About Me */
 .aboutMeSection {
-	width: 100%;
-	overflow: hidden;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 20px;
+	align-items: flex-start;
 }
 
 .aboutMeSection img {
-	width: 330px;
-	float: left;
-	margin-right: 0;
+	width: 250px;
+	flex-shrink: 0;
 }
 
 .aboutMeTable {
-	float: right;
-	width: calc(100% - 365px);
+	width: 100%;
+	max-width: 600px; /* 테이블 최대 너비를 설정 */
 	border-collapse: collapse;
-	border-spacing: 0;
-	margin-left: 0;
 	font-family: 'Roboto', sans-serif;
 }
 
-.aboutMeTable th,
-.aboutMeTable td {
-	padding: 1px;
+.aboutMeTable th, .aboutMeTable td {
+	padding: 8px;
 	vertical-align: top;
 	background-color: #E9EEEE;
 }
@@ -2272,12 +2270,28 @@ button:active,
 
 .aboutMeTable td {
 	text-align: left;
-	width: 610px;
 }
 
 .aboutMeTable td p {
 	font-size: 16px;
 	margin-bottom: -15px;
+}
+
+/* 반응형 설정 */
+@media (max-width: 768px) {
+	.aboutMeSection {
+		flex-direction: column;
+		align-items: center;
+	}
+
+	.aboutMeTable {
+		width: 100%;
+	}
+
+	.aboutMeSection img {
+		width: 100%; /* 모바일에서 이미지를 전체 너비로 */
+		max-width: 250px;
+	}
 }
 
 
