@@ -1774,6 +1774,38 @@ article:last-child {
 }
 
 /* Image */
+/* Portfolio img height */
+.item img {
+	height: 190px;
+}
+
+/* 기본 이미지 스타일 */
+.image.fit {
+    position: relative;
+    display: inline-block;
+}
+/* 숨겨진 텍스트 스타일 */
+.overlay-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+/* hover 시 텍스트 표시 */
+.image.fit:hover .overlay-text {
+    opacity: 1;
+}
+.image.fit:hover img {
+    filter: blur(3px) brightness(0.3);
+}
+
+
 
 .image {
 	display: inline-block;
@@ -2298,6 +2330,59 @@ button:active,
 		width: 100%; 
 		max-width: 250px;
 	}
+}
+
+@media (max-width: 600px) {
+    .experienceTd p {
+        font-size: 14px; /* 원하는 크기로 조정 */
+        white-space: nowrap; /* 한 줄로 보이도록 설정 */
+        overflow: hidden; /* 넘치는 내용 숨김 */
+        text-overflow: ellipsis; /* 넘치는 부분을 '...'로 표시 */
+    }
+}
+
+
+/* Nav Bar */
+.triangle-icon {
+    display: inline-block;
+    margin-left: 5px;
+    width: 0;
+    height: 0;
+    border-left: 1px solid transparent;
+    border-right: 1px solid transparent;
+    border-top: 1px solid red;
+	background-color: red;
+    vertical-align: middle;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    background-color: white;
+    list-style: none;
+    padding: 0;
+    margin: 5px 0 0;
+    border: 1px solid #ccc;
+    width: 150px;
+    z-index: 10;
+}
+
+.dropdown-menu li {
+    padding: 10px;
+    text-align: left;
+}
+
+.dropdown-menu li a {
+    text-decoration: none;
+    color: black;
+}
+
+.dropdown-menu li a:hover {
+    background-color: #f0f0f0;
+}
+
+.portfolio-item:hover .dropdown-menu {
+    display: block;
 }
 
 

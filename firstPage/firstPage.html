@@ -1,0 +1,87 @@
+<!doctype html>
+<html>
+<head>
+	<title>Login Box</title>
+	<style>
+		body {
+			background-image: url("login coding body.jpg");
+		}
+		.login {
+			width: 400px;
+			height: 180px;
+			padding: 20px;
+			margin: 100px auto;
+			background-color: #f0f0f0;
+			border: 1px solid #ccc;
+			text-align: center;
+			font-size: large;
+		}
+
+		.correct-password {
+			background-color: #90EE90;
+		}
+
+		.incorrect-password {
+			background-color: #FF6347;
+		}
+	</style>
+</head>
+<body>
+	<div class="login">
+		<h1>Login</h1>
+		<a href="../../index.html" style="width: 80px; height: 40px; display: inline; float: right; margin-top: -100px; border: 2px solid black; border-radius: 5px; background-color: #b9b2b2; text-decoration: none; color: inherit;"><div style="margin-top: 6px;">Home</div></a>
+		<label for="password">Password</label>
+		<input type="password" id="password" value="home">
+		<button id="togglePassword" onclick="togglePassword()">Show</button>
+		<br>
+		<button onclick="checkPassword()" style="width: 80px; height: 30px; margin-top: 10px;">Login</button>
+	</div>
+
+	<script>
+		function togglePassword() {
+			var passwordInput = document.getElementById("password");
+			var toggleButton = document.getElementById("togglePassword");
+
+			if (passwordInput.type === "password") {
+				passwordInput.type = "text";
+				toggleButton.textContent = "Hide";
+			} else {
+				passwordInput.type = "password";
+				toggleButton.textContent = "Show";
+			}
+		}
+
+		function checkPassword() {
+			var password = document.getElementById("password").value;
+
+			if (password === "home") {
+				document.querySelector(".login").classList.add("correct-password");
+				document.querySelector(".login").classList.remove("incorrect-password");
+				setSessionCookie("page1");
+				window.location.href = "Home.html";
+			} else {
+				document.querySelector(".login").classList.add("incorrect-password");
+				document.querySelector(".login").classList.remove("correct-password");
+			}
+		}
+
+		function setSessionCookie() {
+			var now = new Date();
+			var time = now.getTime();
+			var expireTime = time + (5 * 60 * 1000);
+			now.setTime(expireTime);
+			document.cookie = "sessionID=12345;expires=" + now.toUTCString() + ";path=/";
+		}
+
+		var input = document.getElementById("password");
+
+		input.addEventListener("keyup", function(event) {
+			if (event.key === "Enter") {
+				event.preventDefault();
+				checkPassword();
+			}
+		});
+	</script>
+
+</body>
+</html>
