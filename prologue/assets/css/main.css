@@ -2277,7 +2277,7 @@ button:active,
 	margin-bottom: -15px;
 }
 
-/* 반응형 설정 */
+/* flex 설정 */
 @media (max-width: 768px) {
 	.aboutMeSection {
 		flex-direction: column;
@@ -2289,7 +2289,7 @@ button:active,
 	}
 
 	.aboutMeSection img {
-		width: 100%; /* 모바일에서 이미지를 전체 너비로 */
+		width: 100%; 
 		max-width: 250px;
 	}
 }
