@@ -2333,7 +2333,7 @@ button:active,
 }
 
 @media (max-width: 600px) {
-    .experienceTd p, skillsTd p {
+    .experienceTd p, .skillsTd p {
         font-size: 14px; /* 원하는 크기로 조정 */
         white-space: nowrap; /* 한 줄로 보이도록 설정 */
         overflow: hidden; /* 넘치는 내용 숨김 */
