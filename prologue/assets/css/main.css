@@ -2333,7 +2333,7 @@ button:active,
 }
 
 @media (max-width: 600px) {
-    .experienceTd p, .skillsTd p {
+    .experienceTd p {
         font-size: 14px; 
         white-space: nowrap; 
         overflow: hidden; 
