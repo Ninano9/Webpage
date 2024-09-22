@@ -2207,7 +2207,7 @@ button:active,
 
 #footer {
 	margin-left: 375px;
-	text-align: center;
+	/* text-align: center; */
 	background-color: #dce3e2;
 	padding: 3em 0 4em 0;
 	box-shadow: inset 0 1px 0 0 rgba(0, 0, 0, 0.05), inset 0 0.1em 0.1em 0 rgba(0, 0, 0, 0.025);
@@ -2215,10 +2215,11 @@ button:active,
 }
 
 #footer .copyright {
-	cursor: default;
 	margin: 0;
+	cursor: default;
+	list-style:none;
 }
-
+/*
 #footer .copyright li {
 	display: inline-block;
 	line-height: 1em;
@@ -2231,7 +2232,7 @@ button:active,
 	border-left: 0;
 	padding-left: 0;
 	margin-left: 0;
-}
+} */
 
 /* Main */
 
@@ -2246,11 +2247,12 @@ button:active,
 .aboutMeSection img {
 	width: 250px;
 	flex-shrink: 0;
+	margin-top: 20px;
 }
 
 .aboutMeTable {
 	width: 100%;
-	max-width: 600px; /* 테이블 최대 너비를 설정 */
+	max-width: 600px;
 	border-collapse: collapse;
 	font-family: 'Roboto', sans-serif;
 }
@@ -2261,7 +2263,7 @@ button:active,
 	background-color: #E9EEEE;
 }
 
-.aboutMeTable th {
+.aboutMeTable th {	
 	color: inherit;
 	font-weight: bold;
 	text-align: left;
@@ -2272,8 +2274,12 @@ button:active,
 	text-align: left;
 }
 
-.aboutMeTable td p {
+.experienceTd p {
 	font-size: 16px;
+	margin-bottom: -15px;
+}
+.contactTd p {
+	font-size: 20px;
 	margin-bottom: -15px;
 }
 
