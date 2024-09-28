@@ -578,8 +578,9 @@
 
         /* 대여, 나눔해요 썸네일 바깥 div */
         #mainTumbnailDiv {
+            margin-left: 12px;
+            margin-top: 3px;
             display: inline-block;
-            margin: var(--imgMargin);
         }
 
         /* 대여, 나눔해요 썸네일 이미지 */
@@ -598,18 +599,43 @@
         }
 
         /* 대여, 나눔해요 썸네일 제목 */
-        #mainThumbnailTitle {
+        .mainThumbnailTitle {
+            display: inline-block;
             width: 289px;
-            height: 25px;
+            height: 250px;
             text-align: center;
             font-size: 17px;
             font-weight: bold;
             margin-top: 5px;
 
+        }
+
+        .mainThumbnailTitle p {
             /* 긴내용 자르고 뒤에... */
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
+            margin-top: 18px;
+        }
+
+        .mainThumbnailBizz p {
+            /* 긴내용 자르고 뒤에... */
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            margin-top: 18px;
+        }
+
+        .mainThumbnailImage img {
+            display: inline-block;
+            width: 255px;
+            height: 175px;
+        }
+
+        .mainThumbnailBizz img {
+            display: inline-block;
+            width: 230px;
+            height: 170px;
         }
 
         /* 오늘의 인기 게시글 */
@@ -772,76 +798,7 @@
         <div class="header">
             <div class="float-end"
                 style="margin-bottom: -70px; margin-top: 30px; width: 90px; height: 40px; text-align: right; ">
-                <c:if test="${not isLogin }">
 
-                    <div class="dropdown">
-                        <img id="dropdownBtn2" src="/resources/img/mypageicon.png" class="dropbtn"
-                            style="height: 40px; width: 40px;">
-                        <div class="dropdown-content2">
-                            <a href="" data-bs-toggle="modal" data-bs-target="#exampleModal"> 로그인 </a>
-                        </div>
-                    </div>
-
-                    <!-- Modal -->
-                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                        aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content" style="display:contents;">
-                                <c:import url="/user/login" />
-                            </div>
-                        </div>
-                    </div>
-
-                </c:if>
-
-                <c:if test="${not empty isLogin and isLogin }">
-                    <c:choose>
-                        <c:when test="${id eq 'admin'}">
-                            <!-- 사용자가 'admin' 역할을 가지고 있는 경우의 코드 -->
-                            <div class="dropdown">
-                                <img id="dropdownBtn2" src="/resources/img/mypageicon.png" class="dropbtn"
-                                    style="height: 40px; width: 40px;">
-                                <div class="dropdown-content2">
-                                    <div class="dropdown-title">${nick }</div>
-                                    <a href="/admin">관리자 페이지</a>
-                                    <a href="/message/list">내 채팅</a>
-                                    <a href="" id="logout_button">로그아웃</a>
-                                </div>
-                            </div>
-                        </c:when>
-                        <c:otherwise>
-                            <div class="dropdown">
-                                <img id="dropdownBtn1" src="/resources/img/jong.png" class="dropbtn"
-                                    style="height: 40px; width: 40px;">
-                                <span id="badge"></span>
-                                <div class="dropdown-content1 ">
-                                    <div class="dropdown-title" style="text-align: center;">알림</div>
-                                    <div id="alertDel"><button id="allDel">전체삭제</button></div>
-                                    <div class="scrollbar">
-                                        <a id="new-icon">
-                                            <label id="new-icon-text">NEW</label>
-                                        </a>
-                                        <a id="alert"></a>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="dropdown">
-                                <div id="profileImageContainer">
-                                    <img class="profileImage" id="dropdownBtn2" src="">
-                                </div>
-                                <div class="dropdown-content2">
-                                    <div class="dropdown-title">${nick }</div>
-                                    <a href="/profile">마이페이지</a>
-                                    <a href="/message/list">내 채팅</a>
-                                    <a href="/profile/rentList ">빌린거/빌려준거</a>
-                                    <a href="/profile/basket">찜 목록</a>
-                                    <a href="" id="logout_button">로그아웃</a>
-                                </div>
-                            </div>
-                        </c:otherwise>
-                    </c:choose>
-                </c:if>
             </div>
 
             <div class="mx-auto p-4" style="width: 1200px;">
@@ -934,11 +891,6 @@
             <!-- 검색버튼 -->
             <div id="mainSearchDiv">
                 <form action="/mainSearch" method="get" id="searchForm">
-                    <!--     <select name="selectSub" id="selectSub" required="required"> -->
-                    <!--     	<option value="rent">대여해요</option> -->
-                    <!--     	<option value="share">나눔해요</option> -->
-                    <!--     	<option value="please">해주세요</option> -->
-                    <!--     </select> -->
                     <input type="text" name="searchText" id="mainSearch" placeholder=" 필요한 것을 검색해보세요." required
                         oninvalid="this.setCustomValidity('제목을 입력해주세요')" oninput="this.setCustomValidity('')" />
                     <button id="mainBtnSearch">검색</button>
@@ -987,57 +939,82 @@
             <!-- 대여해요 게시글 -->
             <div id="mainRent">
                 <div id="mainTitle">최신 대여해요 게시글</div>
-                <c:forEach var="boardRentInfo" items="${boardRentInfo}">
-                    <div id="mainTumbnailDiv" class="mainDiv">
-                        <a href="/rent/view?boardNo=${boardRentInfo.BOARD_NO }&menu=1&cate=${boardRentInfo.CATE }">
-                            <c:if test="${not empty boardRentInfo.THUMBNAIL_NAME }">
-                                <div><img src="/upload/${boardRentInfo.THUMBNAIL_NAME }" id="mainThumbnailImg"></div>
-                            </c:if>
-                            <c:if test="${empty boardRentInfo.THUMBNAIL_NAME }">
-                                <div><img id="mainNoITumbnail" alt="사진이 없습니다" src="/resources/img/noimg.png"></div>
-                            </c:if>
-                        </a>
-                        <div id="mainThumbnailTitle">${boardRentInfo.TITLE}</div>
-                    </div><!-- #mainTumbnailDiv -->
-                </c:forEach>
+                <div id="mainTumbnailDiv" class="mainDiv">
+                    <div class="mainThumbnailTitle">
+                        <div class="mainThumbnailImage"><img src="images/drill.png" alt="drill"></div>
+                        <p>드릴 대여해요</p>
+                    </div>
+
+                    <div class="mainThumbnailTitle">
+                        <div class="mainThumbnailImage"><img src="images/phoneCase.jpeg" alt="phoneCase"></div>
+                        <p>핸드폰 케이스</p>
+                    </div>
+
+                    <div class="mainThumbnailTitle">
+                        <div class="mainThumbnailImage"><img src="images/cat.jpeg" alt="phoneCase"></div>
+                        <p>고양이 자랑이에요~</p>
+                    </div>
+
+                    <div class="mainThumbnailTitle">
+                        <div class="mainThumbnailImage"><img src="images/camera.jpeg" alt="phoneCase"></div>
+                        <p>카메라 빌려봅니다</p>
+                    </div>
+                </div><!-- #mainTumbnailDiv -->
             </div><!-- #mainRent -->
             <div id="textMargin"></div>
 
             <!-- 나눔해요 게시글 -->
             <div id="mainShare">
                 <div id="mainTitle">최신 나눔해요 게시글</div>
-                <c:forEach var="boardShareInfo" items="${boardShareInfo}">
-                    <div id="mainTumbnailDiv">
-                        <a href="/share/view?boardNo=${boardShareInfo.BOARD_NO }&menu=2&cate=${boardShareInfo.CATE }">
-                            <c:if test="${not empty boardShareInfo.THUMBNAIL_NAME }">
-                                <div><img src="/upload/${boardShareInfo.THUMBNAIL_NAME }" id="mainThumbnailImg"></div>
-                            </c:if>
-                            <c:if test="${empty boardShareInfo.THUMBNAIL_NAME }">
-                                <div><img id="mainNoITumbnail" alt="사진이 없습니다" src="/resources/img/noimg.png"></div>
-                            </c:if>
-                        </a>
-                        <div id="mainThumbnailTitle">${boardShareInfo.TITLE}</div>
-                    </div><!-- #mainTumbnailDiv -->
-                </c:forEach>
+                <div id="mainTumbnailDiv" class="mainDiv">
+                    <div class="mainThumbnailTitle">
+                        <div class="mainThumbnailImage"><img src="images/stool.jpg" alt="stool"></div>
+                        <p>스툴 나눔해요</p>
+                    </div>
+
+                    <div class="mainThumbnailTitle">
+                        <div class="mainThumbnailImage"><img src="images/phone.jpg" alt="phone"></div>
+                        <p>갤럭시 빌려드려요!!!</p>
+                    </div>
+
+                    <div class="mainThumbnailTitle">
+                        <div class="mainThumbnailImage"><img src="images/monitor.jpg" alt="monitor"></div>
+                        <p>모니터 드립니다 오셔서 가져가셔야 합니다.</p>
+                    </div>
+
+                    <div class="mainThumbnailTitle">
+                        <div class="mainThumbnailImage"><img src="images/keybaord.jpg" alt="keyboard"></div>
+                        <p>키보드 나눔해요</p>
+                    </div>
+                </div>
             </div><!-- #mainShare -->
             <div id="textMargin"></div>
 
             <!-- 니딧 인증 업체 -->
             <div id="mainBusiness">
-                <div id="mainTitle">니딧 인증 업체</div>
-                <c:forEach var="businessInfo" items="${businessInfo}">
-                    <div id="mainTumbnailDiv">
-                        <a href="/business/view?boardNo=${businessInfo.BOARD_NO }&menu=5&cate=${businessInfo.CATE }">
-                            <c:if test="${not empty businessInfo.THUMBNAIL_NAME }">
-                                <div><img src="/upload/${businessInfo.THUMBNAIL_NAME }" id="mainThumbnailImg"></div>
-                            </c:if>
-                            <c:if test="${empty businessInfo.THUMBNAIL_NAME }">
-                                <div><img id="mainNoITumbnail" alt="사진이 없습니다" src="/resources/img/noimg.png"></div>
-                            </c:if>
-                        </a>
-                        <div id="mainThumbnailTitle">${businessInfo.TITLE}</div>
-                    </div><!-- #mainTumbnailDiv -->
-                </c:forEach>
+                <div id="mainTumbnailDiv" class="mainDiv">
+
+                    <div id="mainTitle">니딧 인증 업체</div>
+                    <div class="mainThumbnailTitle">
+                        <div class="mainThumbnailBizz"><img src="images/klid.png" alt="klid"></div>
+                        <p>한국지역정보 개발원</p>
+                    </div>
+
+                    <div class="mainThumbnailTitle">
+                        <div class="mainThumbnailBizz"><img src="images/didc.png" alt="didc"></div>
+                        <p>국방부</p>
+                    </div>
+
+                    <div class="mainThumbnailTitle">
+                        <div class="mainThumbnailBizz"><img src="images/knato.jpeg" alt="knato"></div>
+                        <p>한국관광공사</p>
+                    </div>
+
+                    <div class="mainThumbnailTitle">
+                        <div class="mainThumbnailBizz"><img src="images/forest.jpg" alt="phoneCase"></div>
+                        <p>산림청</p>
+                    </div>
+                </div>
             </div><!-- #mainBusiness -->
             <div id="textMargin"></div>
 
