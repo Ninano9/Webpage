@@ -12,7 +12,8 @@
     <title>Needit</title>
     <link rel="icon" href="/project/images/favicon.ico">
     <script type="text/javascript" src="http://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=APIKEY&libraries=services,clusterer,drawing"></script>
+    <script type="text/javascript"
+        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=APIKEY&libraries=services,clusterer,drawing"></script>
 
     <script type="text/javascript">
 
@@ -896,9 +897,7 @@
                             d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z" />
                     </svg>
                 </button><br>
-                <c:if test="${isLogin and (id eq admin)  }">
-                    <a href="#"><button class="policy-floating-button" id="FloatMain">FAQ</button></a><br>
-                </c:if>
+                <a href="../index.html"><button class="policy-floating-button" id="FloatMain"><div style="font-size: 12px; font-size: 12px; font-weight: bold; margin-left: -1px;">Home</div></button></a><br>
                 <button onclick="downFunction()" class="policy-floating-button" id="scrollDown">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-chevron-down" viewBox="0 0 16 16">
@@ -1054,17 +1053,18 @@
             <div id="mainMap">
                 <div id="mainTitleMap">내 주변 지도</div>
                 <div id="map" style="width:499px;height:236px;"></div>
-                <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7b3f0d951065994a496da70090c542f4"></script>
+                <script type="text/javascript"
+                    src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7b3f0d951065994a496da70090c542f4"></script>
                 <script>
                     var container = document.getElementById('map');
                     var options = {
                         center: new kakao.maps.LatLng(33.450701, 126.570667),
                         level: 3
                     };
-            
+
                     var map = new kakao.maps.Map(container, options);
                 </script>
-                
+
             </div><!-- #mainMap -->
 
         </div><!-- #container -->
@@ -1082,7 +1082,8 @@
             <span style="margin-left: 73px;">
                 <span style=" margin-right: 90px;"><a href='/project/opening.html' id='footer-text'>소개 페이지</a></span>
                 <span style=" margin-right: 90px;"><a href='/project/term.html' id='footer-text'>이용 약관</a></span>
-                <span style=" margin-right: 90px;"><a href='/project/privacyPolicy.html' id='footer-text'>개인정보처리방침</a></span>
+                <span style=" margin-right: 90px;"><a href='/project/privacyPolicy.html'
+                        id='footer-text'>개인정보처리방침</a></span>
                 <span style=" margin-right: 90px;"><a href='/project/locationPolicy.html' id='footer-text'>위치기반서비스
                         이용약관</a></span>
             </span>
