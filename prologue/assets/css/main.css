@@ -228,9 +228,9 @@ blockquote {
 	font-style: italic;
 }
 
-p,ul,ol,dl,table {
-	margin-bottom: 2em;
-}
+/* p,ul,ol,dl,table {
+	margin-bottom: 50px;
+} */
 
 br.clear {
 	clear: both;
@@ -2348,7 +2348,6 @@ button:active,
         text-overflow: ellipsis; 
     }
 }
-
 
 /* Nav Bar */
 .triangle-icon {
