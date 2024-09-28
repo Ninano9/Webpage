@@ -1,64 +1,97 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+  <meta charset="UTF-8">
+  <title>Insert title here</title>
 
-<style type="text/css">
-.policy-floating-button{
-    background-color:black;
-    color: white;
-    border: 0;
-    margin: 0;
-    width: 45px;
-    height: 45px;
-    border-radius: 20px;
-    cursor: pointer;
-}
+  <style type="text/css">
+    /* 전체 스크롤바 너비 */
+    ::-webkit-scrollbar {
+      width: 12px;
+      background-color: #f5f5f5;
+      /* 스크롤바 배경 색상 */
+    }
 
-#FloatMain{
-	margin: 5px 0px;
-}
+    /* 스크롤바 트랙 */
+    ::-webkit-scrollbar-track {
+      background-color: #f5f5f5;
+      /* 트랙 배경 */
+      border-radius: 10px;
+      /* 트랙에 둥근 모서리 추가 */
+    }
 
-.floating {
-    position: fixed;
-    bottom: 20px;
-    right: 3px;
-    flex-direction: column;
-    align-items: flex-end;
-}
-</style>
+    /* 스크롤바 슬라이더 */
+    ::-webkit-scrollbar-thumb {
+      background-color: #ff533f;
+      /* 슬라이더 색상 */
+      border-radius: 10px;
+      /* 슬라이더에 둥근 모서리 추가 */
+      border: 2px solid #ff533f;
+      /* 슬라이더 테두리 */
+    }
 
-<script type="text/javascript">
-function topFunction() {
-    window.scrollTo({
+    /* 스크롤바 슬라이더를 호버했을 때 */
+    ::-webkit-scrollbar-thumb:hover {
+      background-color: #555;
+      /* 호버 시 슬라이더 색상 변경 */
+    }
+
+    .policy-floating-button {
+      background-color: black;
+      color: white;
+      border: 0;
+      margin: 0;
+      width: 45px;
+      height: 45px;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+
+    #FloatMain {
+      margin: 5px 0px;
+    }
+
+    .floating {
+      position: fixed;
+      bottom: 20px;
+      right: 3px;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+  </style>
+
+  <script type="text/javascript">
+    function topFunction() {
+      window.scrollTo({
         top: 0,
         behavior: "smooth"
-    });
-}
+      });
+    }
 
-function downFunction() {
-    window.scrollTo({
+    function downFunction() {
+      window.scrollTo({
         top: 5000,
         behavior: "smooth"
-    });
-}
-</script>
+      });
+    }
+  </script>
 
 </head>
+
 <body>
 
-<h1>개인정보처리방침</h1>
-<hr>
+  <h1>개인정보처리방침</h1>
+  <hr>
 
-<div class="floating">
-<button onclick="topFunction()" class="policy-floating-button" id="scrollTop">▲</button><br>
-<a href="main.html"><button class="policy-floating-button" id="FloatMain">메인</button></a><br>
-<button onclick="downFunction()" class="policy-floating-button" id="scrollDown">▼</button>
-</div>
+  <div class="floating">
+    <button onclick="topFunction()" class="policy-floating-button" id="scrollTop">▲</button><br>
+    <a href="main.html"><button class="policy-floating-button" id="FloatMain">메인</button></a><br>
+    <button onclick="downFunction()" class="policy-floating-button" id="scrollDown">▼</button>
+  </div>
 
-<div style="border: 5px solid rgb(255,83,63); width: 95%; margin: auto; border-radius: 5px;">
-<pre style="width: 100%; white-space: pre-wrap; word-wrap:break-word; padding: 5px;">
+  <div style="border: 5px solid rgb(255,83,63); width: 95%; margin: auto; border-radius: 5px;">
+    <pre style="width: 100%; white-space: pre-wrap; word-wrap:break-word; padding: 5px;">
 <strong style="font-size: 20px;">개인정보처리방침</strong>
 
 통계청('http://www.narastat.kr/pms/index.do' 이하 '통계정책관리시스템')은 개인정보보호법에 따라 이용자의 개인정보 보호 및 권익을 보호하고 개인정보와 관련한 이용자의 고충을 원활하게 처리할 수 있도록 다음과 같은 처리방침을 두고 있습니다.
@@ -195,7 +228,8 @@ function downFunction() {
  ○ 2012.2.15 ~ 2013.9.30(다운로드)
  ○ 2013.10.1 ~ 2016.12.6(다운로드)
 </pre>
-</div>
+  </div>
 
 </body>
+
 </html>
