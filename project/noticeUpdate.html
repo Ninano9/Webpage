@@ -3,65 +3,82 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
     crossorigin="anonymous"></script>
+<link rel="icon" href="images/favicon.ico">
 
-    <div id="adminpage-container"></div>
+<div id="adminpage-container"></div>
 
-    <script>
-        // adminpage.html의 내용을 가져오기
-        fetch('adminpage.html')
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('adminpage-container').innerHTML = data;
-    
-                // 콘텐츠가 로드된 후 삭제 버튼에 이벤트 리스너 추가
-                const deleteButtons = document.querySelectorAll('.delete_btn');
-                deleteButtons.forEach(button => {
-                    button.addEventListener('click', function() {
-                        const id = this.getAttribute('data-id'); // data-id 속성에서 ID 가져오기
-                        deleteBoard(id);
-                    });
+<script>
+    // adminpage.html의 내용을 가져오기
+    fetch('adminpage.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('adminpage-container').innerHTML = data;
+
+            // 콘텐츠가 로드된 후 삭제 버튼에 이벤트 리스너 추가
+            const deleteButtons = document.querySelectorAll('.delete_btn');
+            deleteButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    const id = this.getAttribute('data-id'); // data-id 속성에서 ID 가져오기
+                    deleteBoard(id);
                 });
             });
-    
-    // 초기 데이터 설정
-    let notices = [
-        { id: 1, title: "2024년 정기 점검 안내", content: "2024년 10월 15일부터 10월 20일까지 시스템 정기 점검이 진행됩니다.", date: "2024-09-30" },
-        { id: 2, title: "신규 서비스 런칭", content: "2024년 11월 1일 새로운 서비스가 런칭됩니다. 많은 관심 부탁드립니다!", date: "2024-09-29" },
-        { id: 3, title: "추가 휴무 안내", content: "2024년 10월 5일(금요일)은 추석 연휴로 인해 휴무합니다. 양해 부탁드립니다.", date: "2024-09-28" },
-        { id: 4, title: "시스템 업데이트 완료", content: "시스템 업데이트가 완료되었습니다. 사용자 여러분의 많은 이용 바랍니다.", date: "2024-09-27" },
-    ];
 
-    function renderTable() {
-        const tbody = document.getElementById('noticeTableBody');
-        tbody.innerHTML = '';
-        notices.forEach(notice => {
-            const row = `
-                <tr id="row${notice.id}">
-                    <td>${notice.title}</td>
-                    <td>${notice.content}</td>
-                    <td>${notice.date}</td>
-                    <td><button id="deleteNoticeTBtn" class="delete_btn" onclick="deleteBoard(${notice.id})">삭제</button></td>
-                </tr>
-            `;
-            tbody.innerHTML += row;
+            // 작성 버튼에 이벤트 리스너 추가
+            const btnWrite = document.getElementById('btnWrite');
+            btnWrite.addEventListener('click', function (event) {
+                event.preventDefault(); // 기본 폼 제출 방지
+                addNotice();
+            });
         });
-    }
 
     function deleteBoard(id) {
-        if (confirm('정말로 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.')) {
-            notices = notices.filter(notice => notice.id !== id); // 해당 항목 삭제
-            renderTable(); // 테이블 새로 그리기
-            alert('삭제가 완료되었습니다.'); // 삭제 완료 알림
+        const row = document.getElementById(`row${id}`); // 해당 ID의 행 가져오기
+        if (row) {
+            if (confirm('정말로 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.')) {
+                row.remove(); // 해당 행 삭제
+                alert('삭제가 완료되었습니다.'); // 삭제 완료 알림
+            } else {
+                alert('삭제가 취소되었습니다.'); // 취소 알림
+            }
         } else {
-            alert('삭제가 취소되었습니다.'); // 취소 알림
+            alert('삭제할 항목을 찾을 수 없습니다.'); // 항목이 없을 때 알림
         }
     }
 
-    // 페이지 로드 시 테이블 렌더링
-    document.addEventListener('DOMContentLoaded', renderTable);
-    </script>
-    
-    
+    function addNotice() {
+        const title = document.getElementById('title').value; // 제목 가져오기
+        const content = document.getElementById('content').value; // 본문 가져오기
+        const date = new Date().toLocaleDateString(); // 현재 날짜 가져오기
+
+        // 새 행 만들기
+        const newRow = document.createElement('tr');
+        const rowCount = document.querySelectorAll('#noticeTableBody tr').length + 1; // 행 번호 생성
+        newRow.id = `row${rowCount}`; // 새 행 ID
+
+        newRow.innerHTML = `
+            <td id="longText">${title}</td>
+            <td id="longText">${content}</td>
+            <td>${date}</td>
+            <td><button id="deleteNoticeTBtn" class="delete_btn" data-id="${rowCount}">삭제</button></td>
+        `;
+
+        // 새 행을 테이블에 추가
+        document.getElementById('noticeTableBody').appendChild(newRow);
+
+        // 입력 필드 초기화
+        document.getElementById('title').value = '';
+        document.getElementById('content').value = '';
+
+        // 삭제 버튼에 이벤트 리스너 추가
+        const deleteButton = newRow.querySelector('.delete_btn');
+        deleteButton.addEventListener('click', function () {
+            const id = this.getAttribute('data-id'); // data-id 속성에서 ID 가져오기
+            deleteBoard(id);
+        });
+    }
+</script>
+
+
 
 <style>
     #adminNotice {
@@ -172,35 +189,31 @@
                     <td id="longText">2024년 정기 점검 안내</td>
                     <td id="longText">2024년 10월 15일부터 10월 20일까지 시스템 정기 점검이 진행됩니다. 이 기간 동안 서비스 이용이 제한될 수 있습니다.</td>
                     <td>2024-09-30</td>
-                    <td><button id="deleteNoticeTBtn" class="delete_btn" onclick="deleteBoard(1)">삭제</button></td>
+                    <td><button id="deleteNoticeTBtn" class="delete_btn" data-id="1">삭제</button></td>
                 </tr>
                 <tr id="row2">
                     <td id="longText">신규 서비스 런칭</td>
                     <td id="longText">2024년 11월 1일 새로운 서비스가 런칭됩니다. 많은 관심 부탁드립니다!</td>
                     <td>2024-09-29</td>
-                    <td><button id="deleteNoticeTBtn" class="delete_btn" onclick="deleteBoard(2)">삭제</button></td>
+                    <td><button id="deleteNoticeTBtn" class="delete_btn" data-id="2">삭제</button></td>
                 </tr>
                 <tr id="row3">
                     <td id="longText">추가 휴무 안내</td>
                     <td id="longText">2024년 10월 5일(금요일)은 추석 연휴로 인해 휴무합니다. 양해 부탁드립니다.</td>
                     <td>2024-09-28</td>
-                    <td><button id="deleteNoticeTBtn" class="delete_btn" onclick="deleteBoard(3)">삭제</button></td>
+                    <td><button id="deleteNoticeTBtn" class="delete_btn" data-id="3">삭제</button></td>
                 </tr>
                 <tr id="row4">
                     <td id="longText">시스템 업데이트 완료</td>
                     <td id="longText">시스템 업데이트가 완료되었습니다. 사용자 여러분의 많은 이용 바랍니다.</td>
                     <td>2024-09-27</td>
-                    <td><button id="deleteNoticeTBtn" class="delete_btn" onclick="deleteBoard(4)">삭제</button></td>
+                    <td><button id="deleteNoticeTBtn" class="delete_btn" data-id="4">삭제</button></td>
                 </tr>
             </tbody>
         </table>
 
 
     </div><!-- #tableWrapper -->
-
-
-
-
 
 
 </div><!-- #adminContent -->

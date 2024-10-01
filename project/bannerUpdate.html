@@ -1,5 +1,9 @@
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
+<link rel="icon" href="images/favicon.ico">
 
 <div id="adminpage-container"></div>
 <script>
@@ -8,25 +12,73 @@
         .then(data => {
             document.getElementById('adminpage-container').innerHTML = data;
         });
+    // 이미지 미리보기 함수
+    function previewImages() {
+        const fileInput = document.getElementById('file');
+        const bannerImgPre = document.getElementById('bannerImgPre');
+
+        // 미리보기 초기화
+        bannerImgPre.innerHTML = '';
+
+        Array.from(fileInput.files).forEach(file => {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                img.alt = '썸네일';
+                bannerImgPre.appendChild(img); // 썸네일 크기는 CSS에서 조정됨
+            }
+            reader.readAsDataURL(file);
+        });
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        // adminpage.html을 가져와서 표시
+        fetch('adminpage.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('adminpage-container').innerHTML = data;
+            });
+
+        // 작성 버튼 클릭 이벤트 리스너
+        document.getElementById('btnWrite').addEventListener('click', function (event) {
+            event.preventDefault(); // 기본 폼 제출 방지
+            previewImages(); // 이미지 미리보기 호출
+            // 필요시 여기에 추가적인 제출 로직을 추가할 수 있습니다.
+        });
+    });
 </script>
 
 <style>
-    #adminBanner{
+    #adminBanner {
         background-color: #ff8108;
         width: 302px;
     }
-    #bannerImgPre{
-        width: auto;
-        height: 250px;
-        white-space: nowrap;
+
+    #bannerImgPre {
+        /* 플렉스 박스를 사용하여 가로 배치 */
+        display: flex;
+        /* 가로 스크롤 활성화 */
         overflow-x: auto;
+        /* 줄 바꿈 방지 */
+        white-space: nowrap;
         margin-left: 10px;
+        padding: 10px;
     }
-    
-    #bannerImg{
+
+    #bannerImgPre img {
+        width: 250px;
+        height: auto;
+        max-height: 150px;
+        object-fit: cover;
+        margin-right: 10px;
         border: 1px solid #ccc;
-        width: 400px;
-        height: 210px;
+    }
+
+    #bannerImg {
+        border: 1px solid #ccc;
+        width: 300px;
+        height: auto;
         display: inline-block;
         vertical-align: top;
         margin-right: 10px;
@@ -36,44 +88,61 @@
         background-repeat: no-repeat;
         background-position: center center;
     }
-    
-    </style>
-    
-    <script type="text/javascript">
-    
-    
-    
-    </script>
-    
-    
-    <!-- 안쪽 내용 -->
-    <div id="adminContent">
-    
+
+    /* Webkit 브라우저를 위한 스타일 */
+    #bannerImgPre::-webkit-scrollbar {
+        width: 12px;
+    }
+
+    #bannerImgPre::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 10px;
+    }
+
+    #bannerImgPre::-webkit-scrollbar-thumb {
+        background-color: transparent;
+        border-radius: 10px;
+        background: #ff533f;
+    }
+
+    #bannerImgPre::-webkit-scrollbar {
+        width: 12px;
+    }
+
+    #bannerImgPre::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 10px;
+    }
+
+    #bannerImgPre::-webkit-scrollbar-thumb {
+        background-color: transparent;
+        border-radius: 10px;
+        background: #ff533f;
+    }
+</style>
+
+<script type="text/javascript">
+
+
+
+</script>
+
+<!-- 안쪽 내용 -->
+<div id="adminContent">
     <form action="./bannerUpdate" method="post" enctype="multipart/form-data">
-    
-    <div class="form-group mb-3 ms-3">
-        <label class="form-label" for="file">첨부파일</label>
-        <input type="file" class="form-control" name="file" id="file" multiple="multiple">
-    </div>
-    
-    <!-- <div class="text-center"> -->
-    <div class="ms-3">
-        <button class="btn btn-primary" id="btnWrite">작성</button>
-        <button type="reset" class="btn btn-danger" id="btnCancel">취소</button>
-    </div>
+        <div class="form-group mb-3 ms-3">
+            <label class="form-label" for="file">첨부파일</label>
+            <input type="file" class="form-control" name="file" id="file" multiple="multiple">
+        </div>
+        <div class="ms-3">
+            <button class="btn btn-primary" id="btnWrite">작성</button>
+            <button type="reset" class="btn btn-danger" id="btnCancel">취소</button>
+        </div>
     </form>
     <br>
-    
     <!-- 이미지 미리보기 -->
-    <div id="bannerImgPre">
-        <c:forEach items="${file }" var="bannerNames">
-            <img id="BannerImg" alt="썸네일" src="/resources/banner/${bannerNames.storedName }">
-        </c:forEach>
-    </div><!-- .bannerImgPre -->
-    
-    
-    </div><!-- #adminContent -->
-    
-    
-    </body>
-    </html>
+    <div id="bannerImgPre"></div> <!-- 이미지 미리보기를 위한 div -->
+</div><!-- #adminContent -->
+</body>
+
+</html>
