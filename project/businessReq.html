@@ -1,5 +1,8 @@
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
 
 <div id="adminpage-container"></div>
 <script>
@@ -11,25 +14,27 @@
 </script>
 
 <style>
-    #adminBusiness{
+    #adminBusiness {
         background-color: #ff8108;
         width: 302px;
     }
-    
-    #tableWrapper th{
+
+    #tableWrapper th {
         position: sticky;
         top: 0px;
     }
-    #tableWrapper{
+
+    #tableWrapper {
         overflow-x: hidden;
         overflow-y: scroll;
         height: 315px;
     }
-    
-    #adminContent{
+
+    #adminContent {
         width: 80%;
     }
-    .approveButton{
+
+    .approveButton {
         width: 82px;
         height: 26px;
         vertical-align: middle;
@@ -38,7 +43,8 @@
         border-radius: 5px;
         font-weight: bold;
     }
-    .cancelButton{
+
+    .cancelButton {
         width: 106px;
         height: 26px;
         vertical-align: middle;
@@ -47,126 +53,132 @@
         border-radius: 5px;
         font-weight: bold;
     }
-    
+
     /* Webkit 브라우저를 위한 스타일 */
-    #tableWrapper::-webkit-scrollbar { width: 12px; }
-    #tableWrapper::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
-    #tableWrapper::-webkit-scrollbar-thumb { background-color: transparent; border-radius: 10px;background: #ff533f; }
-    
-    </style>
-    
-    <script type="text/javascript">
-    $(document).ready(function() {
-        $(".approveButton").click(function() {
-            var id = $(this).data('id');
-            console.log("id : ", id);
-            $.ajax({
-                type: "POST",
-                url: "/admin/approveBusiness",
-                data: {
-                    id: id
-                },
-                success: function(response) {
-                    console.log("AJAX성공")
-                    console.log("response : ",response)
-    
-                    var target = $(".approveButton[data-id='" + id + "']");
-                    console.log(target[0])
-                    if(response === "done"){
-                        console.log("함수 실행")
-                        target.removeClass("req").addClass("done");
-                        console.log(target[0])
-                        target.text("승인됨")
-                    }
-                    
-                },
-                error: function(xhr, status, error) {
-                }
-            });
-        });
-    
-        $(".cancelButton").click(function() {
-            var id = $(this).data('id');
-            cancelBusiness(id);
-        });
-    });
-    
-    
-    function cancelBusiness(id) {
-        $.ajax({
-            type: "POST",
-            url: "/admin/cancelBusiness",
-            data: {
-                id: id
-            },
-            success: function(response) {
-            },
-            error: function(xhr, status, error) {
-            }
-        });
+    #tableWrapper::-webkit-scrollbar {
+        width: 12px;
     }
-        
-        
-    </script>
-    
-    
-    <!-- 안쪽 내용 -->
-    <div id="adminContent">
-    
+
+    #tableWrapper::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 10px;
+    }
+
+    #tableWrapper::-webkit-scrollbar-thumb {
+        background-color: transparent;
+        border-radius: 10px;
+        background: #ff533f;
+    }
+</style>
+
+<!-- 안쪽 내용 -->
+<div id="adminContent">
+
     <div id="tableWrapper">
-    <table class="table table-striped table-sm">
-    
-    <colgroup>
-        <col style="width: 10%;">
-        <col style="width: 10%;">
-        <col style="width: 20%;">
-        <col style="width: 20%;">
-        <col style="width: 20%;">
-        
-        <col style="width: 10%;">
-        <col style="width: 10%;">
-    </colgroup>
-    
-    <thead>
-        <tr class="table-danger">
-            <th>아이디</th>
-            <th>업체 이름</th>
-            <th>업체 주소</th>
-            <th>업체 전화번호</th>
-            <th>업체 URL</th>
-    
-            <th>승인</th>
-            <th>거절</th>
-        </tr>
-    </thead>
-    
-    <tbody>
-    <c:forEach var="list" items="${businessList }">
-        <tr>
-            <td>${list.ID }</td>
-            <td>${list.BUSINESS_NAME }</td>
-            <td>${list.BUSINESS_ADDR }</td>
-            <td>${list.BUSINESS_PHONE }</td>
-            <td>${list.BUSINESS_URL }</td>
-            <c:if test="${list.BUSINESS_STATUS eq 1 }">
-                <td><button class="approveButton req" data-id="${list.ID}">승인</button></td>
-            </c:if>
-            <c:if test="${list.BUSINESS_STATUS eq 2 }">
-                <td><button class="approveButton done" data-id="${list.ID}" disabled="disabled">승인됨</button></td>
-            </c:if>
-            <c:if test="${list.BUSINESS_STATUS eq 1 }">
-                <td><button class="cancelButton" data-id="${list.ID}">거절</button></td>
-            </c:if>
-            <c:if test="${list.BUSINESS_STATUS eq 2 }">
-                <td><button class="cancelButton" data-id="${list.ID}">등록해제</button></td>
-            </c:if>
-        </tr>
-    </c:forEach>
-    </tbody>
-    </table>
-    
+        <table class="table table-striped table-sm">
+
+            <colgroup>
+                <col style="width: 8%;">
+                <col style="width: 12%;">
+                <col style="width: 25%;">
+
+                <col style="width: 15%;">
+                <col style="width: 20%;">
+                <col style="width: 10%;">
+
+                <col style="width: 10%;">
+            </colgroup>
+
+            <thead>
+                <tr class="table-danger">
+                    <th>아이디</th>
+                    <th>업체 이름</th>
+                    <th>업체 주소</th>
+
+                    <th>업체 전화번호</th>
+                    <th>업체 URL</th>
+                    <th>승인</th>
+
+                    <th>거절</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>기술 혁신가들</td>
+                    <td>경기도 성남시 분당구 판교로 123</td>
+                    <td>(031) 123-4567</td>
+                    <td><a href="http://techinnovators.com">http://techinnovators.com</a></td>
+                    <td>
+                        <button class="approveButton done" data-id="1" disabled="disabled">승인됨</button>
+                    </td>
+                    <td>
+                        <button class="cancelButton" data-id="1">거절</button>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>2</td>
+                    <td>환경 솔루션</td>
+                    <td>서울특별시 강남구 테헤란로 456</td>
+                    <td>(02) 987-6543</td>
+                    <td><a href="http://greenearth.com">http://greenearth.com</a></td>
+                    <td>
+                        <button class="approveButton done" data-id="2" disabled="disabled">승인됨</button>
+                    </td>
+                    <td>
+                        <button class="cancelButton" data-id="2">거절</button>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>3</td>
+                    <td>글로벌 핀테크</td>
+                    <td>부산광역시 해운대구 해운대해변로 789</td>
+                    <td>(051) 123-4567</td>
+                    <td><a href="http://globalfintech.com">http://globalfintech.com</a></td>
+                    <td>
+                        <button class="approveButton req" data-id="3">승인</button>
+                    </td>
+                    <td>
+                        <button class="cancelButton" data-id="3">거절</button>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>4</td>
+                    <td>어반 건축가들</td>
+                    <td>대구광역시 중구 동성로 1010</td>
+                    <td>(053) 765-4321</td>
+                    <td><a href="http://urbanarchitects.com">http://urbanarchitects.com</a></td>
+                    <td>
+                        <button class="approveButton done" data-id="4" disabled="disabled">승인됨</button>
+                    </td>
+                    <td>
+                        <button class="cancelButton" data-id="4">등록해제</button>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>5</td>
+                    <td>신선 식품 마켓</td>
+                    <td>광주광역시 북구 하남대로 2020</td>
+                    <td>(062) 234-5678</td>
+                    <td><a href="http://freshfoods.com">http://freshfoods.com</a></td>
+                    <td>
+                        <button class="approveButton req" data-id="5">승인</button>
+                    </td>
+                    <td>
+                        <button class="cancelButton" data-id="5">거절</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
     </div><!-- #tableWrapper -->
-    </div><!-- #adminContent -->
-    
-    </body>
-    </html>
+</div><!-- #adminContent -->
+
+</body>
+
+</html>
