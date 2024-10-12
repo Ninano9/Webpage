@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>캘리그라피 시</title>
+	<style>
+		@font-face {
+			font-family: 'ShillaCulture';
+			src: url('fonts/JejuHallasan.ttf') format('truetype');
+		}
+
+		body {
+			font-family: 'ShillaCulture', cursive;
+			text-align: center;
+			color: #333;
+			padding: 50px;
+		}
+
+		.poem {
+			background-image: url('/fonts/pngtree-smiley-balloon-cute-birthday-background-image_598829.jpg');
+			background-size: cover;
+			/* 이미지가 전체 영역을 덮도록 설정 */
+			background-position: center;
+			/* 배경 이미지를 중앙에 배치 */
+			background-repeat: no-repeat;
+			/* 이미지를 반복하지 않도록 설정 */
+			font-size: 27px;
+			line-height: 1.9;
+			margin: 0 auto;
+			max-width: 646px;
+			width: 100%;
+			/* 필요에 따라 전체 폭을 설정 */
+			height: 944px;
+			/* 높이를 자동으로 조정 */
+			padding: 30px;
+			box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+			font-weight: bold;
+			position: relative;
+			/* 부모 요소에 위치 추가 */
+			overflow: hidden;
+			/* 자식 요소가 부모 요소를 초과하지 않도록 방지 */
+		}
+
+		.block {
+			position: relative;
+			/* 상대 위치 설정 */
+			margin: 0 auto;
+			width: 595px;
+			height: 843px;
+		}
+
+		.block::before {
+			content: "";
+			/* 가상 요소를 위해 필요 */
+			position: absolute;
+			top: -22px;
+			left: 0;
+			right: 0;
+			bottom: -6px;
+			background-color: rgba(255, 255, 255, 0.7);
+			/* 반투명한 흰색 배경 */
+			z-index: 0;
+			/* 텍스트 뒤로 보냄 */
+			border-radius: 15px;
+		}
+
+		.block p {
+			position: relative;
+			/* 텍스트를 흐림 효과가 있는 배경 위에 두기 위해 상대 위치 설정 */
+			z-index: 1;
+			/* 텍스트를 흐림 효과 위로 가져옴 */
+			margin: 0;
+			/* 기본 마진 제거 */
+		}
+
+		#title {
+			margin-top: 48px;
+			font-size: 50px;
+			font-weight: bold;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="poem">
+		<div class="block">
+			<p id="title">사랑에 답함</p><br>
+
+			<p>예쁘지 않은 것을 예쁘게</p>
+			<p>보아주는 것이 사랑이다</p><br>
+
+			<p>좋지 않은 것을 좋게</p>
+			<p>생각해 주는 것이 사랑이다</p><br>
+
+			<p>싫은 것도 잘 참아주면서</p>
+			<p>처음만 그런 것이 아니라</p><br>
+
+			<p>나중까지 아주 나중까지</p>
+			<p>그렇게 하는 것이 사랑이다.</p>
+
+			<P style="font-size: 20px; text-align: right; margin-top: 55px; margin-right: 15px;">나태주, 꽃을 보듯 너를 본다 중</P>
+			<P style="font-size: 20px; text-align: right; margin-right: 15px">2024.10.20 아빠 엄마가</P>
+		</div>
+	</div>
+</body>
+
+</html>
