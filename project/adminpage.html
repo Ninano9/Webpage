@@ -1,156 +1,878 @@
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-
-
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>관리자 페이지</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Needit 관리자 대시보드</title>
 <link rel="icon" href="images/favicon.ico">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 
 <style>
-/* 로고 크기 */
-#adminImg{
-	float: left;
- 	position: fixed;
-	z-index: 1;
-	width: 300px;
-	height: 105px;
-	margin-top: 5px;
+/* CSS 변수 시스템 - 접근성 및 브라우저 호환성 개선 */
+:root {
+  /* 색상 시스템 - WCAG 2.1 AA 기준 준수 */
+  --color-primary: #ff533f;
+  --color-primary-light: #ff7a66;
+  --color-primary-dark: #e63c28;
+  --color-primary-accessible: #d63384; /* 더 높은 대비율 */
+  --color-secondary: #6c757d;
+  --color-success: #198754; /* 더 어두운 녹색으로 대비 개선 */
+  --color-warning: #fd7e14; /* 더 어두운 주황색으로 대비 개선 */
+  --color-danger: #dc3545;
+  --color-info: #0dcaf0;
+  
+  /* 중성 색상 - 더 나은 대비율 */
+  --color-neutral-50: #fafafa;
+  --color-neutral-100: #f8f9fa;
+  --color-neutral-200: #e9ecef;
+  --color-neutral-300: #dee2e6;
+  --color-neutral-400: #ced4da;
+  --color-neutral-500: #adb5bd;
+  --color-neutral-600: #6c757d;
+  --color-neutral-700: #495057;
+  --color-neutral-800: #343a40;
+  --color-neutral-900: #212529;
+  
+  /* 텍스트 색상 - 접근성 개선 */
+  --text-primary: #212529;
+  --text-secondary: #495057;
+  --text-muted: #6c757d;
+  --text-light: #ffffff;
+  
+  /* 간격 시스템 */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-xxl: 3rem;
+  
+  /* 타이포그래피 */
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-xxl: 1.5rem;
+  --font-size-xxxl: 2rem;
+  --line-height-base: 1.6;
+  --line-height-sm: 1.4;
+  --line-height-lg: 1.8;
+  
+  /* 레이아웃 */
+  --border-radius: 8px;
+  --border-radius-sm: 4px;
+  --border-radius-lg: 12px;
+  --box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  --box-shadow-lg: 0 4px 16px rgba(0,0,0,0.15);
+  --box-shadow-focus: 0 0 0 3px rgba(255, 83, 63, 0.25);
+  
+  /* 애니메이션 */
+  --transition-base: 0.2s ease;
+  --transition-fast: 0.1s ease;
+  --transition-slow: 0.3s ease;
+  
+  /* 레이아웃 변수 */
+  --sidebar-width: 280px;
+  --header-height: 70px;
+  
+  /* 터치 타겟 최소 크기 (접근성) */
+  --touch-target-min: 44px;
 }
 
-/* 로그아웃 버튼 */
-#adminBtn{
-	float: right;
-	position: relative;
-	z-index:2;
-	margin-right:17px;
-	margin-top:16px;
-	border: 0px solid;
-	border-radius: 5px;
-	width: 82px;
-	height: 37px;
+/* 전역 스타일 - 접근성 및 브라우저 호환성 개선 */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
-/* 목록 글씨체 */
-#adminUl li{
-	list-style: none;
-	color: white;
-	font-size: 35px;
-	font-weight: bold;
-	margin-bottom: 15px;
-	margin-left: -6px;
-}
-/* 목록 클릭시 */
-li:hover{
-	background-color: #ff8200;
-	cursor: pointer;
-	width: 302px;
+* {
+  margin: 0;
+  padding: 0;
 }
 
-/* 위쪽 배경 */
-#adminTop{
-	border: 0px solid rgb(255,83,63);
-	width: 100%;
-	height: 100px;
-	background: rgb(255,83,63);
-	position: fixed;
-	margin-left: 300px;
-	z-index: 3;
+html {
+  font-size: 16px; /* 기본 폰트 크기 명시 */
+  scroll-behavior: smooth;
 }
 
-/* 메인, 로그아웃 버튼 */
-#mainButton{
-	position: relative;
-    width: 85%;
-    right: 145px;
-}
-/* 왼쪽 배경 */
-#adminLeft{
-	float: left;
-	position: fixed;
-	border: 0px solid rgb(255,83,63);
-	width: 300px;
-	height: 100%;
-	background: rgb(255,83,63);
-}
-/* 목록 전체 div */
-#adminList{
-	float: left;
-	position: fixed;
-	z-index:1;
-	margin-top: 110px;
-	margin-left: -28px;
+/* prefers-reduced-motion 지원 */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
-/* 안쪽 내용 중간 배치 */
-#adminContent {
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans KR', sans-serif;
+  background-color: var(--color-neutral-50);
+  color: var(--text-primary);
+  line-height: var(--line-height-base);
+  font-size: var(--font-size-base);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* 포커스 스타일 - 접근성 개선 */
+:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* 스크린 리더 전용 텍스트 */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* 고대비 모드 지원 */
+@media (prefers-contrast: high) {
+  :root {
+    --color-primary: #cc0000;
+    --color-neutral-700: #000000;
+    --color-neutral-300: #666666;
+  }
+}
+
+/* 관리자 레이아웃 */
+.admin-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* 사이드바 */
+.sidebar {
+  width: var(--sidebar-width);
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+  color: white;
+  position: fixed;
+  height: 100vh;
+  overflow-y: auto;
+  box-shadow: var(--box-shadow-lg);
+  z-index: 1000;
+}
+
+.sidebar-header {
+  padding: var(--spacing-xl);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  text-align: center;
+}
+
+.sidebar-logo {
+  width: 200px;
+  height: auto;
+  filter: brightness(0) invert(1);
+}
+
+.sidebar-title {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  margin-top: var(--spacing-md);
+  opacity: 0.9;
+}
+
+/* 네비게이션 메뉴 */
+.sidebar-nav {
+  padding: var(--spacing-lg) 0;
+}
+
+.nav-item {
+  margin-bottom: var(--spacing-xs);
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  padding: var(--spacing-md) var(--spacing-xl);
+  color: rgba(255, 255, 255, 0.9);
+  text-decoration: none;
+  transition: var(--transition-base);
+  font-weight: 500;
+}
+
+.nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+  transform: translateX(4px);
+}
+
+.nav-link.active {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+  border-right: 4px solid white;
+}
+
+.nav-icon {
+  width: 20px;
+  margin-right: var(--spacing-md);
+  text-align: center;
+}
+
+/* 메인 콘텐츠 */
+.main-content {
+  flex: 1;
+  margin-left: var(--sidebar-width);
+  display: flex;
+  flex-direction: column;
+}
+
+/* 헤더 */
+.admin-header {
+  background: white;
+  padding: var(--spacing-lg) var(--spacing-xl);
+  box-shadow: var(--box-shadow);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.page-title {
+  font-size: var(--font-size-xxl);
+  font-weight: 700;
+  color: var(--color-neutral-900);
+  margin: 0;
+}
+
+.admin-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--spacing-sm) var(--spacing-lg);
+  border: none;
+  border-radius: var(--border-radius);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  transition: var(--transition-base);
+  gap: var(--spacing-sm);
+}
+
+.btn-primary {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-primary-dark);
+  transform: translateY(-1px);
+}
+
+.btn-outline {
+  background-color: transparent;
+  border: 2px solid var(--color-neutral-300);
+  color: var(--color-neutral-700);
+}
+
+.btn-outline:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+/* 콘텐츠 영역 */
+.content-area {
+  flex: 1;
+  padding: var(--spacing-xl);
+}
+
+/* 통계 카드 */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-xxl);
+}
+
+.stat-card {
+  background: white;
+  padding: var(--spacing-xl);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--box-shadow);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-lg);
+  transition: var(--transition-base);
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--box-shadow-lg);
+}
+
+.stat-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-xl);
+  color: white;
+}
+
+.stat-icon.primary { background: var(--color-primary); }
+.stat-icon.success { background: var(--color-success); }
+.stat-icon.warning { background: var(--color-warning); }
+.stat-icon.info { background: var(--color-info); }
+
+.stat-content h3 {
+  font-size: var(--font-size-xs);
+  color: var(--color-neutral-500);
+  font-weight: 500;
+  margin-bottom: var(--spacing-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.stat-content .stat-number {
+  font-size: var(--font-size-xxxl);
+  font-weight: 700;
+  color: var(--color-neutral-900);
+}
+
+/* 데이터 테이블 */
+.data-table-container {
+  background: white;
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--box-shadow);
+  overflow: hidden;
+}
+
+.table-header {
+  padding: var(--spacing-xl);
+  border-bottom: 1px solid var(--color-neutral-200);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.table-title {
+  font-size: var(--font-size-xl);
+  font-weight: 600;
+  color: var(--color-neutral-900);
+  margin: 0;
+}
+
+.table-actions {
+  display: flex;
+  gap: var(--spacing-sm);
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.data-table th,
+.data-table td {
+  padding: var(--spacing-md) var(--spacing-lg);
+  text-align: left;
+  border-bottom: 1px solid var(--color-neutral-200);
+}
+
+.data-table th {
+  background-color: var(--color-neutral-100);
+  font-weight: 600;
+  color: var(--color-neutral-700);
+  font-size: var(--font-size-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.data-table tbody tr {
+  transition: var(--transition-base);
+}
+
+.data-table tbody tr:hover {
+  background-color: var(--color-neutral-50);
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: 20px;
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.status-active { background: rgba(40, 167, 69, 0.1); color: var(--color-success); }
+.status-pending { background: rgba(255, 193, 7, 0.1); color: var(--color-warning); }
+.status-inactive { background: rgba(220, 53, 69, 0.1); color: var(--color-danger); }
+
+.action-btn {
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border: none;
+  border-radius: var(--border-radius);
+  font-size: var(--font-size-xs);
+  cursor: pointer;
+  transition: var(--transition-base);
+  margin-right: var(--spacing-xs);
+}
+
+.action-btn.edit {
+  background-color: var(--color-info);
+  color: white;
+}
+
+.action-btn.delete {
+  background-color: var(--color-danger);
+  color: white;
+}
+
+.action-btn:hover {
+  transform: translateY(-1px);
+  opacity: 0.9;
+}
+
+/* 반응형 */
+@media (max-width: 1024px) {
+  .sidebar {
+    transform: translateX(-100%);
+    transition: var(--transition-base);
+  }
+  
+  .sidebar.open {
+    transform: translateX(0);
+  }
+  
+  .main-content {
+    margin-left: 0;
+  }
+  
+  .stats-grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .admin-header {
+    padding: var(--spacing-md);
+  }
+  
+  .content-area {
+    padding: var(--spacing-md);
+  }
+  
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .table-header {
+    flex-direction: column;
+    gap: var(--spacing-md);
+    align-items: stretch;
+  }
+  
+  .data-table {
+    font-size: var(--font-size-sm);
+  }
+  
+  .data-table th,
+  .data-table td {
+    padding: var(--spacing-sm);
+  }
+}
+
+/* 로딩 애니메이션 */
+.loading {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* 알림 표시 */
+.notification-badge {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: var(--color-danger);
+  color: white;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  font-size: var(--font-size-xs);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+/* 스크롤바 스타일 - 브라우저 호환성 개선 */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-neutral-100);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-neutral-400);
+  border-radius: var(--border-radius-sm);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-neutral-600);
+}
+
+/* Firefox 스크롤바 */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-neutral-400) var(--color-neutral-100);
+}
+
+/* 키보드 네비게이션 개선 */
+.nav-link:focus,
+.btn:focus,
+button:focus,
+a:focus {
+  box-shadow: var(--box-shadow-focus);
+  z-index: 1;
+}
+
+/* 터치 디바이스 최적화 */
+@media (hover: none) and (pointer: coarse) {
+  .nav-link,
+  .btn,
+  .action-btn {
+    min-height: var(--touch-target-min);
+    min-width: var(--touch-target-min);
+  }
+}
+
+/* Internet Explorer 11 폴백 */
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+  .admin-layout {
+    display: block;
+  }
+  
+  .sidebar {
     float: left;
-    position: fixed;
-    width: 80%;
-    margin-left: 300px;
-    margin-top: 128px;
+  }
+  
+  .main-content {
+    margin-left: var(--sidebar-width);
+    display: block;
+  }
+  
+  .stats-grid {
+    display: block;
+  }
+  
+  .stat-card {
+    display: block;
+    margin-bottom: var(--spacing-lg);
+  }
 }
 
-/* 목록 링크 링크색 제거 */
-#adminList li a{
-	text-decoration: none;
-	color: white;
-}
-
-/* 로고와 목록 띄우기 */
-#adminDayVisit{
-	margin-top: 8px;
-}
-/* 로그인중일때 */
-#ifLogin{
- 	float: right;
-    position: relative;
-    margin-right: -88px;
-    margin-top: 10px;
-    z-index: 5;
-    width: 12px;
-    height: 12px;
-    background-color: red;
-    border-radius: 20px;
+/* 다크 모드 지원 */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-neutral-50: #1a1a1a;
+    --color-neutral-100: #2d2d2d;
+    --color-neutral-200: #404040;
+    --color-neutral-300: #525252;
+    --text-primary: #ffffff;
+    --text-secondary: #e5e5e5;
+  }
 }
 
 </style>
 
 </head>
 <body>
+  <!-- 관리자 레이아웃 -->
+  <div class="admin-layout">
+    <!-- 사이드바 -->
+    <aside class="sidebar" role="navigation" aria-label="관리자 메뉴">
+      <div class="sidebar-header">
+        <img src="images/needitAdmin.png" alt="Needit 관리자" class="sidebar-logo">
+        <h1 class="sidebar-title">관리자 대시보드</h1>
+      </div>
+      
+      <nav class="sidebar-nav">
+        <ul role="list">
+          <li class="nav-item">
+            <a href="reportList.html" class="nav-link" aria-describedby="report-desc">
+              <i class="fas fa-exclamation-triangle nav-icon" aria-hidden="true"></i>
+              <span>신고접수 목록</span>
+            </a>
+            <span id="report-desc" class="sr-only">사용자 신고 접수 현황을 확인하고 관리합니다</span>
+          </li>
+          
+          <li class="nav-item">
+            <a href="businessReq.html" class="nav-link" aria-describedby="business-desc">
+              <i class="fas fa-building nav-icon" aria-hidden="true"></i>
+              <span>업체요청 목록</span>
+            </a>
+            <span id="business-desc" class="sr-only">업체 등록 요청을 검토하고 승인합니다</span>
+          </li>
+          
+          <li class="nav-item">
+            <a href="bannerUpdate.html" class="nav-link" aria-describedby="banner-desc">
+              <i class="fas fa-image nav-icon" aria-hidden="true"></i>
+              <span>메인배너 수정</span>
+            </a>
+            <span id="banner-desc" class="sr-only">메인 페이지 배너 이미지를 업데이트합니다</span>
+          </li>
+          
+          <li class="nav-item">
+            <a href="noticeUpdate.html" class="nav-link" aria-describedby="notice-desc">
+              <i class="fas fa-bullhorn nav-icon" aria-hidden="true"></i>
+              <span>공지등록</span>
+            </a>
+            <span id="notice-desc" class="sr-only">새로운 공지사항을 작성하고 게시합니다</span>
+          </li>
+        </ul>
+      </nav>
+    </aside>
 
-<div id="adminAll" style="width: 1200px;">
-<!-- 니딧 로고 -->
-<img alt="니딧로고" src="images/needitAdmin.png" id="adminImg">
+    <!-- 메인 콘텐츠 -->
+    <main class="main-content">
+      <!-- 헤더 -->
+      <header class="admin-header">
+        <h2 class="page-title">관리자 대시보드</h2>
+        <div class="admin-actions">
+          <button type="button" class="btn btn-outline" id="sidebar-toggle" aria-label="사이드바 토글" aria-expanded="true">
+            <i class="fas fa-bars" aria-hidden="true"></i>
+          </button>
+          <a href="../index.html" class="btn btn-primary">
+            <i class="fas fa-home" aria-hidden="true"></i>
+            <span>메인으로</span>
+          </a>
+        </div>
+      </header>
 
+      <!-- 콘텐츠 영역 -->
+      <div class="content-area">
+        <!-- 통계 카드 -->
+        <section class="stats-grid" aria-label="관리 현황 통계">
+          <div class="stat-card">
+            <div class="stat-icon primary">
+              <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>
+            </div>
+            <div class="stat-content">
+              <h3>신고 접수</h3>
+              <div class="stat-number">12</div>
+            </div>
+          </div>
+          
+          <div class="stat-card">
+            <div class="stat-icon warning">
+              <i class="fas fa-building" aria-hidden="true"></i>
+            </div>
+            <div class="stat-content">
+              <h3>업체 요청</h3>
+              <div class="stat-number">5</div>
+            </div>
+          </div>
+          
+          <div class="stat-card">
+            <div class="stat-icon success">
+              <i class="fas fa-users" aria-hidden="true"></i>
+            </div>
+            <div class="stat-content">
+              <h3>활성 사용자</h3>
+              <div class="stat-number">1,234</div>
+            </div>
+          </div>
+          
+          <div class="stat-card">
+            <div class="stat-icon info">
+              <i class="fas fa-chart-line" aria-hidden="true"></i>
+            </div>
+            <div class="stat-content">
+              <h3>오늘 방문자</h3>
+              <div class="stat-number">89</div>
+            </div>
+          </div>
+        </section>
 
-<!-- 위쪽 배경 -->
-<div id="adminTop">
-<!-- 로그아웃 버튼 -->
-	<div id="mainButton">
-	<a href="../index.html"><button id="adminBtn">메인으로</button></a>
-	</div><!-- #mainButton -->
-</div><!-- #adminTop -->
+        <!-- 최근 활동 테이블 -->
+        <section class="data-table-container" aria-label="최근 관리 활동">
+          <div class="table-header">
+            <h3 class="table-title">최근 활동</h3>
+            <div class="table-actions">
+              <button type="button" class="btn btn-outline">
+                <i class="fas fa-refresh" aria-hidden="true"></i>
+                새로고침
+              </button>
+            </div>
+          </div>
+          
+          <table class="data-table" role="table">
+            <thead>
+              <tr>
+                <th scope="col">시간</th>
+                <th scope="col">활동</th>
+                <th scope="col">상태</th>
+                <th scope="col">작업</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>2024-01-15 14:30</td>
+                <td>신고 접수 처리</td>
+                <td><span class="status-badge status-active">완료</span></td>
+                <td>
+                  <button type="button" class="action-btn edit" aria-label="수정">
+                    <i class="fas fa-edit" aria-hidden="true"></i>
+                  </button>
+                  <button type="button" class="action-btn delete" aria-label="삭제">
+                    <i class="fas fa-trash" aria-hidden="true"></i>
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>2024-01-15 13:15</td>
+                <td>업체 승인</td>
+                <td><span class="status-badge status-pending">대기</span></td>
+                <td>
+                  <button type="button" class="action-btn edit" aria-label="수정">
+                    <i class="fas fa-edit" aria-hidden="true"></i>
+                  </button>
+                  <button type="button" class="action-btn delete" aria-label="삭제">
+                    <i class="fas fa-trash" aria-hidden="true"></i>
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>2024-01-15 12:00</td>
+                <td>배너 업데이트</td>
+                <td><span class="status-badge status-active">완료</span></td>
+                <td>
+                  <button type="button" class="action-btn edit" aria-label="수정">
+                    <i class="fas fa-edit" aria-hidden="true"></i>
+                  </button>
+                  <button type="button" class="action-btn delete" aria-label="삭제">
+                    <i class="fas fa-trash" aria-hidden="true"></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+      </div>
+    </main>
+  </div>
 
+  <!-- JavaScript -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+  
+  <script>
+    // 사이드바 토글 기능
+    document.getElementById('sidebar-toggle').addEventListener('click', function() {
+      const sidebar = document.querySelector('.sidebar');
+      const isOpen = sidebar.classList.contains('open');
+      
+      if (window.innerWidth <= 1024) {
+        sidebar.classList.toggle('open');
+        this.setAttribute('aria-expanded', !isOpen);
+      }
+    });
 
-<!-- 왼쪽 배경 -->
-<div id="adminLeft"></div>
+    // 반응형 처리
+    function handleResize() {
+      const sidebar = document.querySelector('.sidebar');
+      const toggleBtn = document.getElementById('sidebar-toggle');
+      
+      if (window.innerWidth > 1024) {
+        sidebar.classList.remove('open');
+        toggleBtn.setAttribute('aria-expanded', 'true');
+      }
+    }
 
+    window.addEventListener('resize', handleResize);
+    handleResize(); // 초기 실행
 
-<!-- 목록 -->
-<div id="adminList">
-<ul id="adminUl">
-<li id="adminReport"><a href="reportList.html">신고접수 목록</a></li>
-<li id="adminBusiness"><a href="businessReq.html">업체요청 목록</a></li>
+    // 키보드 네비게이션 개선
+    document.addEventListener('keydown', function(e) {
+      // ESC 키로 사이드바 닫기
+      if (e.key === 'Escape') {
+        const sidebar = document.querySelector('.sidebar');
+        const toggleBtn = document.getElementById('sidebar-toggle');
+        
+        if (sidebar.classList.contains('open')) {
+          sidebar.classList.remove('open');
+          toggleBtn.setAttribute('aria-expanded', 'false');
+          toggleBtn.focus();
+        }
+      }
+    });
 
-<li id="adminBanner"><a href="bannerUpdate.html">메인배너 수정</a></li>
-<li id="adminNotice"><a href="noticeUpdate.html">공지등록</a></li>
-</ul>
-</div>
+    // 접근성: 포커스 트랩 (모바일에서 사이드바 열렸을 때)
+    function trapFocus(element) {
+      const focusableElements = element.querySelectorAll(
+        'a[href], button, textarea, input[type="text"], input[type="radio"], input[type="checkbox"], select'
+      );
+      const firstFocusableElement = focusableElements[0];
+      const lastFocusableElement = focusableElements[focusableElements.length - 1];
 
-</div><!-- #adminAll -->
+      element.addEventListener('keydown', function(e) {
+        if (e.key === 'Tab') {
+          if (e.shiftKey) {
+            if (document.activeElement === firstFocusableElement) {
+              lastFocusableElement.focus();
+              e.preventDefault();
+            }
+          } else {
+            if (document.activeElement === lastFocusableElement) {
+              firstFocusableElement.focus();
+              e.preventDefault();
+            }
+          }
+        }
+      });
+    }
 
+    // 모바일에서 사이드바가 열렸을 때 포커스 트랩 적용
+    const sidebar = document.querySelector('.sidebar');
+    if (window.innerWidth <= 1024) {
+      trapFocus(sidebar);
+    }
+  </script>
 </body>
 </html>
