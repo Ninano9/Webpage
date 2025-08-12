@@ -245,7 +245,6 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background: var(--color-neutral-100);
             padding: var(--spacing-sm) 0;
         }
 
@@ -636,9 +635,7 @@
 
         /* 섹션 헤더 */
         .section-header {
-            background: var(--color-neutral-100);
             padding: var(--spacing-lg);
-            border-bottom: 1px solid var(--color-neutral-300);
             font-size: var(--font-size-xxxl);
             text-align: center;
             font-weight: bold;
@@ -1245,6 +1242,57 @@
         .no-css-variables .btn-secondary {
             background-color: #6c757d;
         }
+
+        /* 인기 게시글 스타일 */
+        .popular-posts-container {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-lg);
+            padding: var(--spacing-xl);
+        }
+
+        .popular-post {
+            padding: var(--spacing-lg);
+            border: 1px solid var(--color-neutral-300);
+            border-radius: var(--border-radius);
+            background: white;
+            box-shadow: var(--box-shadow);
+        }
+
+        .post-title {
+            font-size: var(--font-size-lg);
+            font-weight: bold;
+            color: var(--color-neutral-800);
+            margin: 0 0 var(--spacing-md) 0;
+        }
+
+        .post-content {
+            font-size: var(--font-size-base);
+            color: var(--color-neutral-700);
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        /* 지도 컨테이너 스타일 */
+        .map-container {
+            padding: var(--spacing-xl);
+            display: flex;
+            justify-content: center;
+        }
+
+        #map {
+            width: 100%;
+            max-width: 800px;
+            height: 400px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        @media (max-width: 768px) {
+            #map {
+                height: 300px;
+            }
+        }
     </style>
 
 </head>
@@ -1316,7 +1364,6 @@
                     </ul>
                 </nav>
             </div>
-            <hr>
 
         </header>
     </div><!-- header -->
@@ -1486,28 +1533,28 @@
         <div id="textMargin"></div>
 
         <!-- 인기 게시글(추천수) -->
-        <div id="mainCommu">
-            <div id="mainTitleHit">오늘의 인기 게시글</div>
-            <hr id="mainCommuHitHr">
-            <div id="mainCommuHitDiv">
-                어머님, 나 어디에서 그대 꽃잎을 헤일 향해 흘리우리다. 때 노래, 슬프게 슬퍼하는 밤을 그리워 패, 아니라 좋을까 아름따다 말 죽은 사랑과 별이 보내 하늘을 찾지 했다.
-
-                네가 바위틈에 이렇게 좋은 그 아니라 일로도 된 내 놓인 증발하는 주고 추억과 가슴속에 쪽 있습니다. 가득 잊지 가거라 모두가 기억해주오 멀리 고이 봅니다. 뜨겁게 입니다.
-
-                나와 위를 때 매어놓은 시절 무성할 동산에 프랑시스 말이 모습 켜지고 도시 때 싣고 때. 어찌 같이 사랑했던 벌써 잠, 목이 라이너 청명한 하나에 써 였다.
-            </div><!-- #mainCommuHitDiv -->
-            <div id="mainCommuHitDiv">
-                이렇게 나는 앉아서 강이 멀리 이국 것을 소멸시키는 이름자를 어미들 바라보는 이국 지나고 꽃밭에 너는 별이 가실 뜨겁게 자신을 보내 봅니다. 헤어져 저편으로 위를 않은
-                써요.
-
-                나와 좋을까 옥, 뜨겁게 완성된다는 그 그리고 고독한 나는 잠자야 했던 흐른다 밤을 뿌리우리다. 리가 그 날에 밟고 소멸시키는 무성할 바다를 너를 무덤 두 삶은 입니다.
-            </div><!-- #mainCommuHitDiv -->
-        </div><!-- #mainCommu -->
+        <!-- 인기 게시글 -->
+        <section class="content-section">
+            <div class="section-header"><strong>오늘의 인기 게시글</strong></div>
+            <div class="popular-posts-container">
+                <div class="popular-post">
+                    <h4 class="post-title">첫 번째 인기 게시글</h4>
+                    <p class="post-content">어머님, 나 어디에서 그대 꽃잎을 헤일 향해 흘리우리다. 때 노래, 슬프게 슬퍼하는 밤을 그리워 패, 아니라 좋을까 아름따다 말 죽은 사랑과 별이 보내 하늘을 찾지 했다.</p>
+                </div>
+                <div class="popular-post">
+                    <h4 class="post-title">두 번째 인기 게시글</h4>
+                    <p class="post-content">이렇게 나는 앉아서 강이 멀리 이국 것을 소멸시키는 이름자를 어미들 바라보는 이국 지나고 꽃밭에 너는 별이 가실 뜨겁게 자신을 보내 봅니다.</p>
+                </div>
+            </div>
+        </section>
 
         <!-- 주변 지도 -->
-        <div id="mainMap">
-            <div id="mainTitleMap">내 주변 지도</div>
-            <div id="map" style="width:499px;height:236px;"></div>
+        <section class="content-section">
+            <div class="section-header"><strong>내 주변 지도</strong></div>
+            <div class="map-container">
+                <div id="map"></div>
+            </div>
+        </section>
             <script type="text/javascript"
                 src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7b3f0d951065994a496da70090c542f4"></script>
             <script>
