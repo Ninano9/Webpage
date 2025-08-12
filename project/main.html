@@ -111,44 +111,112 @@
     </script>
 
     <style type="text/css">
+        /* CSS 변수 시스템 */
+        :root {
+            /* 색상 시스템 */
+            --color-primary: #ff533f;
+            --color-primary-light: #ff7a66;
+            --color-primary-dark: #e63c28;
+            --color-secondary: #6c757d;
+            --color-accent: #007bff;
+            --color-neutral-100: #f8f9fa;
+            --color-neutral-200: #e9ecef;
+            --color-neutral-300: #dee2e6;
+            --color-neutral-500: #adb5bd;
+            --color-neutral-700: #495057;
+            --color-neutral-800: #343a40;
+            --color-neutral-900: #212529;
+            
+            /* 간격 시스템 */
+            --spacing-xs: 0.25rem;
+            --spacing-sm: 0.5rem;
+            --spacing-md: 1rem;
+            --spacing-lg: 1.5rem;
+            --spacing-xl: 2rem;
+            --spacing-xxl: 3rem;
+            
+            /* 타이포그래피 */
+            --font-size-sm: 0.875rem;
+            --font-size-base: 1rem;
+            --font-size-lg: 1.125rem;
+            --font-size-xl: 1.25rem;
+            --font-size-xxl: 1.5rem;
+            --font-size-xxxl: 2rem;
+            
+            /* 레이아웃 */
+            --container-max-width: 1200px;
+            --border-radius: 8px;
+            --border-radius-sm: 4px;
+            --border-radius-lg: 12px;
+            --box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            --box-shadow-lg: 0 4px 16px rgba(0,0,0,0.15);
+            
+            /* 트랜지션 */
+            --transition-fast: 0.15s ease;
+            --transition-base: 0.2s ease;
+            --transition-slow: 0.3s ease;
+        }
+
+        /* 전역 리셋 및 기본 스타일 */
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--color-neutral-800);
+            margin: 0;
+            padding: 0;
+        }
+
         /* 전체 스크롤바 너비 */
         ::-webkit-scrollbar {
             width: 12px;
-            background-color: #f5f5f5;
-            /* 스크롤바 배경 색상 */
+            background-color: var(--color-neutral-100);
         }
 
         /* 스크롤바 트랙 */
         ::-webkit-scrollbar-track {
-            background-color: #f5f5f5;
-            /* 트랙 배경 */
-            border-radius: 10px;
-            /* 트랙에 둥근 모서리 추가 */
+            background-color: var(--color-neutral-100);
+            border-radius: var(--border-radius-lg);
         }
 
         /* 스크롤바 슬라이더 */
         ::-webkit-scrollbar-thumb {
-            background-color: #ff533f;
-            /* 슬라이더 색상 */
-            border-radius: 10px;
-            /* 슬라이더에 둥근 모서리 추가 */
-            border: 2px solid #ff533f;
-            /* 슬라이더 테두리 */
+            background-color: var(--color-secondary);
+            border-radius: var(--border-radius-lg);
+            border: 2px solid var(--color-secondary);
+            transition: var(--transition-base);
         }
 
+        ::-webkit-scrollbar-thumb:hover {
+            background-color: var(--color-primary-light);
+            border-color: var(--color-primary-light);
+        }
+
+        /* 브랜드 색상 - 제한적 사용 */
         #needitFont {
-            color: #ff533f;
+            color: var(--color-primary);
         }
 
+        /* 기본 링크 스타일 */
         a {
             text-decoration: none;
-            color: black;
+            color: var(--color-neutral-800);
+            transition: var(--transition-base);
         }
 
+        a:hover {
+            color: var(--color-primary);
+        }
+
+        /* 리스트 스타일 */
         li {
             list-style: none;
         }
 
+        /* 네비게이션 기본 스타일 */
         nav {
             list-style: none;
             padding: 0;
@@ -156,117 +224,132 @@
         }
 
         nav li {
-            width: 170px;
+            flex: 1;
+            min-width: 170px;
         }
 
+        /* 컨테이너 시스템 */
         .wrap {
-            width: 1200px;
-            margin: auto;
+            max-width: var(--container-max-width);
+            margin: 0 auto;
+            padding: 0 var(--spacing-md);
         }
 
         .container {
-            max-width: 1200px;
-            margin: auto;
-            font-size: 20px;
+            max-width: var(--container-max-width);
+            margin: 0 auto;
+            font-size: var(--font-size-xl);
             font-weight: bold;
         }
 
+        /* 헤더 Flexbox 레이아웃 */
         #header {
             background: #fff;
-            margin: 0;
             position: relative;
-            text-align: center;
+            box-shadow: var(--box-shadow);
+            display: flex;
+            flex-direction: column;
         }
 
         #header .container {
+            display: flex;
             justify-content: center;
             align-items: center;
+            padding: var(--spacing-md) 0;
         }
 
         #header .gnb {
-            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: var(--color-neutral-100);
+            padding: var(--spacing-sm) 0;
         }
 
         #header .nav ul.gnb {
-            margin-bottom: 0px;
-            padding-left: 0px;
+            margin: 0;
+            padding: 0;
             display: flex;
+            list-style: none;
+            gap: var(--spacing-xl);
         }
 
         #header .nav ul.gnb li {
-            margin-bottom: 0px;
-            color: #000;
-            text-align: center;
             position: relative;
+            display: flex;
+            align-items: center;
         }
 
         #header .nav ul.gnb li a {
-            box-sizing: border-box;
             display: block;
-            transition: .8s ease;
-            text-transform: uppercase;
+            padding: var(--spacing-md) var(--spacing-lg);
+            color: var(--color-neutral-800);
+            font-weight: 500;
+            transition: var(--transition-base);
+            border-radius: var(--border-radius);
         }
 
-        #header .nav ul.gnb li ul li a:hover {
-            color: blue;
+        #header .nav ul.gnb li a:hover {
+            color: var(--color-primary);
+            background-color: var(--color-neutral-200);
         }
 
         #header .nav ul.gnb li ul.sub {
             position: absolute;
-            padding-left: 0px;
+            top: 100%;
+            left: 0;
             display: none;
-            padding-top: 10px;
-            z-index: 4;
-            width: 100%
+            flex-direction: column;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow-lg);
+            padding: var(--spacing-sm);
+            min-width: 200px;
+            z-index: 1000;
         }
 
         #header .nav ul.gnb li ul.sub li {
-            position: relative;
+            margin: 0;
         }
 
         #header .nav ul.gnb li ul.sub li a {
-            padding: 10px;
-            margin-top: 8px;
+            padding: var(--spacing-sm) var(--spacing-md);
+            margin: 0;
+            white-space: nowrap;
         }
 
-        #header .nav ul.gnb:hover li ul.sub {
-            display: block;
-            color: blue;
-        }
-
-        #header .nav ul.gnb li {
-            display: inline-block;
-            margin-bottom: 0px;
-
+        #header .nav ul.gnb li:hover ul.sub {
+            display: flex;
         }
 
 
         #header.open .hd_bg {
             position: absolute;
             width: 100%;
-            transition: all;
-            z-index: 3;
-            background-color: #ffffffd5;
-        }
-
-        #header .nav ul.gnb li ul.sub li a {
-            text-align: center
+            transition: var(--transition-base);
+            z-index: 999;
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(5px);
         }
 
         #header .nav .active {
-            position: relative
+            position: relative;
+        }
+
+        #header .nav .active:after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
+            background: var(--color-primary);
+            transition: var(--transition-base);
         }
 
         #header .nav .active:hover:after {
-            content: '';
-            display: block;
-            width: 100%;
-            height: 2px;
-            background: #000;
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            background-color: #ccc
+            width: 80%;
         }
 
         .dropbtn {
@@ -359,12 +442,12 @@
 
         .dropdown-title {
             color: white;
-            padding: 12px 16px;
+            padding: var(--spacing-md) var(--spacing-lg);
             text-decoration: none;
             display: block;
-            border-bottom: solid #f1f1f1;
-            background-color: #ff533f;
-            border-radius: 20px 20px 0px 0px;
+            border-bottom: solid var(--color-neutral-200);
+            background-color: var(--color-primary);
+            border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
         }
 
         .dropdown-title:after {
@@ -375,19 +458,23 @@
             right: 60px;
             border-left: 10px solid transparent;
             border-right: 10px solid transparent;
-            border-bottom: 10px solid #ff533f;
+            border-bottom: 10px solid var(--color-primary);
         }
 
         #allDel {
-            font-size: 12px;
+            font-size: var(--font-size-sm);
             border-radius: 30px;
             border: none;
-            background-color: #ff533f;
+            background-color: var(--color-secondary);
             color: white;
-            margin-top: 3px;
-            margin-right: 8px;
-            margin-bottom: 8px;
+            padding: var(--spacing-xs) var(--spacing-md);
+            margin: var(--spacing-xs) var(--spacing-sm) var(--spacing-sm) 0;
+            transition: var(--transition-base);
+            cursor: pointer;
+        }
 
+        #allDel:hover {
+            background-color: var(--color-primary);
         }
 
         #alertDel {
@@ -428,10 +515,13 @@
         }
 
         .scrollbar::-webkit-scrollbar-thumb {
-            background: #ff533f;
-            /* 스크롤바 색상 */
-            border-radius: 10px;
-            /* 스크롤바 둥근 테두리 */
+            background: var(--color-secondary);
+            border-radius: var(--border-radius-lg);
+            transition: var(--transition-base);
+        }
+
+        .scrollbar::-webkit-scrollbar-thumb:hover {
+            background: var(--color-primary-light);
         }
 
         .scrollbar::-webkit-scrollbar-track {
@@ -469,46 +559,62 @@
             border: 1px solid #ccc;
         }
 
-        /* 검색 */
-        #mainSearchDiv {
-            position: absolute;
-            vertical-align: top;
-            margin-top: -46px;
-            margin-left: 800px;
+        /* 검색 영역 */
+        .search-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: var(--spacing-xl) 0;
+            max-width: var(--container-max-width);
+            margin: 0 auto;
         }
 
-        /* #mainSearchDiv1{ */
-        /*     position: absolute; */
-        /*     margin-top: -57px; */
-        /*     margin-left: 780px; */
-        /* } */
-        /* 검색input */
-        #mainSearch {
-            position: inherit;
-            vertical-align: top;
-            width: 355px;
-            height: 35px;
-            border: 1px solid #ccc;
-            border-top-left-radius: 5px;
-            border-bottom-left-radius: 5px;
+        .search-form {
+            display: flex;
+            align-items: center;
+            background: white;
+            border: 2px solid var(--color-neutral-300);
+            border-radius: var(--border-radius-lg);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition-base);
         }
 
-        /* 검색버튼 */
-        #mainBtnSearch {
-            position: absolute;
-            vertical-align: top;
-            height: 35px;
-            width: 52px;
-            margin-left: -7px;
-            border: 1px solid #ccc;
-            border-top-right-radius: 5px;
-            border-bottom-right-radius: 5px;
+        .search-form:focus-within {
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 3px rgba(255, 83, 63, 0.1);
         }
 
-        /* 검색버튼 focus 없애기 */
-        #mainSearch:focus,
-        #mainBtnSearch:focus {
+        .search-input {
+            flex: 1;
+            padding: var(--spacing-md) var(--spacing-lg);
+            border: none;
+            font-size: var(--font-size-base);
+            background: transparent;
+            min-width: 300px;
+        }
+
+        .search-input:focus {
             outline: none;
+        }
+
+        .search-input::placeholder {
+            color: var(--color-neutral-500);
+        }
+
+        .search-button {
+            padding: var(--spacing-md) var(--spacing-lg);
+            background: var(--color-primary);
+            color: white;
+            border: none;
+            font-size: var(--font-size-base);
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition-base);
+        }
+
+        .search-button:hover {
+            background: var(--color-primary-dark);
         }
 
         /* 썸네일 div */
@@ -533,36 +639,17 @@
             height: 500px;
         }
 
-        /* 나눔,대여,업체 div */
-        #mainRent,
-        #mainShare,
-        #mainBusiness {
-            border: 1px solid #ccc;
-            width: 1200px;
-            height: 300px;
-            border-radius: 10px;
-        }
-
-        /* 오늘의 인기 게시글 */
-        #mainCommu {
-            border: 1px solid #ccc;
-            width: 695px;
-            height: 300px;
-            float: left;
-            border-radius: 10px;
-            /* 	display: table-cell; */
-            /* 	vertical-align: middle; */
+        /* 메인 콘텐츠 섹션 */
+        .content-section {
+            max-width: var(--container-max-width);
+            margin: var(--spacing-xxl) auto;
+            border: 1px solid var(--color-neutral-300);
+            border-radius: var(--border-radius-lg);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
         }
 
 
-        /* 지도 */
-        #mainMap {
-            border: 1px solid #ccc;
-            width: 505px;
-            height: 300px;
-            float: right;
-            border-radius: 10px;
-        }
 
         /* hr 위아래 조절 */
         /* hr{ */
@@ -571,144 +658,72 @@
         /* 	border: 1px solid #black; */
         /* } */
 
-        /* 게시글 제목 */
-        #mainTitle {
-            border-bottom: 1px solid #ccc;
-            width: 1199px;
-            height: 63px;
-            font-size: 30px;
+        /* 섹션 헤더 */
+        .section-header {
+            background: var(--color-neutral-100);
+            padding: var(--spacing-lg);
+            border-bottom: 1px solid var(--color-neutral-300);
+            font-size: var(--font-size-xxxl);
             text-align: center;
             font-weight: bold;
-            line-height: 60px;
+            color: var(--color-neutral-800);
         }
 
-        #mainTitleHit {
-            border-bottom: 1px solid #ccc;
-            font-size: 30px;
-            text-align: center;
-            font-weight: bold;
-            width: 700px;
-            height: 63px;
-            line-height: 60px;
+
+
+        /* 카드 컨테이너 */
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--spacing-lg);
+            padding: var(--spacing-xl);
         }
 
-        #mainTitleMap {
-            border-bottom: 1px solid #ccc;
-            font-size: 30px;
-            text-align: center;
-            font-weight: bold;
-            width: 499px;
-            height: 63px;
-            line-height: 60px;
+
+
+        /* 카드 스타일 */
+        .card {
+            display: flex;
+            flex-direction: column;
+            background: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition-base);
         }
 
-        /* 대여, 나눔해요 썸네일 바깥 div */
-        #mainTumbnailDiv {
-            margin-left: 12px;
-            margin-top: 3px;
-            display: inline-block;
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--box-shadow-lg);
         }
 
-        /* 대여, 나눔해요 썸네일 이미지 */
-        #mainThumbnailImg {
-            width: 289px;
+        .card-image {
+            width: 100%;
             height: 200px;
-            margin: var(--imgMargin);
+            object-fit: cover;
+            background: var(--color-neutral-100);
         }
 
-        /* 썸네일 사진 없을 때 */
-        #mainNoITumbnail {
-            width: 289px;
-            height: 200px;
-            margin: var(--imgMargin);
-            border: 1px solid #ccc;
+        .card-content {
+            padding: var(--spacing-lg);
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
-        /* 대여, 나눔해요 썸네일 제목 */
-        .mainThumbnailTitle {
-            display: inline-block;
-            width: 289px;
-            height: 250px;
+        .card-title {
+            font-size: var(--font-size-lg);
+            font-weight: bold;
+            color: var(--color-neutral-800);
             text-align: center;
-            font-size: 17px;
-            font-weight: bold;
-            margin-top: 5px;
-
-        }
-
-        .mainThumbnailTitle p {
-            /* 긴내용 자르고 뒤에... */
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
-            margin-top: 18px;
-        }
-
-        .mainThumbnailBizz p {
-            /* 긴내용 자르고 뒤에... */
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            margin-top: 18px;
-        }
-
-        .mainThumbnailImage img {
-            display: inline-block;
-            width: 255px;
-            height: 175px;
-        }
-
-        .mainThumbnailBizz img {
-            display: inline-block;
-            width: 230px;
-            height: 170px;
-        }
-
-        /* 오늘의 인기 게시글 */
-        #mainCommuHitDiv {
-            margin: -30px -14px 60px 7px;
-            width: 680px;
-            height: auto;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            display: -webkit-box;
-            -webkit-box-orient: vertical;
-            /* 두줄 출력 */
-            -webkit-line-clamp: 2;
-            line-height: 1.5;
-            margin-top: 18px;
+            margin: 0;
         }
 
 
-        #mainCommuHitHr {
-            position: relative;
-            top: 100px;
-        }
-
-        #mainCommuHitTitle {
-            display: block;
-            font-size: 22px;
-            font-weight: bold;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-
-        #mainCommuHitContent {
-            display: inline-block;
-            width: 682px;
-            height: 66px;
-            font-size: 18px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-
-        #mainCommuHitContent img {
-            display: block;
-            /* 	display :inline-block; */
-            max-width: 120px;
-        }
 
         /* 지도 아이콘 링크 */
         #mainMapIcon {
@@ -748,10 +763,7 @@
             text-decoration: underline;
         }
 
-        /* 항목별 간격 맞추기 */
-        #textMargin {
-            margin-bottom: 2.5em;
-        }
+
 
         .modal-content {
             width: 300px;
@@ -763,29 +775,54 @@
         }
 
         /* 플로팅 버튼 */
-        .policy-floating-button {
-            background-color: white;
-            color: black;
-            border: 0;
-            margin: 0;
-            width: 45px;
-            height: 45px;
-            border-radius: 20px;
-            cursor: pointer;
-            border: 1px solid #ccc;
-            box-shadow: 2px 2px 2px #ccc;
-        }
-
-        #FloatMain {
-            margin: 5px 0px;
-            font-size: 13px;
-        }
-
-        .floating {
-            display: block;
+        .floating-buttons {
             position: fixed;
-            bottom: 20px;
-            right: 12px;
+            bottom: var(--spacing-xl);
+            right: var(--spacing-xl);
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-sm);
+            z-index: 1000;
+        }
+
+        .floating-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: none;
+            background: white;
+            color: var(--color-neutral-700);
+            box-shadow: var(--box-shadow-lg);
+            cursor: pointer;
+            transition: var(--transition-base);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: var(--font-size-sm);
+            font-weight: bold;
+        }
+
+        .floating-btn:hover {
+            background: var(--color-primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .floating-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .floating-buttons {
+                bottom: var(--spacing-lg);
+                right: var(--spacing-lg);
+            }
+            
+            .floating-btn {
+                width: 45px;
+                height: 45px;
+            }
         }
 
         .carousel-item {
@@ -800,11 +837,442 @@
             backdrop-filter: blur(5px);
             -webkit-backdrop-filter: blur(5px);
         }
+
+        /* 버튼 시스템 */
+        .btn {
+            display: inline-block;
+            padding: var(--spacing-sm) var(--spacing-lg);
+            border-radius: var(--border-radius);
+            border: none;
+            font-size: var(--font-size-base);
+            font-weight: 500;
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: var(--transition-base);
+            line-height: 1.5;
+        }
+
+        .btn-primary {
+            background-color: var(--color-primary);
+            color: white;
+            width: 104px;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--color-primary-dark);
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background-color: var(--color-secondary);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--color-neutral-700);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--color-primary);
+            color: var(--color-primary);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--color-primary);
+            color: white;
+        }
+
+        /* 헤더 로고 영역 */
+        .header-logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            max-width: var(--container-max-width);
+            margin: 0 auto;
+            padding: var(--spacing-lg) var(--spacing-md);
+        }
+
+        .logo-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .logo-img {
+            width: 350px;
+            height: 70px;
+            object-fit: contain;
+        }
+
+        /* 반응형 로고 */
+        @media (max-width: 768px) {
+            .logo-img {
+                width: 250px;
+                height: 50px;
+            }
+        }
+
+        /* 푸터 스타일 */
+        .footer {
+            background: var(--color-neutral-100);
+            border-top: 1px solid var(--color-neutral-300);
+            padding: var(--spacing-xxl) 0;
+            margin-top: var(--spacing-xxl);
+        }
+
+        .footer-container {
+            max-width: var(--container-max-width);
+            margin: 0 auto;
+            padding: 0 var(--spacing-md);
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-xl);
+        }
+
+        .footer-contact {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: var(--spacing-lg);
+        }
+
+        .contact-info h3 {
+            font-size: var(--font-size-xl);
+            font-weight: bold;
+            color: var(--color-neutral-800);
+            margin: 0 0 var(--spacing-sm) 0;
+        }
+
+        .contact-details {
+            color: var(--color-neutral-700);
+            font-size: var(--font-size-base);
+        }
+
+        .contact-details div {
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-xl);
+            justify-content: center;
+            margin: var(--spacing-lg) 0;
+        }
+
+        .footer-links a {
+            color: var(--color-neutral-700);
+            text-decoration: none;
+            font-size: var(--font-size-base);
+            transition: var(--transition-base);
+        }
+
+        .footer-links a:hover {
+            color: var(--color-primary);
+        }
+
+        .footer-actions {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        @media (max-width: 768px) {
+            .footer-contact {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                gap: var(--spacing-md);
+            }
+        }
+
+        /* 반응형 디자인 최적화 */
+        
+        /* 태블릿 */
+        @media (max-width: 1024px) {
+            .wrap {
+                padding: 0 var(--spacing-md);
+            }
+            
+            .card-container {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: var(--spacing-md);
+                padding: var(--spacing-lg);
+            }
+            
+            #header .nav ul.gnb {
+                gap: var(--spacing-md);
+            }
+            
+            .search-input {
+                min-width: 250px;
+            }
+        }
+
+        /* 모바일 */
+        @media (max-width: 768px) {
+            :root {
+                --spacing-xl: 1.5rem;
+                --spacing-xxl: 2rem;
+            }
+            
+            .header-logo-container {
+                padding: var(--spacing-md);
+            }
+            
+            #header .nav ul.gnb {
+                flex-direction: column;
+                gap: var(--spacing-sm);
+                padding: var(--spacing-md) 0;
+            }
+            
+            #header .nav ul.gnb li {
+                width: 100%;
+                text-align: center;
+            }
+            
+            .card-container {
+                grid-template-columns: 1fr;
+                gap: var(--spacing-md);
+                padding: var(--spacing-md);
+            }
+            
+            .search-container {
+                padding: var(--spacing-md) var(--spacing-sm);
+            }
+            
+            .search-form {
+                flex-direction: column;
+                border-radius: var(--border-radius);
+            }
+            
+            .search-input {
+                min-width: auto;
+                border-bottom: 1px solid var(--color-neutral-300);
+                border-radius: 0;
+            }
+            
+            .search-button {
+                border-radius: 0 0 var(--border-radius) var(--border-radius);
+            }
+            
+            .section-header {
+                font-size: var(--font-size-xl);
+                padding: var(--spacing-md);
+            }
+            
+            .card-title {
+                font-size: var(--font-size-base);
+            }
+        }
+
+        /* 작은 모바일 */
+        @media (max-width: 480px) {
+            .wrap {
+                padding: 0 var(--spacing-sm);
+            }
+            
+            .header-logo-container {
+                padding: var(--spacing-sm);
+            }
+            
+            .logo-img {
+                width: 200px;
+                height: 40px;
+            }
+            
+            .card-container {
+                padding: var(--spacing-sm);
+            }
+            
+            .card-content {
+                padding: var(--spacing-md);
+            }
+            
+            .footer {
+                padding: var(--spacing-lg) 0;
+            }
+            
+            .contact-info h3 {
+                font-size: var(--font-size-lg);
+            }
+        }
+
+        /* 터치 친화적 인터페이스 */
+        @media (hover: none) and (pointer: coarse) {
+            .btn, .floating-btn, .search-button {
+                min-height: 44px;
+                min-width: 44px;
+            }
+            
+            #header .nav ul.gnb li a {
+                padding: var(--spacing-lg);
+                min-height: 44px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            
+            .card {
+                cursor: pointer;
+            }
+            
+            .card:active {
+                transform: scale(0.98);
+            }
+        }
+
+        /* 접근성 개선 */
+        
+        /* 고대비 모드 지원 */
+        @media (prefers-contrast: high) {
+            :root {
+                --color-primary: #d63031;
+                --color-secondary: #2d3436;
+                --box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            }
+            
+            .card {
+                border: 2px solid var(--color-neutral-800);
+            }
+            
+            .btn {
+                border: 2px solid currentColor;
+            }
+        }
+
+        /* 애니메이션 감소 설정 */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+            
+            .card:hover {
+                transform: none;
+            }
+            
+            .floating-btn:hover {
+                transform: none;
+            }
+        }
+
+        /* 다크 모드 지원 */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --color-neutral-100: #2d3436;
+                --color-neutral-200: #636e72;
+                --color-neutral-300: #74b9ff;
+                --color-neutral-500: #b2bec3;
+                --color-neutral-700: #ddd;
+                --color-neutral-800: #fff;
+                --color-neutral-900: #fff;
+            }
+            
+            body {
+                background-color: var(--color-neutral-100);
+                color: var(--color-neutral-800);
+            }
+            
+            .card {
+                background-color: #636e72;
+                color: white;
+            }
+            
+            #header {
+                background-color: var(--color-neutral-200);
+            }
+        }
+
+        /* 포커스 표시 개선 */
+        .btn:focus,
+        .search-input:focus,
+        .search-button:focus,
+        .floating-btn:focus,
+        #header .nav ul.gnb li a:focus {
+            outline: 3px solid var(--color-primary);
+            outline-offset: 2px;
+        }
+
+        /* 스크린 리더 전용 텍스트 */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        /* 브라우저 호환성 폴백 */
+        
+        /* Flexbox 미지원 브라우저 대응 */
+        .flex-fallback {
+            display: block;
+        }
+
+        .flex-fallback .card-container {
+            display: block;
+        }
+
+        .flex-fallback .card {
+            display: inline-block;
+            vertical-align: top;
+            width: calc(25% - 1rem);
+            margin-right: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Grid 미지원 브라우저 대응 */
+        .no-grid .card-container {
+            display: block;
+        }
+
+        .no-grid .card {
+            float: left;
+            width: calc(25% - 1rem);
+            margin-right: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .no-grid .card:nth-child(4n) {
+            margin-right: 0;
+        }
+
+        /* CSS 변수 미지원 브라우저 대응 */
+        .no-css-variables {
+            /* 기본 색상 폴백 */
+        }
+
+        .no-css-variables .btn-primary {
+            background-color: #ff533f;
+        }
+
+        .no-css-variables .btn-secondary {
+            background-color: #6c757d;
+        }
     </style>
 
 </head>
 
 <body>
+    <!-- 디버깅용 브레이크포인트 표시 -->
+    <div class="debug-breakpoint sr-only" aria-hidden="true"></div>
+    
     <div class="wrap">
 
         <div class="header">
@@ -813,9 +1281,11 @@
 
             </div>
 
-            <div class="mx-auto p-4" style="width: 1200px;">
-                <div class="mx-auto p-2">
-                    <a class="logo" href="main.html"><img src="images/needit.png" width="350" height="70"></a>
+            <div class="header-logo-container">
+                <div class="logo-wrapper">
+                    <a class="logo" href="main.html">
+                        <img src="images/needit.png" alt="Needit 로고" class="logo-img">
+                    </a>
                 </div>
             </div>
 
@@ -875,39 +1345,42 @@
         <div id="container">
 
             <!-- 플로팅 버튼 -->
-            <div class="floating">
-                <button onclick="topFunction()" class="policy-floating-button" id="scrollTop">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                        class="bi bi-chevron-up" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd"
-                            d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z" />
-                    </svg>
-                </button><br>
-                <a href="../index.html"><button class="policy-floating-button" id="FloatMain">
-                        <div style="font-size: 12px; font-size: 12px; font-weight: bold; margin-left: -1px;">Home</div>
-                    </button></a><br>
-                <button onclick="downFunction()" class="policy-floating-button" id="scrollDown">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                        class="bi bi-chevron-down" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd"
-                            d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" />
+            <div class="floating-buttons">
+                <button onclick="topFunction()" class="floating-btn" title="맨 위로">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z" />
                     </svg>
                 </button>
-            </div><!-- .floating -->
+                
+                <a href="../index.html" class="floating-btn" title="홈으로" style="text-decoration: none;">
+                    Home
+                </a>
+                
+                <button onclick="downFunction()" class="floating-btn" title="맨 아래로">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" />
+                    </svg>
+                </button>
+            </div>
 
 
             <!-- 이미지 불러오기 -->
 
-            <!-- 검색버튼 -->
-            <div id="mainSearchDiv">
-                <form id="searchForm">
-                    <input type="text" name="searchText" id="mainSearch" placeholder=" 필요한 것을 검색해보세요." required
-                        oninvalid="this.setCustomValidity('제목을 입력해주세요')" oninput="this.setCustomValidity('')" />
-                    <button id="mainBtnSearch">검색</button>
+            <!-- 검색 영역 -->
+            <div class="search-container">
+                <form class="search-form" id="searchForm">
+                    <input 
+                        type="text" 
+                        name="searchText" 
+                        class="search-input" 
+                        placeholder="필요한 것을 검색해보세요." 
+                        required
+                        oninvalid="this.setCustomValidity('제목을 입력해주세요')" 
+                        oninput="this.setCustomValidity('')" 
+                    />
+                    <button type="submit" class="search-button">검색</button>
                 </form>
-            </div><!-- #mainSearchDiv -->
-
-            <div style="margin-bottom: 90px;"></div>
+            </div>
             <!-- 썸네일 -->
             <!-- 저장 경로를 img폴더로 지정, src에 storedname EL문으로 불러오기 -->
             <div id="Thumbnail">
@@ -938,84 +1411,104 @@
             <div id="textMargin"></div>
 
             <!-- 대여해요 게시글 -->
-            <div id="mainRent">
-                <div id="mainTitle">최신 대여해요 게시글</div>
-                <div id="mainTumbnailDiv" class="mainDiv">
-                    <div class="mainThumbnailTitle">
-                        <div class="mainThumbnailImage"><img src="images/drill.png" alt="drill"></div>
-                        <p>드릴 대여해요</p>
+            <section class="content-section">
+                <div class="section-header">최신 대여해요 게시글</div>
+                <div class="card-container">
+                    <div class="card">
+                        <img src="images/drill.png" alt="드릴" class="card-image">
+                        <div class="card-content">
+                            <h3 class="card-title">드릴 대여해요</h3>
+                        </div>
                     </div>
 
-                    <div class="mainThumbnailTitle">
-                        <div class="mainThumbnailImage"><img src="images/phoneCase.jpeg" alt="phoneCase"></div>
-                        <p>핸드폰 케이스</p>
+                    <div class="card">
+                        <img src="images/phoneCase.jpeg" alt="핸드폰 케이스" class="card-image">
+                        <div class="card-content">
+                            <h3 class="card-title">핸드폰 케이스</h3>
+                        </div>
                     </div>
 
-                    <div class="mainThumbnailTitle">
-                        <div class="mainThumbnailImage"><img src="images/cat.jpeg" alt="phoneCase"></div>
-                        <p>고양이 자랑이에요~</p>
+                    <div class="card">
+                        <img src="images/cat.jpeg" alt="고양이" class="card-image">
+                        <div class="card-content">
+                            <h3 class="card-title">고양이 자랑이에요~</h3>
+                        </div>
                     </div>
 
-                    <div class="mainThumbnailTitle">
-                        <div class="mainThumbnailImage"><img src="images/camera.jpeg" alt="phoneCase"></div>
-                        <p>카메라 빌려봅니다</p>
+                    <div class="card">
+                        <img src="images/camera.jpeg" alt="카메라" class="card-image">
+                        <div class="card-content">
+                            <h3 class="card-title">카메라 빌려봅니다</h3>
+                        </div>
                     </div>
-                </div><!-- #mainTumbnailDiv -->
-            </div><!-- #mainRent -->
-            <div id="textMargin"></div>
-
+                </div>
+            </section>
             <!-- 나눔해요 게시글 -->
-            <div id="mainShare">
-                <div id="mainTitle">최신 나눔해요 게시글</div>
-                <div id="mainTumbnailDiv" class="mainDiv">
-                    <div class="mainThumbnailTitle">
-                        <div class="mainThumbnailImage"><img src="images/stool.jpg" alt="stool"></div>
-                        <p>스툴 나눔해요</p>
+            <section class="content-section">
+                <div class="section-header">최신 나눔해요 게시글</div>
+                <div class="card-container">
+                    <div class="card">
+                        <img src="images/stool.jpg" alt="스툴" class="card-image">
+                        <div class="card-content">
+                            <h3 class="card-title">스툴 나눔해요</h3>
+                        </div>
                     </div>
 
-                    <div class="mainThumbnailTitle">
-                        <div class="mainThumbnailImage"><img src="images/phone.jpg" alt="phone"></div>
-                        <p>갤럭시 빌려드려요!!!</p>
+                    <div class="card">
+                        <img src="images/phone.jpg" alt="갤럭시" class="card-image">
+                        <div class="card-content">
+                            <h3 class="card-title">갤럭시 빌려드려요!!!</h3>
+                        </div>
                     </div>
 
-                    <div class="mainThumbnailTitle">
-                        <div class="mainThumbnailImage"><img src="images/monitor.jpg" alt="monitor"></div>
-                        <p>모니터 드립니다 오셔서 가져가셔야 합니다.</p>
+                    <div class="card">
+                        <img src="images/monitor.jpg" alt="모니터" class="card-image">
+                        <div class="card-content">
+                            <h3 class="card-title">모니터 드립니다 오셔서 가져가셔야 합니다.</h3>
+                        </div>
                     </div>
 
-                    <div class="mainThumbnailTitle">
-                        <div class="mainThumbnailImage"><img src="images/keybaord.jpg" alt="keyboard"></div>
-                        <p>키보드 나눔해요</p>
+                    <div class="card">
+                        <img src="images/keybaord.jpg" alt="키보드" class="card-image">
+                        <div class="card-content">
+                            <h3 class="card-title">키보드 나눔해요</h3>
+                        </div>
                     </div>
                 </div>
-            </div><!-- #mainShare -->
-            <div id="textMargin"></div>
-
+            </section>
             <!-- 니딧 인증 업체 -->
-            <div id="mainBusiness">
-                <div id="mainTitle">니딧 인증 업체</div>
-                <div id="mainTumbnailDiv" class="mainDiv">
-                    <div class="mainThumbnailTitle">
-                        <div class="mainThumbnailBizz"><img src="images/klid.png" alt="klid"></div>
-                        <p>한국지역정보 개발원</p>
+            <section class="content-section">
+                <div class="section-header">니딧 인증 업체</div>
+                <div class="card-container">
+                    <div class="card">
+                        <img src="images/klid.png" alt="한국지역정보 개발원" class="card-image">
+                        <div class="card-content">
+                            <h3 class="card-title">한국지역정보 개발원</h3>
+                        </div>
                     </div>
 
-                    <div class="mainThumbnailTitle">
-                        <div class="mainThumbnailBizz"><img src="images/didc.png" alt="didc"></div>
-                        <p>국방부</p>
+                    <div class="card">
+                        <img src="images/didc.png" alt="국방부" class="card-image">
+                        <div class="card-content">
+                            <h3 class="card-title">국방부</h3>
+                        </div>
                     </div>
 
-                    <div class="mainThumbnailTitle">
-                        <div class="mainThumbnailBizz"><img src="images/knato.jpeg" alt="knato"></div>
-                        <p>한국관광공사</p>
+                    <div class="card">
+                        <img src="images/knato.jpeg" alt="한국관광공사" class="card-image">
+                        <div class="card-content">
+                            <h3 class="card-title">한국관광공사</h3>
+                        </div>
                     </div>
 
-                    <div class="mainThumbnailTitle">
-                        <div class="mainThumbnailBizz"><img src="images/forest.jpg" alt="phoneCase"></div>
-                        <p>산림청</p>
+                    <div class="card">
+                        <img src="images/forest.jpg" alt="산림청" class="card-image">
+                        <div class="card-content">
+                            <h3 class="card-title">산림청</h3>
+                        </div>
                     </div>
                 </div>
-            </div><!-- #mainBusiness -->
+            </section>
             <div id="textMargin"></div>
 
             <!-- 인기 게시글(추천수) -->
@@ -1057,40 +1550,33 @@
 
         </div><!-- #container -->
 
-        <div style="clear: both; margin-bottom: 50px;"></div>
-
-        <div style="margin-top: 20px;"></div>
-        <!-- <div style="margin-left: 15%; margin-right: 15%;"> -->
-
-        <div id="fooeterStart">
-            <hr style="margin-bottom: 1em;">
-
-            <span style="font-size: 20px; margin-left: 40px; font-size: 24px;"><strong>고객센터 1200-1342</strong></span>
-
-            <span style="margin-left: 73px;">
-                <span style=" margin-right: 90px;"><a href='/project/opening.html' id='footer-text'>소개 페이지</a></span>
-                <span style=" margin-right: 90px;"><a href='/project/term.html' id='footer-text'>이용 약관</a></span>
-                <span style=" margin-right: 90px;"><a href='/project/privacyPolicy.html'
-                        id='footer-text'>개인정보처리방침</a></span>
-                <span style=" margin-right: 90px;"><a href='/project/locationPolicy.html' id='footer-text'>위치기반서비스
-                        이용약관</a></span>
-            </span>
-            <div style="margin-bottom: 7px;"></div>
-
-            <div style="margin-left: 40px; display: inline-block;">
-                <div style="font-size: 20px; margin-bottom: 5px; font-size: 25px;">상담 시간</div>
-                <div style="display: block; font-size: 12px; margin-left: 125px; float: right; margin-top: -36px;">
-                    <div>평일 09:00 - 18:00</div>
-                    <div>주말, 공휴일 휴무</div>
-                </div>
-                <div style="clear: both;">
-                    <button class="btn btn-secondary" id="footer-report-button1"
-                        style="background-color: #ff533f; border: none; width: 104px;">1:1 문의</button>
+        <!-- 푸터 -->
+        <footer class="footer">
+            <div class="footer-container">
+                <div class="footer-content">
+                    <div class="footer-contact">
+                        <div class="contact-info">
+                            <h3>고객센터 1200-1342</h3>
+                            <div class="contact-details">
+                                <div><strong>상담 시간</strong></div>
+                                <div>평일 09:00 - 18:00</div>
+                                <div>주말, 공휴일 휴무</div>
+                            </div>
+                        </div>
+                        <div class="footer-actions">
+                            <button class="btn btn-primary">1:1 문의</button>
+                        </div>
+                    </div>
+                    
+                    <div class="footer-links">
+                        <a href='/project/opening.html'>소개 페이지</a>
+                        <a href='/project/term.html'>이용 약관</a>
+                        <a href='/project/privacyPolicy.html'>개인정보처리방침</a>
+                        <a href='/project/locationPolicy.html'>위치기반서비스 이용약관</a>
+                    </div>
                 </div>
             </div>
-
-        </div><!-- #fooeterStart -->
-        <div style="margin-bottom: 110px;"></div>
+        </footer>
 
     </div><!-- .wrap -->
 
