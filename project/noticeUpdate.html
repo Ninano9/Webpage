@@ -25,52 +25,132 @@
 <div id="adminpage-container"></div>
 
 <script>
-    // adminpage.html의 내용을 가져오기
     fetch('adminpage.html')
         .then(response => response.text())
         .then(data => {
             document.getElementById('adminpage-container').innerHTML = data;
-
-            // 콘텐츠가 로드된 후 삭제 버튼에 이벤트 리스너 추가
-            const deleteButtons = document.querySelectorAll('.delete_btn');
-            deleteButtons.forEach(button => {
+            
+            // 페이지 제목 변경
+            document.getElementById('page-title').textContent = '공지등록';
+            
+            // 현재 메뉴 활성화
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === 'noticeUpdate.html') {
+                    link.classList.add('active');
+                }
+            });
+            
+            // 콘텐츠 삽입
+            const contentArea = document.getElementById('admin-content');
+            contentArea.innerHTML = `
+                <div class="col-10 ms-3">
+                    <form action="./noticeUpdate" method="post" enctype="multipart/form-data">
+                        <div class="form-group mb-3">
+                            <label class="form-label" for="title">제목</label>
+                            <input type="text" class="form-control" name="title" id="title">
+                        </div>
+                        <div class="form-group mb-3">
+                            <label class="form-label" for="content">본문</label>
+                            <textarea class="form-control" name="content" id="content"></textarea>
+                        </div>
+                        <div id="submitBtn">
+                            <button class="btn btn-primary" id="btnWrite">작성</button>
+                            <button type="reset" class="btn btn-danger" id="btnCancel">취소</button>
+                        </div>
+                    </form>
+                </div>
+                
+                <hr>
+                
+                <div id="tableWrapper">
+                    <table id="noticeTable" class="table table-striped table-sm">
+                        <colgroup>
+                            <col style="width: 20%;">
+                            <col style="width: 60%;">
+                            <col style="width: 15%;">
+                            <col style="width: 15%;">
+                        </colgroup>
+                        <thead>
+                            <tr class="table-danger">
+                                <th>제목</th>
+                                <th>내용</th>
+                                <th>작성날짜</th>
+                                <th>삭제</th>
+                            </tr>
+                        </thead>
+                        <tbody id="noticeTableBody">
+                            <tr id="row1">
+                                <td id="longText">2024년 정기 점검 안내</td>
+                                <td id="longText">2024년 10월 15일부터 10월 20일까지 시스템 정기 점검이 진행됩니다. 이 기간 동안 서비스 이용이 제한될 수 있습니다.</td>
+                                <td>2024-09-30</td>
+                                <td><button id="deleteNoticeTBtn" class="delete_btn" data-id="1">삭제</button></td>
+                            </tr>
+                            <tr id="row2">
+                                <td id="longText">신규 서비스 런칭</td>
+                                <td id="longText">2024년 11월 1일 새로운 서비스가 런칭됩니다. 많은 관심 부탁드립니다!</td>
+                                <td>2024-09-29</td>
+                                <td><button id="deleteNoticeTBtn" class="delete_btn" data-id="2">삭제</button></td>
+                            </tr>
+                            <tr id="row3">
+                                <td id="longText">추가 휴무 안내</td>
+                                <td id="longText">2024년 10월 5일(금요일)은 추석 연휴로 인해 휴무합니다. 양해 부탁드립니다.</td>
+                                <td>2024-09-28</td>
+                                <td><button id="deleteNoticeTBtn" class="delete_btn" data-id="3">삭제</button></td>
+                            </tr>
+                            <tr id="row4">
+                                <td id="longText">시스템 업데이트 완료</td>
+                                <td id="longText">시스템 업데이트가 완료되었습니다. 사용자 여러분의 많은 이용 바랍니다.</td>
+                                <td>2024-09-27</td>
+                                <td><button id="deleteNoticeTBtn" class="delete_btn" data-id="4">삭제</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            `;
+            
+            // 이벤트 리스너 추가
+            document.getElementById('btnWrite').addEventListener('click', function (event) {
+                event.preventDefault();
+                addNotice();
+            });
+            
+            // 기존 삭제 버튼들에 이벤트 리스너 추가
+            document.querySelectorAll('.delete_btn').forEach(button => {
                 button.addEventListener('click', function () {
-                    const id = this.getAttribute('data-id'); // data-id 속성에서 ID 가져오기
+                    const id = this.getAttribute('data-id');
                     deleteBoard(id);
                 });
-            });
-
-            // 작성 버튼에 이벤트 리스너 추가
-            const btnWrite = document.getElementById('btnWrite');
-            btnWrite.addEventListener('click', function (event) {
-                event.preventDefault(); // 기본 폼 제출 방지
-                addNotice();
             });
         });
 
     function deleteBoard(id) {
-        const row = document.getElementById(`row${id}`); // 해당 ID의 행 가져오기
+        const row = document.getElementById(`row${id}`);
         if (row) {
             if (confirm('정말로 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.')) {
-                row.remove(); // 해당 행 삭제
-                alert('삭제가 완료되었습니다.'); // 삭제 완료 알림
+                row.remove();
+                alert('삭제가 완료되었습니다.');
             } else {
-                alert('삭제가 취소되었습니다.'); // 취소 알림
+                alert('삭제가 취소되었습니다.');
             }
         } else {
-            alert('삭제할 항목을 찾을 수 없습니다.'); // 항목이 없을 때 알림
+            alert('삭제할 항목을 찾을 수 없습니다.');
         }
     }
 
     function addNotice() {
-        const title = document.getElementById('title').value; // 제목 가져오기
-        const content = document.getElementById('content').value; // 본문 가져오기
-        const date = new Date().toLocaleDateString(); // 현재 날짜 가져오기
+        const title = document.getElementById('title').value;
+        const content = document.getElementById('content').value;
+        const date = new Date().toLocaleDateString();
 
-        // 새 행 만들기
+        if (!title || !content) {
+            alert('제목과 내용을 모두 입력해주세요.');
+            return;
+        }
+
         const newRow = document.createElement('tr');
-        const rowCount = document.querySelectorAll('#noticeTableBody tr').length + 1; // 행 번호 생성
-        newRow.id = `row${rowCount}`; // 새 행 ID
+        const rowCount = document.querySelectorAll('#noticeTableBody tr').length + 1;
+        newRow.id = `row${rowCount}`;
 
         newRow.innerHTML = `
             <td id="longText">${title}</td>
@@ -79,19 +159,17 @@
             <td><button id="deleteNoticeTBtn" class="delete_btn" data-id="${rowCount}">삭제</button></td>
         `;
 
-        // 새 행을 테이블에 추가
         document.getElementById('noticeTableBody').appendChild(newRow);
-
-        // 입력 필드 초기화
         document.getElementById('title').value = '';
         document.getElementById('content').value = '';
 
-        // 삭제 버튼에 이벤트 리스너 추가
         const deleteButton = newRow.querySelector('.delete_btn');
         deleteButton.addEventListener('click', function () {
-            const id = this.getAttribute('data-id'); // data-id 속성에서 ID 가져오기
+            const id = this.getAttribute('data-id');
             deleteBoard(id);
         });
+        
+        alert('공지사항이 등록되었습니다.');
     }
 </script>
 

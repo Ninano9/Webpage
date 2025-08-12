@@ -28,42 +28,71 @@
         .then(response => response.text())
         .then(data => {
             document.getElementById('adminpage-container').innerHTML = data;
+            
+            // 페이지 제목 변경
+            document.getElementById('page-title').textContent = '메인배너 수정';
+            
+            // 현재 메뉴 활성화
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === 'bannerUpdate.html') {
+                    link.classList.add('active');
+                }
+            });
+            
+            // 콘텐츠 삽입
+            const contentArea = document.getElementById('admin-content');
+            contentArea.innerHTML = `
+                <form action="./bannerUpdate" method="post" enctype="multipart/form-data">
+                    <div class="form-group mb-3 ms-3">
+                        <label class="form-label" for="file">첨부파일</label>
+                        <input type="file" class="form-control" name="file" id="file" multiple="multiple">
+                    </div>
+                    <div class="ms-3">
+                        <button class="btn btn-primary" id="btnWrite">작성</button>
+                        <button type="reset" class="btn btn-danger" id="btnCancel">취소</button>
+                    </div>
+                </form>
+                <br>
+                <div id="bannerImgPre"></div>
+            `;
+            
+            // 작성 버튼 이벤트 리스너 추가
+            document.getElementById('btnWrite').addEventListener('click', function (event) {
+                event.preventDefault();
+                previewImages();
+            });
         });
-    // 이미지 미리보기 함수
+
     function previewImages() {
         const fileInput = document.getElementById('file');
         const bannerImgPre = document.getElementById('bannerImgPre');
 
-        // 미리보기 초기화
+        if (!fileInput.files.length) {
+            alert('파일을 선택해주세요.');
+            return;
+        }
+
         bannerImgPre.innerHTML = '';
 
         Array.from(fileInput.files).forEach(file => {
+            if (!file.type.startsWith('image/')) {
+                alert('이미지 파일만 업로드 가능합니다.');
+                return;
+            }
+            
             const reader = new FileReader();
             reader.onload = function (e) {
                 const img = document.createElement('img');
                 img.src = e.target.result;
-                img.alt = '썸네일';
-                bannerImgPre.appendChild(img); // 썸네일 크기는 CSS에서 조정됨
+                img.alt = '배너 미리보기';
+                bannerImgPre.appendChild(img);
             }
             reader.readAsDataURL(file);
         });
+        
+        alert('이미지 미리보기가 생성되었습니다.');
     }
-
-    document.addEventListener("DOMContentLoaded", function () {
-        // adminpage.html을 가져와서 표시
-        fetch('adminpage.html')
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('adminpage-container').innerHTML = data;
-            });
-
-        // 작성 버튼 클릭 이벤트 리스너
-        document.getElementById('btnWrite').addEventListener('click', function (event) {
-            event.preventDefault(); // 기본 폼 제출 방지
-            previewImages(); // 이미지 미리보기 호출
-            // 필요시 여기에 추가적인 제출 로직을 추가할 수 있습니다.
-        });
-    });
 </script>
 
 <style>

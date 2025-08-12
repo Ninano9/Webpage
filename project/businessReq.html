@@ -24,58 +24,151 @@
 
 <div id="adminpage-container"></div>
 <script>
-    // adminpage.html을 가져와서 표시
     fetch('adminpage.html')
         .then(response => response.text())
         .then(data => {
             document.getElementById('adminpage-container').innerHTML = data;
-
-            // 가져온 HTML에 버튼 기능 추가
+            
+            // 페이지 제목 변경
+            document.getElementById('page-title').textContent = '업체요청 목록';
+            
+            // 현재 메뉴 활성화
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === 'businessReq.html') {
+                    link.classList.add('active');
+                }
+            });
+            
+            // 콘텐츠 삽입
+            const contentArea = document.getElementById('admin-content');
+            contentArea.innerHTML = `
+                <div id="tableWrapper">
+                    <table class="table table-striped table-sm">
+                        <colgroup>
+                            <col style="width: 8%;">
+                            <col style="width: 12%;">
+                            <col style="width: 25%;">
+                            <col style="width: 15%;">
+                            <col style="width: 20%;">
+                            <col style="width: 10%;">
+                            <col style="width: 10%;">
+                        </colgroup>
+                        <thead>
+                            <tr class="table-danger">
+                                <th>아이디</th>
+                                <th>업체 이름</th>
+                                <th>업체 주소</th>
+                                <th>업체 전화번호</th>
+                                <th>업체 URL</th>
+                                <th>승인</th>
+                                <th>거절</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>기술 혁신가들</td>
+                                <td>경기도 성남시 분당구 판교로 123</td>
+                                <td>(031) 123-4567</td>
+                                <td><a href="#">http://techinnovators.com</a></td>
+                                <td>
+                                    <button class="approveButton req" data-id="5">승인</button>
+                                </td>
+                                <td>
+                                    <button class="cancelButton" data-id="5">거절</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>환경 솔루션</td>
+                                <td>서울특별시 강남구 테헤란로 456</td>
+                                <td>(02) 987-6543</td>
+                                <td><a href="#">http://greenearth.com</a></td>
+                                <td>
+                                    <button class="approveButton req" data-id="5">승인</button>
+                                </td>
+                                <td>
+                                    <button class="cancelButton" data-id="5">거절</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>글로벌 핀테크</td>
+                                <td>부산광역시 해운대구 해운대해변로 789</td>
+                                <td>(051) 123-4567</td>
+                                <td><a href="#">http://globalfintech.com</a></td>
+                                <td>
+                                    <button class="approveButton req" data-id="5">승인</button>
+                                </td>
+                                <td>
+                                    <button class="cancelButton" data-id="5">거절</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td>어반 건축가들</td>
+                                <td>대구광역시 중구 동성로 1010</td>
+                                <td>(053) 765-4321</td>
+                                <td><a href="#">http://urbanarchitects.com</a></td>
+                                <td>
+                                    <button class="approveButton req" data-id="5">승인</button>
+                                </td>
+                                <td>
+                                    <button class="cancelButton" data-id="5">거절</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td>신선 식품 마켓</td>
+                                <td>광주광역시 북구 하남대로 2020</td>
+                                <td>(062) 234-5678</td>
+                                <td><a href="#">http://freshfoods.com</a></td>
+                                <td>
+                                    <button class="approveButton req" data-id="5">승인</button>
+                                </td>
+                                <td>
+                                    <button class="cancelButton" data-id="5">거절</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            `;
+            
+            // 버튼 이벤트 리스너 추가
             document.querySelectorAll('.approveButton').forEach(button => {
                 button.addEventListener('click', function () {
                     const row = this.closest('tr');
-
-                    // 승인 버튼 클릭 시 상태 변경
                     this.innerText = '승인됨';
                     this.classList.remove('req');
                     this.classList.add('done');
                     this.disabled = true;
-
-                    // 다른 승인 버튼 비활성화
+                    
                     row.querySelectorAll('.approveButton.req').forEach(btn => {
                         btn.disabled = true;
                     });
-
-                    // 거절 버튼을 등록해제로 변경
+                    
                     const cancelButton = row.querySelector('.cancelButton');
                     cancelButton.innerText = '등록해제';
                     cancelButton.classList.add('deregister');
                 });
             });
 
-            // 등록해제 및 거절 버튼 클릭 시 해당 행 삭제
             document.querySelectorAll('.cancelButton').forEach(button => {
                 button.addEventListener('click', function () {
                     const row = this.closest('tr');
-                    // 거절 버튼 클릭 시 행 삭제
                     if (!this.classList.contains('deregister')) {
                         row.remove();
                     } else {
-                        // 등록해제 버튼 클릭 시 행 삭제
                         row.remove();
                     }
                 });
             });
         });
-
 </script>
 
 <style>
-    #adminBusiness {
-        background-color: #ff8108;
-        width: 302px;
-    }
-
     #tableWrapper th {
         position: sticky;
         top: 0px;
@@ -123,116 +216,3 @@
         background: var(--color-primary);
     }
 </style>
-
-<!-- 안쪽 내용 -->
-<div id="adminContent">
-
-    <div id="tableWrapper">
-        <table class="table table-striped table-sm">
-
-            <colgroup>
-                <col style="width: 8%;">
-                <col style="width: 12%;">
-                <col style="width: 25%;">
-
-                <col style="width: 15%;">
-                <col style="width: 20%;">
-                <col style="width: 10%;">
-
-                <col style="width: 10%;">
-            </colgroup>
-
-            <thead>
-                <tr class="table-danger">
-                    <th>아이디</th>
-                    <th>업체 이름</th>
-                    <th>업체 주소</th>
-
-                    <th>업체 전화번호</th>
-                    <th>업체 URL</th>
-                    <th>승인</th>
-
-                    <th>거절</th>
-                </tr>
-            </thead>
-
-            <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>기술 혁신가들</td>
-                    <td>경기도 성남시 분당구 판교로 123</td>
-                    <td>(031) 123-4567</td>
-                    <td><a href="#">http://techinnovators.com</a></td>
-                    <td>
-                        <button class="approveButton req" data-id="5">승인</button>
-                    </td>
-                    <td>
-                        <button class="cancelButton" data-id="5">거절</button>
-                    </td>
-                    <td>
-                </tr>
-
-                <tr>
-                    <td>2</td>
-                    <td>환경 솔루션</td>
-                    <td>서울특별시 강남구 테헤란로 456</td>
-                    <td>(02) 987-6543</td>
-                    <td><a href="#">http://greenearth.com</a></td>
-                    <td>
-                        <button class="approveButton req" data-id="5">승인</button>
-                    </td>
-                    <td>
-                        <button class="cancelButton" data-id="5">거절</button>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>3</td>
-                    <td>글로벌 핀테크</td>
-                    <td>부산광역시 해운대구 해운대해변로 789</td>
-                    <td>(051) 123-4567</td>
-                    <td><a href="#">http://globalfintech.com</a></td>
-                    <td>
-                        <button class="approveButton req" data-id="5">승인</button>
-                    </td>
-                    <td>
-                        <button class="cancelButton" data-id="5">거절</button>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>4</td>
-                    <td>어반 건축가들</td>
-                    <td>대구광역시 중구 동성로 1010</td>
-                    <td>(053) 765-4321</td>
-                    <td><a href="#">http://urbanarchitects.com</a></td>
-                    <td>
-                        <button class="approveButton req" data-id="5">승인</button>
-                    </td>
-                    <td>
-                        <button class="cancelButton" data-id="5">거절</button>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>5</td>
-                    <td>신선 식품 마켓</td>
-                    <td>광주광역시 북구 하남대로 2020</td>
-                    <td>(062) 234-5678</td>
-                    <td><a href="#">http://freshfoods.com</a></td>
-                    <td>
-                        <button class="approveButton req" data-id="5">승인</button>
-                    </td>
-                    <td>
-                        <button class="cancelButton" data-id="5">거절</button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-
-    </div><!-- #tableWrapper -->
-</div><!-- #adminContent -->
-
-</body>
-
-</html>
