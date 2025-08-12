@@ -6,19 +6,26 @@
 <link rel="icon" href="images/favicon.ico">
 
 <style>
-/* CSS 변수 시스템 */
+/* CSS 변수 시스템 - 개선된 색상 팔레트 */
 :root {
-  --color-primary: #ff533f;
-  --color-primary-light: #ff7a66;
-  --color-primary-dark: #e63c28;
-  --color-secondary: #6c757d;
-  --color-neutral-100: #f8f9fa;
-  --color-neutral-200: #e9ecef;
-  --color-neutral-300: #dee2e6;
-  --color-neutral-500: #adb5bd;
-  --color-neutral-700: #495057;
-  --color-neutral-800: #343a40;
-  --color-neutral-900: #212529;
+  --color-primary: #4f46e5;
+  --color-primary-light: #6366f1;
+  --color-primary-dark: #3730a3;
+  --color-secondary: #64748b;
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-danger: #ef4444;
+  --color-info: #06b6d4;
+  --color-neutral-50: #f8fafc;
+  --color-neutral-100: #f1f5f9;
+  --color-neutral-200: #e2e8f0;
+  --color-neutral-300: #cbd5e1;
+  --color-neutral-400: #94a3b8;
+  --color-neutral-500: #64748b;
+  --color-neutral-600: #475569;
+  --color-neutral-700: #334155;
+  --color-neutral-800: #1e293b;
+  --color-neutral-900: #0f172a;
 }
 </style>
 
@@ -44,350 +51,503 @@
 			const contentArea = document.getElementById('admin-content');
 			contentArea.innerHTML = `
 				<!-- 게시글 신고 목록 -->
-				<h3>게시글 신고 목록</h3>
-				<div id="reportBoard">
-					<table class="table table-striped table-sm">
-						<colgroup>
-							<col style="width: 7%;">
-							<col style="width: 16%;">
-							<col style="width: 15%;">
-							<col style="width: 6%;">
-							<col style="width: 8%;">
-							<col style="width: 13%;">
-							<col style="width: 15%;">
-							<col style="width: 15%;">
-							<col style="width: 5%;">
-						</colgroup>
-						<thead>
-							<tr class="table-danger">
-								<th>신고번호</th>
-								<th>게시글번호</th>
-								<th>제목</th>
-								<th>메뉴</th>
-								<th>카테고리</th>
-								<th>작성자</th>
-								<th>신고종류</th>
-								<th>신고날짜</th>
-								<th>삭제</th>
-							</tr>
-						</thead>
+				<div class="table-container">
+					<div class="table-header">
+						<h3 class="table-title">
+							<i class="fas fa-exclamation-triangle text-warning me-2"></i>
+							게시글 신고 목록
+						</h3>
+						<div class="table-actions">
+							<button class="btn btn-outline-secondary btn-sm">
+								<i class="fas fa-filter me-1"></i>필터
+							</button>
+							<button class="btn btn-outline-primary btn-sm">
+								<i class="fas fa-download me-1"></i>내보내기
+							</button>
+						</div>
+					</div>
+					<div id="reportBoard" class="table-wrapper">
+						<table class="modern-table">
+							<thead>
+								<tr>
+									<th>신고번호</th>
+									<th>게시글번호</th>
+									<th>제목</th>
+									<th>메뉴</th>
+									<th>카테고리</th>
+									<th>작성자</th>
+									<th>신고종류</th>
+									<th>신고날짜</th>
+									<th>작업</th>
+								</tr>
+							</thead>
 						<tbody>
 							<tr>
-								<td>12</td>
-								<td>90</td>
-								<td>고양이 자랑이에요~</td>
-								<td>1(대여)</td>
-								<td>1(물품)</td>
-								<td>니나노</td>
-								<td>관련 없는 물품</td>
-								<td>24.09.12</td>
-								<td><button class="delete_btn">삭제</button></td>
+								<td><span class="badge bg-primary">#12</span></td>
+								<td><span class="text-muted">#90</span></td>
+								<td class="text-truncate" style="max-width: 200px;" title="고양이 자랑이에요~">고양이 자랑이에요~</td>
+								<td><span class="badge bg-info">대여</span></td>
+								<td><span class="badge bg-secondary">물품</span></td>
+								<td>
+									<div class="user-info">
+										<div class="user-avatar">니</div>
+										<span>니나노</span>
+									</div>
+								</td>
+								<td><span class="report-type">관련 없는 물품</span></td>
+								<td><span class="text-muted">2024.09.12</span></td>
+								<td>
+									<button class="action-btn delete-btn" title="삭제">
+										<i class="fas fa-trash"></i>
+									</button>
+								</td>
 							</tr>
 							<tr>
-								<td>13</td>
-								<td>85</td>
-								<td>새로운 기술을 배웠어요!</td>
-								<td>2(대여)</td>
-								<td>3(공간)</td>
-								<td>미아오</td>
-								<td>관련 없는 세부사항</td>
-								<td>24.09.13</td>
-								<td><button class="delete_btn">삭제</button></td>
+								<td><span class="badge bg-primary">#13</span></td>
+								<td><span class="text-muted">#85</span></td>
+								<td class="text-truncate" style="max-width: 200px;" title="새로운 기술을 배웠어요!">새로운 기술을 배웠어요!</td>
+								<td><span class="badge bg-info">대여</span></td>
+								<td><span class="badge bg-secondary">공간</span></td>
+								<td>
+									<div class="user-info">
+										<div class="user-avatar">미</div>
+										<span>미아오</span>
+									</div>
+								</td>
+								<td><span class="report-type">관련 없는 세부사항</span></td>
+								<td><span class="text-muted">2024.09.13</span></td>
+								<td>
+									<button class="action-btn delete-btn" title="삭제">
+										<i class="fas fa-trash"></i>
+									</button>
+								</td>
 							</tr>
 							<tr>
-								<td>14</td>
-								<td>92</td>
-								<td>주말이 기대돼요</td>
-								<td>1(대여)</td>
-								<td>3(공간)</td>
-								<td>미아우자</td>
-								<td>잡다한 정보</td>
-								<td>24.09.14</td>
-								<td><button class="delete_btn">삭제</button></td>
+								<td><span class="badge bg-primary">#14</span></td>
+								<td><span class="text-muted">#92</span></td>
+								<td class="text-truncate" style="max-width: 200px;" title="주말이 기대돼요">주말이 기대돼요</td>
+								<td><span class="badge bg-info">대여</span></td>
+								<td><span class="badge bg-secondary">공간</span></td>
+								<td>
+									<div class="user-info">
+										<div class="user-avatar">미</div>
+										<span>미아우자</span>
+									</div>
+								</td>
+								<td><span class="report-type">잡다한 정보</span></td>
+								<td><span class="text-muted">2024.09.14</span></td>
+								<td>
+									<button class="action-btn delete-btn" title="삭제">
+										<i class="fas fa-trash"></i>
+									</button>
+								</td>
 							</tr>
 							<tr>
-								<td>15</td>
-								<td>88</td>
-								<td>새 프로젝트가 기대돼요</td>
-								<td>2(나눔)</td>
-								<td>2(인력)</td>
-								<td>위스커스</td>
-								<td>일반적인 관찰</td>
-								<td>24.09.15</td>
-								<td><button class="delete_btn">삭제</button></td>
+								<td><span class="badge bg-primary">#15</span></td>
+								<td><span class="text-muted">#88</span></td>
+								<td class="text-truncate" style="max-width: 200px;" title="새 프로젝트가 기대돼요">새 프로젝트가 기대돼요</td>
+								<td><span class="badge bg-success">나눔</span></td>
+								<td><span class="badge bg-secondary">인력</span></td>
+								<td>
+									<div class="user-info">
+										<div class="user-avatar">위</div>
+										<span>위스커스</span>
+									</div>
+								</td>
+								<td><span class="report-type">일반적인 관찰</span></td>
+								<td><span class="text-muted">2024.09.15</span></td>
+								<td>
+									<button class="action-btn delete-btn" title="삭제">
+										<i class="fas fa-trash"></i>
+									</button>
+								</td>
 							</tr>
 							<tr>
-								<td>16</td>
-								<td>91</td>
-								<td>오늘 맛있는 식사를 했어요!</td>
-								<td>1(대여)</td>
-								<td>3(공간)</td>
-								<td>퍼펙트</td>
-								<td>사소한 말들</td>
-								<td>24.09.16</td>
-								<td><button class="delete_btn">삭제</button></td>
-							</tr>
-							<tr>
-								<td>17</td>
-								<td>86</td>
-								<td>새로운 취미를 탐험 중이에요</td>
-								<td>2(나눔)</td>
-								<td>3(공간)</td>
-								<td>털복숭이 친구</td>
-								<td>추가적인 의견</td>
-								<td>24.09.17</td>
-								<td><button class="delete_btn">삭제</button></td>
-							</tr>
-							<tr>
-								<td>18</td>
-								<td>89</td>
-								<td>산책하기 좋은 날씨예요</td>
-								<td>1(대여)</td>
-								<td>2(인력)</td>
-								<td>캣타스틱</td>
-								<td>중요하지 않은 정보</td>
-								<td>24.09.18</td>
-								<td><button class="delete_btn">삭제</button></td>
+								<td><span class="badge bg-primary">#16</span></td>
+								<td><span class="text-muted">#91</span></td>
+								<td class="text-truncate" style="max-width: 200px;" title="오늘 맛있는 식사를 했어요!">오늘 맛있는 식사를 했어요!</td>
+								<td><span class="badge bg-info">대여</span></td>
+								<td><span class="badge bg-secondary">공간</span></td>
+								<td>
+									<div class="user-info">
+										<div class="user-avatar">퍼</div>
+										<span>퍼펙트</span>
+									</div>
+								</td>
+								<td><span class="report-type">사소한 말들</span></td>
+								<td><span class="text-muted">2024.09.16</span></td>
+								<td>
+									<button class="action-btn delete-btn" title="삭제">
+										<i class="fas fa-trash"></i>
+									</button>
+								</td>
 							</tr>
 						</tbody>
 					</table>
 				</div>
-				
-				<hr>
+				</div>
 				
 				<!-- 댓글 신고 목록 -->
-				<h3>댓글 신고 목록</h3>
-				<div id="reportComment">
-					<table class="table table-striped table-sm">
-						<colgroup>
-							<col style="width: 7%;">
-							<col style="width: 8%;">
-							<col style="width: 8%;">
-							<col style="width: 15%;">
-							<col style="width: 6%;">
-							<col style="width: 8%;">
-							<col style="width: 13%;">
-							<col style="width: 15%;">
-							<col style="width: 15%;">
-							<col style="width: 5%;">
-						</colgroup>
-						<thead>
-							<tr class="table-danger">
-								<th>신고번호</th>
-								<th>게시글번호</th>
-								<th>댓글번호</th>
-								<th>댓글내용</th>
-								<th>메뉴</th>
-								<th>카테고리</th>
-								<th>작성자</th>
-								<th>신고종류</th>
-								<th>신고날짜</th>
-								<th>삭제</th>
-							</tr>
-						</thead>
+				<div class="table-container mt-4">
+					<div class="table-header">
+						<h3 class="table-title">
+							<i class="fas fa-comments text-info me-2"></i>
+							댓글 신고 목록
+						</h3>
+						<div class="table-actions">
+							<button class="btn btn-outline-secondary btn-sm">
+								<i class="fas fa-filter me-1"></i>필터
+							</button>
+							<button class="btn btn-outline-primary btn-sm">
+								<i class="fas fa-download me-1"></i>내보내기
+							</button>
+						</div>
+					</div>
+					<div id="reportComment" class="table-wrapper">
+						<table class="modern-table">
+							<thead>
+								<tr>
+									<th>신고번호</th>
+									<th>게시글번호</th>
+									<th>댓글번호</th>
+									<th>댓글내용</th>
+									<th>메뉴</th>
+									<th>카테고리</th>
+									<th>작성자</th>
+									<th>신고종류</th>
+									<th>신고날짜</th>
+									<th>작업</th>
+								</tr>
+							</thead>
 						<tbody>
 							<tr>
-								<td>18</td>
-								<td>89</td>
-								<td>1</td>
-								<td>산책하기 좋은 날씨예요</td>
-								<td>1(대여)</td>
-								<td>2(인력)</td>
-								<td>캣타스틱</td>
-								<td>중요하지 않은 정보</td>
-								<td>24.09.18</td>
-								<td><button class="delete_btn">삭제</button></td>
+								<td><span class="badge bg-primary">#18</span></td>
+								<td><span class="text-muted">#89</span></td>
+								<td><span class="badge bg-light text-dark">#1</span></td>
+								<td class="text-truncate" style="max-width: 150px;" title="산책하기 좋은 날씨예요">산책하기 좋은 날씨예요</td>
+								<td><span class="badge bg-info">대여</span></td>
+								<td><span class="badge bg-secondary">인력</span></td>
+								<td>
+									<div class="user-info">
+										<div class="user-avatar">캣</div>
+										<span>캣타스틱</span>
+									</div>
+								</td>
+								<td><span class="report-type">중요하지 않은 정보</span></td>
+								<td><span class="text-muted">2024.09.18</span></td>
+								<td>
+									<button class="action-btn delete-btn" title="삭제">
+										<i class="fas fa-trash"></i>
+									</button>
+								</td>
 							</tr>
 							<tr>
-								<td>19</td>
-								<td>90</td>
-								<td>2</td>
-								<td>새로운 물품이 추가되었습니다</td>
-								<td>2(공유)</td>
-								<td>1(물품)</td>
-								<td>아이템마스터</td>
-								<td>광고성 게시물</td>
-								<td>24.09.19</td>
-								<td><button class="delete_btn">삭제</button></td>
+								<td><span class="badge bg-primary">#19</span></td>
+								<td><span class="text-muted">#90</span></td>
+								<td><span class="badge bg-light text-dark">#2</span></td>
+								<td class="text-truncate" style="max-width: 150px;" title="새로운 물품이 추가되었습니다">새로운 물품이 추가되었습니다</td>
+								<td><span class="badge bg-success">공유</span></td>
+								<td><span class="badge bg-secondary">물품</span></td>
+								<td>
+									<div class="user-info">
+										<div class="user-avatar">아</div>
+										<span>아이템마스터</span>
+									</div>
+								</td>
+								<td><span class="report-type">광고성 게시물</span></td>
+								<td><span class="text-muted">2024.09.19</span></td>
+								<td>
+									<button class="action-btn delete-btn" title="삭제">
+										<i class="fas fa-trash"></i>
+									</button>
+								</td>
 							</tr>
 							<tr>
-								<td>20</td>
-								<td>91</td>
-								<td>3</td>
-								<td>오늘의 추천 공간</td>
-								<td>1(대여)</td>
-								<td>3(공간)</td>
-								<td>공간사랑</td>
-								<td>부적절한 내용</td>
-								<td>24.09.20</td>
-								<td><button class="delete_btn">삭제</button></td>
-							</tr>
-							<tr>
-								<td>21</td>
-								<td>92</td>
-								<td>4</td>
-								<td>이벤트가 진행 중입니다</td>
-								<td>2(공유)</td>
-								<td>2(인력)</td>
-								<td>이벤트참여</td>
-								<td>중복 게시물</td>
-								<td>24.09.21</td>
-								<td><button class="delete_btn">삭제</button></td>
-							</tr>
-							<tr>
-								<td>22</td>
-								<td>93</td>
-								<td>5</td>
-								<td>새로운 공간을 소개합니다</td>
-								<td>1(대여)</td>
-								<td>3(공간)</td>
-								<td>공간마니아</td>
-								<td>불필요한 정보</td>
-								<td>24.09.22</td>
-								<td><button class="delete_btn">삭제</button></td>
-							</tr>
-							<tr>
-								<td>23</td>
-								<td>94</td>
-								<td>6</td>
-								<td>신제품 리뷰입니다</td>
-								<td>2(공유)</td>
-								<td>1(물품)</td>
-								<td>리뷰어</td>
-								<td>상품 관련 없는 내용</td>
-								<td>24.09.23</td>
-								<td><button class="delete_btn">삭제</button></td>
-							</tr>
-							<tr>
-								<td>24</td>
-								<td>95</td>
-								<td>7</td>
-								<td>여행 계획 세우기</td>
-								<td>1(대여)</td>
-								<td>2(인력)</td>
-								<td>여행자</td>
-								<td>관련 없는 주제</td>
-								<td>24.09.24</td>
-								<td><button class="delete_btn">삭제</button></td>
-							</tr>
-							<tr>
-								<td>25</td>
-								<td>96</td>
-								<td>8</td>
-								<td>부동산 정보 공유</td>
-								<td>2(공유)</td>
-								<td>3(공간)</td>
-								<td>부동산고수</td>
-								<td>허위 정보</td>
-								<td>24.09.25</td>
-								<td><button class="delete_btn">삭제</button></td>
-							</tr>
-							<tr>
-								<td>26</td>
-								<td>97</td>
-								<td>9</td>
-								<td>무료 나눔 행사 안내</td>
-								<td>1(대여)</td>
-								<td>1(물품)</td>
-								<td>나눔천사</td>
-								<td>광고성 게시물</td>
-								<td>24.09.26</td>
-								<td><button class="delete_btn">삭제</button></td>
-							</tr>
-							<tr>
-								<td>27</td>
-								<td>98</td>
-								<td>10</td>
-								<td>인력 모집 중입니다</td>
-								<td>2(공유)</td>
-								<td>2(인력)</td>
-								<td>인력관리자</td>
-								<td>중복 게시물</td>
-								<td>24.09.27</td>
-								<td><button class="delete_btn">삭제</button></td>
+								<td><span class="badge bg-primary">#20</span></td>
+								<td><span class="text-muted">#91</span></td>
+								<td><span class="badge bg-light text-dark">#3</span></td>
+								<td class="text-truncate" style="max-width: 150px;" title="오늘의 추천 공간">오늘의 추천 공간</td>
+								<td><span class="badge bg-info">대여</span></td>
+								<td><span class="badge bg-secondary">공간</span></td>
+								<td>
+									<div class="user-info">
+										<div class="user-avatar">공</div>
+										<span>공간사랑</span>
+									</div>
+								</td>
+								<td><span class="report-type">부적절한 내용</span></td>
+								<td><span class="text-muted">2024.09.20</span></td>
+								<td>
+									<button class="action-btn delete-btn" title="삭제">
+										<i class="fas fa-trash"></i>
+									</button>
+								</td>
 							</tr>
 						</tbody>
 					</table>
+				</div>
 				</div>
 			`;
 			
 			// 삭제 버튼 이벤트 리스너 추가
-			document.querySelectorAll('.delete_btn').forEach(button => {
+			document.querySelectorAll('.delete-btn').forEach(button => {
 				button.addEventListener('click', function () {
 					const row = this.closest('tr');
 					if (row) {
 						if (confirm('정말로 삭제하시겠습니까? 이 작업은 취소할 수 없습니다.')) {
-							row.remove();
-							alert('삭제가 완료되었습니다.');
-						} else {
-							alert('삭제가 취소되었습니다.');
+							row.style.opacity = '0.5';
+							setTimeout(() => {
+								row.remove();
+								// 성공 토스트 메시지 표시
+								showToast('삭제가 완료되었습니다.', 'success');
+							}, 300);
 						}
-					} else {
-						alert('삭제할 항목을 찾을 수 없습니다.');
 					}
 				});
 			});
+			
+			// 토스트 메시지 함수
+			function showToast(message, type = 'info') {
+				const toast = document.createElement('div');
+				toast.className = \`toast-message toast-\${type}\`;
+				toast.textContent = message;
+				document.body.appendChild(toast);
+				
+				setTimeout(() => {
+					toast.classList.add('show');
+				}, 100);
+				
+				setTimeout(() => {
+					toast.classList.remove('show');
+					setTimeout(() => {
+						document.body.removeChild(toast);
+					}, 300);
+				}, 3000);
+			}
 		});
 </script>
 
 <style>
-	.table tr td {
-		overflow: hidden;
-		text-overflow: ellipsis;
-		white-space: nowrap;
-	}
+/* 현대적인 테이블 컨테이너 */
+.table-container {
+	background: white;
+	border-radius: 12px;
+	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+	overflow: hidden;
+	margin-bottom: 2rem;
+}
 
-	#reportBoard,
-	#reportComment {
-		overflow-x: hidden;
-		overflow-y: scroll;
-		height: 213px;
-	}
+.table-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 1.5rem;
+	background: linear-gradient(135deg, var(--color-neutral-50) 0%, var(--color-neutral-100) 100%);
+	border-bottom: 1px solid var(--color-neutral-200);
+}
 
-	#reportBoard th,
-	#reportComment th {
-		position: sticky;
-		top: 0px;
-	}
+.table-title {
+	margin: 0;
+	font-size: 1.25rem;
+	font-weight: 600;
+	color: var(--color-neutral-800);
+	display: flex;
+	align-items: center;
+}
 
-	.delete_btn {
-		width: 55px;
-		height: 28px;
-		vertical-align: middle;
-		background-color: inherit;
-		border: 2px solid red;
-		border-radius: 5px;
-		font-weight: bold;
-	}
+.table-actions {
+	display: flex;
+	gap: 0.5rem;
+}
 
-	/* Webkit 브라우저를 위한 스타일 */
-	#reportBoard::-webkit-scrollbar {
-		width: 12px;
-	}
+.table-wrapper {
+	overflow-x: auto;
+	overflow-y: auto;
+	max-height: 400px;
+}
 
-	#reportBoard::-webkit-scrollbar-track {
-		background: #f1f1f1;
-		border-radius: 10px;
-	}
+/* 현대적인 테이블 스타일 */
+.modern-table {
+	width: 100%;
+	border-collapse: collapse;
+	font-size: 0.875rem;
+}
 
-	#reportBoard::-webkit-scrollbar-thumb {
-		background-color: transparent;
-		border-radius: 10px;
-		background: var(--color-primary);
-	}
+.modern-table thead th {
+	background: var(--color-neutral-100);
+	color: var(--color-neutral-700);
+	font-weight: 600;
+	padding: 1rem 0.75rem;
+	text-align: left;
+	border-bottom: 2px solid var(--color-neutral-200);
+	position: sticky;
+	top: 0;
+	z-index: 10;
+	font-size: 0.75rem;
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+}
 
-	#reportComment::-webkit-scrollbar {
-		width: 12px;
-	}
+.modern-table tbody tr {
+	transition: all 0.2s ease;
+	border-bottom: 1px solid var(--color-neutral-100);
+}
 
-	#reportComment::-webkit-scrollbar-track {
-		background: #f1f1f1;
-		border-radius: 10px;
-	}
+.modern-table tbody tr:hover {
+	background-color: var(--color-neutral-50);
+	transform: translateY(-1px);
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
 
-	#reportComment::-webkit-scrollbar-thumb {
-		background-color: transparent;
-		border-radius: 10px;
-		background: var(--color-primary);
+.modern-table tbody td {
+	padding: 1rem 0.75rem;
+	vertical-align: middle;
+}
+
+/* 사용자 정보 스타일 */
+.user-info {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.user-avatar {
+	width: 32px;
+	height: 32px;
+	border-radius: 50%;
+	background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
+	color: white;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-weight: 600;
+	font-size: 0.75rem;
+}
+
+/* 신고 종류 스타일 */
+.report-type {
+	display: inline-block;
+	padding: 0.25rem 0.75rem;
+	background: var(--color-warning);
+	color: white;
+	border-radius: 20px;
+	font-size: 0.75rem;
+	font-weight: 500;
+}
+
+/* 액션 버튼 */
+.action-btn {
+	width: 36px;
+	height: 36px;
+	border: none;
+	border-radius: 8px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	transition: all 0.2s ease;
+	font-size: 0.875rem;
+}
+
+.delete-btn {
+	background: var(--color-danger);
+	color: white;
+}
+
+.delete-btn:hover {
+	background: #dc2626;
+	transform: translateY(-1px);
+	box-shadow: 0 4px 8px rgba(239, 68, 68, 0.3);
+}
+
+/* 배지 스타일 개선 */
+.badge {
+	font-size: 0.75rem;
+	font-weight: 500;
+	padding: 0.25rem 0.5rem;
+}
+
+/* 스크롤바 스타일 */
+.table-wrapper::-webkit-scrollbar {
+	width: 8px;
+	height: 8px;
+}
+
+.table-wrapper::-webkit-scrollbar-track {
+	background: var(--color-neutral-100);
+	border-radius: 4px;
+}
+
+.table-wrapper::-webkit-scrollbar-thumb {
+	background: var(--color-neutral-300);
+	border-radius: 4px;
+}
+
+.table-wrapper::-webkit-scrollbar-thumb:hover {
+	background: var(--color-neutral-400);
+}
+
+/* 토스트 메시지 */
+.toast-message {
+	position: fixed;
+	top: 20px;
+	right: 20px;
+	padding: 1rem 1.5rem;
+	border-radius: 8px;
+	color: white;
+	font-weight: 500;
+	z-index: 1000;
+	transform: translateX(100%);
+	transition: transform 0.3s ease;
+}
+
+.toast-message.show {
+	transform: translateX(0);
+}
+
+.toast-success {
+	background: var(--color-success);
+}
+
+.toast-error {
+	background: var(--color-danger);
+}
+
+.toast-info {
+	background: var(--color-info);
+}
+
+/* 반응형 */
+@media (max-width: 768px) {
+	.table-header {
+		flex-direction: column;
+		gap: 1rem;
+		align-items: stretch;
 	}
+	
+	.table-actions {
+		justify-content: center;
+	}
+	
+	.modern-table {
+		font-size: 0.75rem;
+	}
+	
+	.modern-table thead th,
+	.modern-table tbody td {
+		padding: 0.5rem;
+	}
+	
+	.user-info {
+		flex-direction: column;
+		gap: 0.25rem;
+		text-align: center;
+	}
+	
+	.user-avatar {
+		width: 24px;
+		height: 24px;
+		font-size: 0.625rem;
+	}
+}
 </style>
