@@ -538,7 +538,6 @@
         .search-container {
             display: flex;
             justify-content: center;
-            right: 0;
             align-items: center;
             padding: var(--spacing-xl) 0;
             max-width: var(--container-max-width);
@@ -1298,13 +1297,24 @@
         .map-container {
             display: flex;
             justify-content: center;
+            height: 100%;
         }
 
         #map {
             width: 100%;
-            height: 400px;
+            height: 100%;
+            min-height: 300px;
             border-radius: var(--border-radius);
             box-shadow: var(--box-shadow);
+        }
+
+        .map-section {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .map-section .map-container {
+            flex: 1;
         }
 
         /* 반응형 - 모바일에서는 세로 배치 */
@@ -1313,7 +1323,7 @@
                 flex-direction: column;
                 gap: var(--spacing-lg);
             }
-            
+
             #map {
                 height: 300px;
             }
@@ -1566,15 +1576,17 @@
                     <div class="popular-posts-container">
                         <div class="popular-post">
                             <h4 class="post-title">첫 번째 인기 게시글</h4>
-                            <p class="post-content">어머님, 나 어디에서 그대 꽃잎을 헤일 향해 흘리우리다. 때 노래, 슬프게 슬퍼하는 밤을 그리워 패, 아니라 좋을까 아름따다 말 죽은 사랑과 별이 보내 하늘을 찾지 했다.</p>
+                            <p class="post-content">어머님, 나 어디에서 그대 꽃잎을 헤일 향해 흘리우리다. 때 노래, 슬프게 슬퍼하는 밤을 그리워 패, 아니라 좋을까
+                                아름따다 말 죽은 사랑과 별이 보내 하늘을 찾지 했다.</p>
                         </div>
                         <div class="popular-post">
                             <h4 class="post-title">두 번째 인기 게시글</h4>
-                            <p class="post-content">이렇게 나는 앉아서 강이 멀리 이국 것을 소멸시키는 이름자를 어미들 바라보는 이국 지나고 꽃밭에 너는 별이 가실 뜨겁게 자신을 보내 봅니다.</p>
+                            <p class="post-content">이렇게 나는 앉아서 강이 멀리 이국 것을 소멸시키는 이름자를 어미들 바라보는 이국 지나고 꽃밭에 너는 별이 가실 뜨겁게
+                                자신을 보내 봅니다.</p>
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- 지도 -->
                 <div class="map-section">
                     <div class="section-header"><strong>내 주변 지도</strong></div>

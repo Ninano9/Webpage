@@ -1,51 +1,202 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 
 <head>
   <meta charset="UTF-8">
-  <title>Insert title here</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>위치기반서비스 이용약관 - Needit</title>
+  <link rel="icon" href="/project/images/favicon.ico">
 
   <style type="text/css">
-    /* 전체 스크롤바 너비 */
+    /* CSS 변수 시스템 */
+    :root {
+      --color-primary: #ff533f;
+      --color-primary-light: #ff7a66;
+      --color-primary-dark: #e63c28;
+      --color-secondary: #6c757d;
+      --color-neutral-100: #f8f9fa;
+      --color-neutral-200: #e9ecef;
+      --color-neutral-300: #dee2e6;
+      --color-neutral-700: #495057;
+      --color-neutral-800: #343a40;
+      --color-neutral-900: #212529;
+      
+      --spacing-sm: 0.5rem;
+      --spacing-md: 1rem;
+      --spacing-lg: 1.5rem;
+      --spacing-xl: 2rem;
+      --spacing-xxl: 3rem;
+      
+      --font-size-sm: 0.875rem;
+      --font-size-base: 1rem;
+      --font-size-lg: 1.125rem;
+      --font-size-xl: 1.25rem;
+      --font-size-xxl: 1.5rem;
+      --font-size-xxxl: 2rem;
+      
+      --border-radius: 8px;
+      --border-radius-lg: 12px;
+      --box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      --box-shadow-lg: 0 4px 16px rgba(0,0,0,0.15);
+      
+      --transition-base: 0.2s ease;
+    }
+
+    /* 전역 스타일 */
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      line-height: 1.6;
+      color: var(--color-neutral-800);
+      margin: 0;
+      padding: 0;
+      background-color: var(--color-neutral-100);
+    }
+
+    /* 스크롤바 스타일 */
     ::-webkit-scrollbar {
       width: 12px;
-      background-color: #f5f5f5;
-      /* 스크롤바 배경 색상 */
+      background-color: var(--color-neutral-100);
     }
 
-    /* 스크롤바 트랙 */
     ::-webkit-scrollbar-track {
-      background-color: #f5f5f5;
-      /* 트랙 배경 */
-      border-radius: 10px;
-      /* 트랙에 둥근 모서리 추가 */
+      background-color: var(--color-neutral-100);
+      border-radius: var(--border-radius-lg);
     }
 
-    /* 스크롤바 슬라이더 */
     ::-webkit-scrollbar-thumb {
-      background-color: #ff533f;
-      /* 슬라이더 색상 */
-      border-radius: 10px;
-      /* 슬라이더에 둥근 모서리 추가 */
-      border: 2px solid #ff533f;
-      /* 슬라이더 테두리 */
+      background-color: var(--color-secondary);
+      border-radius: var(--border-radius-lg);
+      border: 2px solid var(--color-secondary);
+      transition: var(--transition-base);
     }
 
-    /* 스크롤바 슬라이더를 호버했을 때 */
     ::-webkit-scrollbar-thumb:hover {
-      background-color: #555;
-      /* 호버 시 슬라이더 색상 변경 */
+      background-color: var(--color-primary-light);
+      border-color: var(--color-primary-light);
+    }
+
+    /* 컨테이너 */
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: var(--spacing-xl);
+      background: white;
+      min-height: 100vh;
+      box-shadow: var(--box-shadow);
+    }
+
+    /* 헤더 */
+    .policy-header {
+      text-align: center;
+      margin-bottom: var(--spacing-xxl);
+      padding-bottom: var(--spacing-xl);
+      border-bottom: 2px solid var(--color-neutral-200);
+    }
+
+    .policy-title {
+      font-size: var(--font-size-xxxl);
+      font-weight: bold;
+      color: var(--color-neutral-900);
+      margin: 0 0 var(--spacing-md) 0;
+    }
+
+    .policy-subtitle {
+      font-size: var(--font-size-base);
+      color: var(--color-neutral-700);
+      margin: 0;
+    }
+
+    /* 콘텐츠 */
+    .policy-content {
+      line-height: 1.8;
+    }
+
+    .policy-section {
+      margin-bottom: var(--spacing-xxl);
+      padding: var(--spacing-xl);
+      background: var(--color-neutral-100);
+      border-radius: var(--border-radius-lg);
+      border-left: 4px solid var(--color-primary);
+    }
+
+    .section-title {
+      font-size: var(--font-size-xl);
+      font-weight: bold;
+      color: var(--color-neutral-900);
+      margin: 0 0 var(--spacing-lg) 0;
+    }
+
+    .section-content {
+      color: var(--color-neutral-800);
+      margin-bottom: var(--spacing-md);
+    }
+
+    .section-list {
+      padding-left: var(--spacing-xl);
+      margin: var(--spacing-md) 0;
+    }
+
+    .section-list li {
+      margin-bottom: var(--spacing-sm);
+      color: var(--color-neutral-700);
+    }
+
+    /* 플로팅 버튼 */
+    .floating-buttons {
+      position: fixed;
+      bottom: var(--spacing-xl);
+      right: var(--spacing-xl);
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-sm);
+      z-index: 1000;
     }
 
     .policy-floating-button {
-      background-color: black;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: none;
+      background: var(--color-primary);
       color: white;
-      border: 0;
-      margin: 0;
-      width: 45px;
-      height: 45px;
-      border-radius: 20px;
+      box-shadow: var(--box-shadow-lg);
       cursor: pointer;
+      transition: var(--transition-base);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: var(--font-size-sm);
+      font-weight: bold;
+    }
+
+    .policy-floating-button:hover {
+      background: var(--color-primary-dark);
+      transform: translateY(-2px);
+    }
+
+    /* 반응형 */
+    @media (max-width: 768px) {
+      .container {
+        padding: var(--spacing-md);
+      }
+      
+      .policy-section {
+        padding: var(--spacing-md);
+      }
+      
+      .floating-buttons {
+        bottom: var(--spacing-lg);
+        right: var(--spacing-lg);
+      }
+      
+      .policy-floating-button {
+        width: 45px;
+        height: 45px;
+      }
     }
 
     #FloatMain {
@@ -80,18 +231,112 @@
 </head>
 
 <body>
+  <div class="container">
+    <!-- 헤더 -->
+    <div class="policy-header">
+      <h1 class="policy-title">위치기반서비스 이용약관</h1>
+      <p class="policy-subtitle">Needit 위치정보 서비스 이용약관</p>
+    </div>
 
-  <h1>위치기반서비스 이용약관</h1>
-  <hr>
+    <!-- 콘텐츠 -->
+    <div class="policy-content">
+      <div class="policy-section">
+        <h2 class="section-title">제1조 (목적)</h2>
+        <div class="section-content">
+          본 약관은 Needit(이하 "회사"라고 합니다)가 개인위치정보사업 약관에 동의한 개인위치정보주체(이하 "회원"이라고 합니다)의 개인위치정보를 수집하고, 위치정보사업자의 지위에서 「위치정보의 보호 및 이용 등에 관한 법률」(이하 "위치정보법"이라 합니다)의 규정에 따라 위치기반서비스 사업자에게 회원의 개인위치정보를 제공함에 있어 회사와 회원의 권리·의무 및 기타 필요한 사항을 규정함을 목적으로 합니다.
+        </div>
+      </div>
 
-  <div class="floating">
-    <button onclick="topFunction()" class="policy-floating-button" id="scrollTop">▲</button><br>
-    <a href="main.html"><button class="policy-floating-button" id="FloatMain">메인</button></a><br>
-    <button onclick="downFunction()" class="policy-floating-button" id="scrollDown">▼</button>
+      <div class="policy-section">
+        <h2 class="section-title">제2조 (이용약관의 효력 및 변경)</h2>
+        <div class="section-content">
+          본 약관은 개인위치정보사업의 고객 또는 개인위치정보주체가 본 약관에 동의하고 회사 소정의 절차에 따라 위치정보사업의 이용자로 등록함으로써 효력이 발생합니다.
+        </div>
+        <div class="section-content">
+          회원이 온라인에서 본 약관의 "동의하기" 버튼을 클릭하였을 경우 본 약관의 내용을 모두 읽고 이를 충분히 이해하였으며, 그 적용에 동의한 것으로 봅니다.
+        </div>
+      </div>
+
+      <div class="policy-section">
+        <h2 class="section-title">제3조 (관계법령의 적용)</h2>
+        <div class="section-content">
+          본 약관은 신의성실의 원칙에 따라 공정하게 적용하며, 본 약관에 명시되지 아니한 사항에 대하여는 관계법령 또는 상관례에 따릅니다.
+        </div>
+      </div>
+
+      <div class="policy-section">
+        <h2 class="section-title">제4조 (개인위치정보 수집방법 등)</h2>
+        <div class="section-content">
+          회사가 위치기반서비스사업자에게 제공하는 개인위치정보 및 개인위치정보의 수집방법, 보유목적과 보유기간은 아래와 같습니다:
+        </div>
+        <ul class="section-list">
+          <li><strong>서비스 명:</strong> GPS 위치</li>
+          <li><strong>수집방법:</strong> GPS</li>
+          <li><strong>서비스 내용 및 목적:</strong> 개인위치 저장 및 주변 서비스 제공</li>
+          <li><strong>개인위치정보 보유기간:</strong> 서비스 종료시까지</li>
+        </ul>
+        <div class="section-content">
+          회사는 「위치정보의 보호 및 이용 등에 관한 법률」 제16조제2항에 따라 위치정보 수집·제공사실 확인자료를 자동 기록·보존하며, 해당 자료는 6개월간 보관합니다.
+        </div>
+      </div>
+
+      <div class="policy-section">
+        <h2 class="section-title">제5조 (서비스 이용요금 및 조건)</h2>
+        <div class="section-content">
+          위치기반서비스는 무료로 제공되며, 별도의 이용요금은 발생하지 않습니다. 단, 데이터 통신료는 회원이 가입한 통신사의 정책에 따라 별도로 부과될 수 있습니다.
+        </div>
+      </div>
+
+      <div class="policy-section">
+        <h2 class="section-title">제6조 (개인위치정보주체의 권리)</h2>
+        <div class="section-content">
+          개인위치정보주체는 회사에 대하여 언제든지 다음 각 호의 권리를 행사할 수 있습니다:
+        </div>
+        <ul class="section-list">
+          <li>개인위치정보 수집·이용·제공에 대한 동의 철회</li>
+          <li>개인위치정보 수집·이용·제공 현황 통지 요구</li>
+          <li>개인위치정보 이용·제공 거부</li>
+          <li>개인위치정보 삭제 요구</li>
+        </ul>
+      </div>
+
+      <div class="policy-section">
+        <h2 class="section-title">제7조 (개인위치정보의 보호)</h2>
+        <div class="section-content">
+          회사는 개인위치정보를 안전하게 관리하기 위하여 다음과 같은 기술적·관리적 보호조치를 취합니다:
+        </div>
+        <ul class="section-list">
+          <li>개인위치정보의 암호화</li>
+          <li>개인위치정보에 대한 접근권한 관리</li>
+          <li>개인위치정보 취급자의 최소화 및 교육</li>
+          <li>개인위치정보 처리시스템 접근기록 보관</li>
+        </ul>
+      </div>
+    </div>
   </div>
 
-  <div style="border: 5px solid rgb(255,83,63); width: 95%; margin: auto; border-radius: 5px;">
-    <pre style="width: 100%; white-space: pre-wrap; word-wrap:break-word; padding: 5px;">
+  <!-- 플로팅 버튼 -->
+  <div class="floating-buttons">
+    <button onclick="topFunction()" class="policy-floating-button" title="맨 위로">↑</button>
+    <a href="main.html" class="policy-floating-button" title="메인으로" style="text-decoration: none; color: white;">홈</a>
+    <button onclick="downFunction()" class="policy-floating-button" title="맨 아래로">↓</button>
+  </div>
+
+  <script>
+    function topFunction() {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+    }
+
+    function downFunction() {
+      window.scrollTo({
+        top: document.body.scrollHeight,
+        behavior: "smooth"
+      });
+    }
+  </script>
 <strong style="font-size: 20px;">개인위치정보사업 이용약관</strong>
 
 제1조(목적) 본 약관은 Needit(이하 “회사”라고 합니다)가 개인위치정보사업 약관에 동의한 개인위치정보주체(이하 “회원”이라고 합니다)의 개인위치정보를 수집하고, 위치정보사업자의 지위에서 「위치정보의 보호 및 이용 등에 관한 법률」(이하 “위치정보법”이라 합니다)의 규정에 따라 위치기반서비스 사업자에게 회원의 개인위치정보를 제공함에 있어 회사와 회원의 권리·의무 및 기타 필요한 사항을 규정함을 목적으로 합니다.
