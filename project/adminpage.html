@@ -1,780 +1,823 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Needit 관리자</title>
-<link rel="icon" href="images/favicon.ico">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-
-<style>
-/* CSS 변수 시스템 - 접근성 및 브라우저 호환성 개선 */
-:root {
-  /* 색상 시스템 - WCAG 2.1 AA 기준 준수 */
-  --color-primary: #ff533f;
-  --color-primary-light: #ff7a66;
-  --color-primary-dark: #e63c28;
-  --color-primary-accessible: #d63384; /* 더 높은 대비율 */
-  --color-secondary: #6c757d;
-  --color-success: #198754; /* 더 어두운 녹색으로 대비 개선 */
-  --color-warning: #fd7e14; /* 더 어두운 주황색으로 대비 개선 */
-  --color-danger: #dc3545;
-  --color-info: #0dcaf0;
-  
-  /* 중성 색상 - 더 나은 대비율 */
-  --color-neutral-50: #fafafa;
-  --color-neutral-100: #f8f9fa;
-  --color-neutral-200: #e9ecef;
-  --color-neutral-300: #dee2e6;
-  --color-neutral-400: #ced4da;
-  --color-neutral-500: #adb5bd;
-  --color-neutral-600: #6c757d;
-  --color-neutral-700: #495057;
-  --color-neutral-800: #343a40;
-  --color-neutral-900: #212529;
-  
-  /* 텍스트 색상 - 접근성 개선 */
-  --text-primary: #212529;
-  --text-secondary: #495057;
-  --text-muted: #6c757d;
-  --text-light: #ffffff;
-  
-  /* 간격 시스템 */
-  --spacing-xs: 0.25rem;
-  --spacing-sm: 0.5rem;
-  --spacing-md: 1rem;
-  --spacing-lg: 1.5rem;
-  --spacing-xl: 2rem;
-  --spacing-xxl: 3rem;
-  
-  /* 타이포그래피 */
-  --font-size-xs: 0.75rem;
-  --font-size-sm: 0.875rem;
-  --font-size-base: 1rem;
-  --font-size-lg: 1.125rem;
-  --font-size-xl: 1.25rem;
-  --font-size-xxl: 1.5rem;
-  --font-size-xxxl: 2rem;
-  --line-height-base: 1.6;
-  --line-height-sm: 1.4;
-  --line-height-lg: 1.8;
-  
-  /* 레이아웃 */
-  --border-radius: 8px;
-  --border-radius-sm: 4px;
-  --border-radius-lg: 12px;
-  --box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  --box-shadow-lg: 0 4px 16px rgba(0,0,0,0.15);
-  --box-shadow-focus: 0 0 0 3px rgba(255, 83, 63, 0.25);
-  
-  /* 애니메이션 */
-  --transition-base: 0.2s ease;
-  --transition-fast: 0.1s ease;
-  --transition-slow: 0.3s ease;
-  
-  /* 레이아웃 변수 */
-  --sidebar-width: 280px;
-  --header-height: 70px;
-  
-  /* 터치 타겟 최소 크기 (접근성) */
-  --touch-target-min: 44px;
-}
-
-/* 전역 스타일 - 접근성 및 브라우저 호환성 개선 */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
-* {
-  margin: 0;
-  padding: 0;
-}
-
-html {
-  font-size: 16px; /* 기본 폰트 크기 명시 */
-  scroll-behavior: smooth;
-}
-
-/* prefers-reduced-motion 지원 */
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
-}
-
-body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans KR', sans-serif;
-  background-color: var(--color-neutral-50);
-  color: var(--text-primary);
-  line-height: var(--line-height-base);
-  font-size: var(--font-size-base);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
-}
-
-/* 포커스 스타일 - 접근성 개선 */
-:focus {
-  outline: 2px solid var(--color-primary);
-  outline-offset: 2px;
-}
-
-:focus:not(:focus-visible) {
-  outline: none;
-}
-
-:focus-visible {
-  outline: 2px solid var(--color-primary);
-  outline-offset: 2px;
-}
-
-/* 스크린 리더 전용 텍스트 */
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
-}
-
-/* 고대비 모드 지원 */
-@media (prefers-contrast: high) {
-  :root {
-    --color-primary: #cc0000;
-    --color-neutral-700: #000000;
-    --color-neutral-300: #666666;
-  }
-}
-
-/* 관리자 레이아웃 */
-.admin-layout {
-  display: flex;
-  min-height: 100vh;
-}
-
-/* 사이드바 */
-.sidebar {
-  width: var(--sidebar-width);
-  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
-  color: white;
-  position: fixed;
-  height: 100vh;
-  overflow-y: auto;
-  box-shadow: var(--box-shadow-lg);
-  z-index: 1000;
-}
-
-.sidebar-header {
-  padding: var(--spacing-xl);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  text-align: center;
-}
-
-.sidebar-logo {
-  width: 200px;
-  height: auto;
-  filter: brightness(0) invert(1);
-}
-
-.sidebar-title {
-  font-size: var(--font-size-lg);
-  font-weight: 600;
-  margin-top: var(--spacing-md);
-  opacity: 0.9;
-}
-
-/* 네비게이션 메뉴 */
-.sidebar-nav {
-  padding: var(--spacing-lg) 0;
-}
-
-.nav-item {
-  margin-bottom: var(--spacing-xs);
-}
-
-.nav-link {
-  display: flex;
-  align-items: center;
-  padding: var(--spacing-md) var(--spacing-xl);
-  color: rgba(255, 255, 255, 0.9);
-  text-decoration: none;
-  transition: var(--transition-base);
-  font-weight: 500;
-}
-
-.nav-link:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-  color: white;
-  transform: translateX(4px);
-}
-
-.nav-link.active {
-  background-color: rgba(255, 255, 255, 0.2);
-  color: white;
-  border-right: 4px solid white;
-}
-
-.nav-icon {
-  width: 20px;
-  margin-right: var(--spacing-md);
-  text-align: center;
-}
-
-/* 메인 콘텐츠 */
-.main-content {
-  flex: 1;
-  margin-left: var(--sidebar-width);
-  display: flex;
-  flex-direction: column;
-}
-
-/* 헤더 */
-.admin-header {
-  background: white;
-  padding: var(--spacing-lg) var(--spacing-xl);
-  box-shadow: var(--box-shadow);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
-
-.page-title {
-  font-size: var(--font-size-xxl);
-  font-weight: 700;
-  color: var(--color-neutral-900);
-  margin: 0;
-}
-
-.admin-actions {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-md);
-}
-
-.btn {
-  display: inline-flex;
-  align-items: center;
-  padding: var(--spacing-sm) var(--spacing-lg);
-  border: none;
-  border-radius: var(--border-radius);
-  font-size: var(--font-size-sm);
-  font-weight: 500;
-  text-decoration: none;
-  cursor: pointer;
-  transition: var(--transition-base);
-  gap: var(--spacing-sm);
-}
-
-.btn-primary {
-  background-color: var(--color-primary);
-  color: white;
-}
-
-.btn-primary:hover {
-  background-color: var(--color-primary-dark);
-  transform: translateY(-1px);
-}
-
-.btn-outline {
-  background-color: transparent;
-  border: 2px solid var(--color-neutral-300);
-  color: var(--color-neutral-700);
-}
-
-.btn-outline:hover {
-  border-color: var(--color-primary);
-  color: var(--color-primary);
-}
-
-/* 콘텐츠 영역 */
-.content-area {
-  flex: 1;
-  padding: var(--spacing-xl);
-}
-
-/* 통계 카드 */
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: var(--spacing-lg);
-  margin-bottom: var(--spacing-xxl);
-}
-
-.stat-card {
-  background: white;
-  padding: var(--spacing-xl);
-  border-radius: var(--border-radius-lg);
-  box-shadow: var(--box-shadow);
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-lg);
-  transition: var(--transition-base);
-}
-
-.stat-card:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--box-shadow-lg);
-}
-
-.stat-icon {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: var(--font-size-xl);
-  color: white;
-}
-
-.stat-icon.primary { background: var(--color-primary); }
-.stat-icon.success { background: var(--color-success); }
-.stat-icon.warning { background: var(--color-warning); }
-.stat-icon.info { background: var(--color-info); }
-
-.stat-content h3 {
-  font-size: var(--font-size-xs);
-  color: var(--color-neutral-500);
-  font-weight: 500;
-  margin-bottom: var(--spacing-xs);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.stat-content .stat-number {
-  font-size: var(--font-size-xxxl);
-  font-weight: 700;
-  color: var(--color-neutral-900);
-}
-
-/* 데이터 테이블 */
-.data-table-container {
-  background: white;
-  border-radius: var(--border-radius-lg);
-  box-shadow: var(--box-shadow);
-  overflow: hidden;
-}
-
-.table-header {
-  padding: var(--spacing-xl);
-  border-bottom: 1px solid var(--color-neutral-200);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.table-title {
-  font-size: var(--font-size-xl);
-  font-weight: 600;
-  color: var(--color-neutral-900);
-  margin: 0;
-}
-
-.table-actions {
-  display: flex;
-  gap: var(--spacing-sm);
-}
-
-.data-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.data-table th,
-.data-table td {
-  padding: var(--spacing-md) var(--spacing-lg);
-  text-align: left;
-  border-bottom: 1px solid var(--color-neutral-200);
-}
-
-.data-table th {
-  background-color: var(--color-neutral-100);
-  font-weight: 600;
-  color: var(--color-neutral-700);
-  font-size: var(--font-size-sm);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.data-table tbody tr {
-  transition: var(--transition-base);
-}
-
-.data-table tbody tr:hover {
-  background-color: var(--color-neutral-50);
-}
-
-.status-badge {
-  display: inline-flex;
-  align-items: center;
-  padding: var(--spacing-xs) var(--spacing-sm);
-  border-radius: 20px;
-  font-size: var(--font-size-xs);
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.status-active { background: rgba(40, 167, 69, 0.1); color: var(--color-success); }
-.status-pending { background: rgba(255, 193, 7, 0.1); color: var(--color-warning); }
-.status-inactive { background: rgba(220, 53, 69, 0.1); color: var(--color-danger); }
-
-.action-btn {
-  padding: var(--spacing-xs) var(--spacing-sm);
-  border: none;
-  border-radius: var(--border-radius);
-  font-size: var(--font-size-xs);
-  cursor: pointer;
-  transition: var(--transition-base);
-  margin-right: var(--spacing-xs);
-}
-
-.action-btn.edit {
-  background-color: var(--color-info);
-  color: white;
-}
-
-.action-btn.delete {
-  background-color: var(--color-danger);
-  color: white;
-}
-
-.action-btn:hover {
-  transform: translateY(-1px);
-  opacity: 0.9;
-}
-
-/* 반응형 */
-@media (max-width: 1024px) {
-  .sidebar {
-    transform: translateX(-100%);
-    transition: var(--transition-base);
-  }
-  
-  .sidebar.open {
-    transform: translateX(0);
-  }
-  
-  .main-content {
-    margin-left: 0;
-  }
-  
-  .stats-grid {
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  }
-}
-
-@media (max-width: 768px) {
-  .admin-header {
-    padding: var(--spacing-md);
-  }
-  
-  .content-area {
-    padding: var(--spacing-md);
-  }
-  
-  .stats-grid {
-    grid-template-columns: 1fr;
-  }
-  
-  .table-header {
-    flex-direction: column;
-    gap: var(--spacing-md);
-    align-items: stretch;
-  }
-  
-  .data-table {
-    font-size: var(--font-size-sm);
-  }
-  
-  .data-table th,
-  .data-table td {
-    padding: var(--spacing-sm);
-  }
-}
-
-/* 로딩 애니메이션 */
-.loading {
-  display: inline-block;
-  width: 20px;
-  height: 20px;
-  border: 3px solid rgba(255, 255, 255, 0.3);
-  border-radius: 50%;
-  border-top-color: white;
-  animation: spin 1s ease-in-out infinite;
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
-/* 알림 표시 */
-.notification-badge {
-  position: absolute;
-  top: -8px;
-  right: -8px;
-  background: var(--color-danger);
-  color: white;
-  border-radius: 50%;
-  width: 20px;
-  height: 20px;
-  font-size: var(--font-size-xs);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
-}
-
-/* 스크롤바 스타일 - 브라우저 호환성 개선 */
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: var(--color-neutral-100);
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--color-neutral-400);
-  border-radius: var(--border-radius-sm);
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--color-neutral-600);
-}
-
-/* Firefox 스크롤바 */
-* {
-  scrollbar-width: thin;
-  scrollbar-color: var(--color-neutral-400) var(--color-neutral-100);
-}
-
-/* 키보드 네비게이션 개선 */
-.nav-link:focus,
-.btn:focus,
-button:focus,
-a:focus {
-  box-shadow: var(--box-shadow-focus);
-  z-index: 1;
-}
-
-/* 터치 디바이스 최적화 */
-@media (hover: none) and (pointer: coarse) {
-  .nav-link,
-  .btn,
-  .action-btn {
-    min-height: var(--touch-target-min);
-    min-width: var(--touch-target-min);
-  }
-}
-
-/* Internet Explorer 11 폴백 */
-@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
-  .admin-layout {
-    display: block;
-  }
-  
-  .sidebar {
-    float: left;
-  }
-  
-  .main-content {
-    margin-left: var(--sidebar-width);
-    display: block;
-  }
-  
-  .stats-grid {
-    display: block;
-  }
-  
-  .stat-card {
-    display: block;
-    margin-bottom: var(--spacing-lg);
-  }
-}
-
-/* 다크 모드 지원 */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-neutral-50: #1a1a1a;
-    --color-neutral-100: #2d2d2d;
-    --color-neutral-200: #404040;
-    --color-neutral-300: #525252;
-    --text-primary: #ffffff;
-    --text-secondary: #e5e5e5;
-  }
-}
-
-</style>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Needit 관리자</title>
+	<link rel="icon" href="images/favicon.ico">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+	<style>
+		/* CSS 변수 시스템 - 접근성 및 브라우저 호환성 개선 */
+		:root {
+			/* 색상 시스템 - WCAG 2.1 AA 기준 준수 */
+			--color-primary: #ff533f;
+			--color-primary-light: #ff7a66;
+			--color-primary-dark: #e63c28;
+			--color-primary-accessible: #d63384;
+			/* 더 높은 대비율 */
+			--color-secondary: #6c757d;
+			--color-success: #198754;
+			/* 더 어두운 녹색으로 대비 개선 */
+			--color-warning: #fd7e14;
+			/* 더 어두운 주황색으로 대비 개선 */
+			--color-danger: #dc3545;
+			--color-info: #0dcaf0;
+
+			/* 중성 색상 - 더 나은 대비율 */
+			--color-neutral-50: #fafafa;
+			--color-neutral-100: #f8f9fa;
+			--color-neutral-200: #e9ecef;
+			--color-neutral-300: #dee2e6;
+			--color-neutral-400: #ced4da;
+			--color-neutral-500: #adb5bd;
+			--color-neutral-600: #6c757d;
+			--color-neutral-700: #495057;
+			--color-neutral-800: #343a40;
+			--color-neutral-900: #212529;
+
+			/* 텍스트 색상 - 접근성 개선 */
+			--text-primary: #212529;
+			--text-secondary: #495057;
+			--text-muted: #6c757d;
+			--text-light: #ffffff;
+
+			/* 간격 시스템 */
+			--spacing-xs: 0.25rem;
+			--spacing-sm: 0.5rem;
+			--spacing-md: 1rem;
+			--spacing-lg: 1.5rem;
+			--spacing-xl: 2rem;
+			--spacing-xxl: 3rem;
+
+			/* 타이포그래피 */
+			--font-size-xs: 0.75rem;
+			--font-size-sm: 0.875rem;
+			--font-size-base: 1rem;
+			--font-size-lg: 1.125rem;
+			--font-size-xl: 1.25rem;
+			--font-size-xxl: 1.5rem;
+			--font-size-xxxl: 2rem;
+			--line-height-base: 1.6;
+			--line-height-sm: 1.4;
+			--line-height-lg: 1.8;
+
+			/* 레이아웃 */
+			--border-radius: 8px;
+			--border-radius-sm: 4px;
+			--border-radius-lg: 12px;
+			--box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+			--box-shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.15);
+			--box-shadow-focus: 0 0 0 3px rgba(255, 83, 63, 0.25);
+
+			/* 애니메이션 */
+			--transition-base: 0.2s ease;
+			--transition-fast: 0.1s ease;
+			--transition-slow: 0.3s ease;
+
+			/* 레이아웃 변수 */
+			--sidebar-width: 280px;
+			--header-height: 70px;
+
+			/* 터치 타겟 최소 크기 (접근성) */
+			--touch-target-min: 44px;
+		}
+
+		/* 전역 스타일 - 접근성 및 브라우저 호환성 개선 */
+		*,
+		*::before,
+		*::after {
+			box-sizing: border-box;
+		}
+
+		* {
+			margin: 0;
+			padding: 0;
+		}
+
+		html {
+			font-size: 16px;
+			/* 기본 폰트 크기 명시 */
+			scroll-behavior: smooth;
+		}
+
+		/* prefers-reduced-motion 지원 */
+		@media (prefers-reduced-motion: reduce) {
+
+			*,
+			*::before,
+			*::after {
+				animation-duration: 0.01ms !important;
+				animation-iteration-count: 1 !important;
+				transition-duration: 0.01ms !important;
+				scroll-behavior: auto !important;
+			}
+		}
+
+		body {
+			font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans KR', sans-serif;
+			background-color: var(--color-neutral-50);
+			color: var(--text-primary);
+			line-height: var(--line-height-base);
+			font-size: var(--font-size-base);
+			-webkit-font-smoothing: antialiased;
+			-moz-osx-font-smoothing: grayscale;
+			text-rendering: optimizeLegibility;
+		}
+
+		/* 포커스 스타일 - 접근성 개선 */
+		:focus {
+			outline: 2px solid var(--color-primary);
+			outline-offset: 2px;
+		}
+
+		:focus:not(:focus-visible) {
+			outline: none;
+		}
+
+		:focus-visible {
+			outline: 2px solid var(--color-primary);
+			outline-offset: 2px;
+		}
+
+		/* 스크린 리더 전용 텍스트 */
+		.sr-only {
+			position: absolute;
+			width: 1px;
+			height: 1px;
+			padding: 0;
+			margin: -1px;
+			overflow: hidden;
+			clip: rect(0, 0, 0, 0);
+			white-space: nowrap;
+			border: 0;
+		}
+
+		/* 고대비 모드 지원 */
+		@media (prefers-contrast: high) {
+			:root {
+				--color-primary: #cc0000;
+				--color-neutral-700: #000000;
+				--color-neutral-300: #666666;
+			}
+		}
+
+		/* 관리자 레이아웃 */
+		.admin-layout {
+			display: flex;
+			min-height: 100vh;
+		}
+
+		/* 사이드바 */
+		.sidebar {
+			width: var(--sidebar-width);
+			background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+			color: white;
+			position: fixed;
+			height: 100vh;
+			overflow-y: auto;
+			box-shadow: var(--box-shadow-lg);
+			z-index: 1000;
+		}
+
+		.sidebar-header {
+			padding: var(--spacing-xl);
+			border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+			text-align: center;
+		}
+
+		.sidebar-logo {
+			width: 200px;
+			height: auto;
+			filter: brightness(0) invert(1);
+		}
+
+		.sidebar-title {
+			font-size: var(--font-size-lg);
+			font-weight: 600;
+			margin-top: var(--spacing-md);
+			opacity: 0.9;
+		}
+
+		/* 네비게이션 메뉴 */
+		.sidebar-nav {
+			padding: var(--spacing-lg) 0;
+		}
+
+		.sidebar-nav ul {
+			list-style: none;
+			padding: 0;
+			margin: 0;
+		}
+
+		.nav-item {
+			margin-bottom: var(--spacing-xs);
+		}
+
+		.nav-link {
+			display: flex;
+			align-items: center;
+			padding: var(--spacing-md) var(--spacing-xl);
+			color: rgba(255, 255, 255, 0.9);
+			text-decoration: none;
+			transition: var(--transition-base);
+			font-weight: 500;
+		}
+
+		.nav-link:hover {
+			background-color: rgba(255, 255, 255, 0.1);
+			color: white;
+			transform: translateX(4px);
+		}
+
+		.nav-link.active {
+			background-color: rgba(255, 255, 255, 0.2);
+			color: white;
+			border-right: 4px solid white;
+		}
+
+		.nav-icon {
+			width: 20px;
+			margin-right: var(--spacing-md);
+			text-align: center;
+		}
+
+		/* 메인 콘텐츠 */
+		.main-content {
+			flex: 1;
+			margin-left: var(--sidebar-width);
+			display: flex;
+			flex-direction: column;
+		}
+
+		/* 헤더 */
+		.admin-header {
+			background: white;
+			padding: var(--spacing-lg) var(--spacing-xl);
+			box-shadow: var(--box-shadow);
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			position: sticky;
+			top: 0;
+			z-index: 100;
+		}
+
+		.page-title {
+			font-size: var(--font-size-xxl);
+			font-weight: 700;
+			color: var(--color-neutral-900);
+			margin: 0;
+		}
+
+		.admin-actions {
+			display: flex;
+			align-items: center;
+			gap: var(--spacing-md);
+		}
+
+		.btn {
+			display: inline-flex;
+			align-items: center;
+			padding: var(--spacing-sm) var(--spacing-lg);
+			border: none;
+			border-radius: var(--border-radius);
+			font-size: var(--font-size-sm);
+			font-weight: 500;
+			text-decoration: none;
+			cursor: pointer;
+			transition: var(--transition-base);
+			gap: var(--spacing-sm);
+		}
+
+		.btn-primary {
+			background-color: var(--color-primary);
+			color: white;
+		}
+
+		.btn-primary:hover {
+			background-color: var(--color-primary-dark);
+			transform: translateY(-1px);
+		}
+
+		.btn-outline {
+			background-color: transparent;
+			border: 2px solid var(--color-neutral-300);
+			color: var(--color-neutral-700);
+		}
+
+		.btn-outline:hover {
+			border-color: var(--color-primary);
+			color: var(--color-primary);
+		}
+
+		/* 콘텐츠 영역 */
+		.content-area {
+			flex: 1;
+			padding: var(--spacing-xl);
+		}
+
+		/* 통계 카드 */
+		.stats-grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+			gap: var(--spacing-lg);
+			margin-bottom: var(--spacing-xxl);
+		}
+
+		.stat-card {
+			background: white;
+			padding: var(--spacing-xl);
+			border-radius: var(--border-radius-lg);
+			box-shadow: var(--box-shadow);
+			display: flex;
+			align-items: center;
+			gap: var(--spacing-lg);
+			transition: var(--transition-base);
+		}
+
+		.stat-card:hover {
+			transform: translateY(-2px);
+			box-shadow: var(--box-shadow-lg);
+		}
+
+		.stat-icon {
+			width: 60px;
+			height: 60px;
+			border-radius: 50%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: var(--font-size-xl);
+			color: white;
+		}
+
+		.stat-icon.primary {
+			background: var(--color-primary);
+		}
+
+		.stat-icon.success {
+			background: var(--color-success);
+		}
+
+		.stat-icon.warning {
+			background: var(--color-warning);
+		}
+
+		.stat-icon.info {
+			background: var(--color-info);
+		}
+
+		.stat-content h3 {
+			font-size: var(--font-size-xs);
+			color: var(--color-neutral-500);
+			font-weight: 500;
+			margin-bottom: var(--spacing-xs);
+			text-transform: uppercase;
+			letter-spacing: 0.5px;
+		}
+
+		.stat-content .stat-number {
+			font-size: var(--font-size-xxxl);
+			font-weight: 700;
+			color: var(--color-neutral-900);
+		}
+
+		/* 데이터 테이블 */
+		.data-table-container {
+			background: white;
+			border-radius: var(--border-radius-lg);
+			box-shadow: var(--box-shadow);
+			overflow: hidden;
+		}
+
+		.table-header {
+			padding: var(--spacing-xl);
+			border-bottom: 1px solid var(--color-neutral-200);
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
+
+		.table-title {
+			font-size: var(--font-size-xl);
+			font-weight: 600;
+			color: var(--color-neutral-900);
+			margin: 0;
+		}
+
+		.table-actions {
+			display: flex;
+			gap: var(--spacing-sm);
+		}
+
+		.data-table {
+			width: 100%;
+			border-collapse: collapse;
+		}
+
+		.data-table th,
+		.data-table td {
+			padding: var(--spacing-md) var(--spacing-lg);
+			text-align: left;
+			border-bottom: 1px solid var(--color-neutral-200);
+		}
+
+		.data-table th {
+			background-color: var(--color-neutral-100);
+			font-weight: 600;
+			color: var(--color-neutral-700);
+			font-size: var(--font-size-sm);
+			text-transform: uppercase;
+			letter-spacing: 0.5px;
+		}
+
+		.data-table tbody tr {
+			transition: var(--transition-base);
+		}
+
+		.data-table tbody tr:hover {
+			background-color: var(--color-neutral-50);
+		}
+
+		.status-badge {
+			display: inline-flex;
+			align-items: center;
+			padding: var(--spacing-xs) var(--spacing-sm);
+			border-radius: 20px;
+			font-size: var(--font-size-xs);
+			font-weight: 500;
+			text-transform: uppercase;
+			letter-spacing: 0.5px;
+		}
+
+		.status-active {
+			background: rgba(40, 167, 69, 0.1);
+			color: var(--color-success);
+		}
+
+		.status-pending {
+			background: rgba(255, 193, 7, 0.1);
+			color: var(--color-warning);
+		}
+
+		.status-inactive {
+			background: rgba(220, 53, 69, 0.1);
+			color: var(--color-danger);
+		}
+
+		.action-btn {
+			padding: var(--spacing-xs) var(--spacing-sm);
+			border: none;
+			border-radius: var(--border-radius);
+			font-size: var(--font-size-xs);
+			cursor: pointer;
+			transition: var(--transition-base);
+			margin-right: var(--spacing-xs);
+		}
+
+		.action-btn.edit {
+			background-color: var(--color-info);
+			color: white;
+		}
+
+		.action-btn.delete {
+			background-color: var(--color-danger);
+			color: white;
+		}
+
+		.action-btn:hover {
+			transform: translateY(-1px);
+			opacity: 0.9;
+		}
+
+		/* 반응형 */
+		@media (max-width: 1024px) {
+			.sidebar {
+				transform: translateX(-100%);
+				transition: var(--transition-base);
+			}
+
+			.sidebar.open {
+				transform: translateX(0);
+			}
+
+			.main-content {
+				margin-left: 0;
+			}
+
+			.stats-grid {
+				grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+			}
+		}
+
+		@media (max-width: 768px) {
+			.admin-header {
+				padding: var(--spacing-md);
+			}
+
+			.content-area {
+				padding: var(--spacing-md);
+			}
+
+			.stats-grid {
+				grid-template-columns: 1fr;
+			}
+
+			.table-header {
+				flex-direction: column;
+				gap: var(--spacing-md);
+				align-items: stretch;
+			}
+
+			.data-table {
+				font-size: var(--font-size-sm);
+			}
+
+			.data-table th,
+			.data-table td {
+				padding: var(--spacing-sm);
+			}
+		}
+
+		/* 로딩 애니메이션 */
+		.loading {
+			display: inline-block;
+			width: 20px;
+			height: 20px;
+			border: 3px solid rgba(255, 255, 255, 0.3);
+			border-radius: 50%;
+			border-top-color: white;
+			animation: spin 1s ease-in-out infinite;
+		}
+
+		@keyframes spin {
+			to {
+				transform: rotate(360deg);
+			}
+		}
+
+		/* 알림 표시 */
+		.notification-badge {
+			position: absolute;
+			top: -8px;
+			right: -8px;
+			background: var(--color-danger);
+			color: white;
+			border-radius: 50%;
+			width: 20px;
+			height: 20px;
+			font-size: var(--font-size-xs);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-weight: bold;
+		}
+
+		/* 스크롤바 스타일 - 브라우저 호환성 개선 */
+		::-webkit-scrollbar {
+			width: 8px;
+		}
+
+		::-webkit-scrollbar-track {
+			background: var(--color-neutral-100);
+		}
+
+		::-webkit-scrollbar-thumb {
+			background: var(--color-neutral-400);
+			border-radius: var(--border-radius-sm);
+		}
+
+		::-webkit-scrollbar-thumb:hover {
+			background: var(--color-neutral-600);
+		}
+
+		/* Firefox 스크롤바 */
+		* {
+			scrollbar-width: thin;
+			scrollbar-color: var(--color-neutral-400) var(--color-neutral-100);
+		}
+
+		/* 키보드 네비게이션 개선 */
+		.nav-link:focus,
+		.btn:focus,
+		button:focus,
+		a:focus {
+			box-shadow: var(--box-shadow-focus);
+			z-index: 1;
+		}
+
+		/* 터치 디바이스 최적화 */
+		@media (hover: none) and (pointer: coarse) {
+
+			.nav-link,
+			.btn,
+			.action-btn {
+				min-height: var(--touch-target-min);
+				min-width: var(--touch-target-min);
+			}
+		}
+
+		/* Internet Explorer 11 폴백 */
+		@media screen and (-ms-high-contrast: active),
+		(-ms-high-contrast: none) {
+			.admin-layout {
+				display: block;
+			}
+
+			.sidebar {
+				float: left;
+			}
+
+			.main-content {
+				margin-left: var(--sidebar-width);
+				display: block;
+			}
+
+			.stats-grid {
+				display: block;
+			}
+
+			.stat-card {
+				display: block;
+				margin-bottom: var(--spacing-lg);
+			}
+		}
+
+		/* 다크 모드 지원 */
+		@media (prefers-color-scheme: dark) {
+			:root {
+				--color-neutral-50: #1a1a1a;
+				--color-neutral-100: #2d2d2d;
+				--color-neutral-200: #404040;
+				--color-neutral-300: #525252;
+				--text-primary: #ffffff;
+				--text-secondary: #e5e5e5;
+			}
+		}
+	</style>
 
 </head>
+
 <body>
-  <!-- 관리자 레이아웃 -->
-  <div class="admin-layout">
-    <!-- 사이드바 -->
-    <aside class="sidebar" role="navigation" aria-label="관리자 메뉴">
-      <div class="sidebar-header">
-        <img src="images/needitAdmin.png" alt="Needit 관리자" class="sidebar-logo">
-        <h1 class="sidebar-title">관리자 대시보드</h1>
-      </div>
-      
-      <nav class="sidebar-nav">
-        <ul role="list">
-          <li class="nav-item">
-            <a href="admin-dashboard.html" class="nav-link" aria-describedby="dashboard-desc">
-              <i class="fas fa-tachometer-alt nav-icon" aria-hidden="true"></i>
-              <span>대시보드</span>
-            </a>
-            <span id="dashboard-desc" class="sr-only">관리자 대시보드 메인 화면입니다</span>
-          </li>
-          
-          <li class="nav-item">
-            <a href="reportList.html" class="nav-link" aria-describedby="report-desc">
-              <i class="fas fa-exclamation-triangle nav-icon" aria-hidden="true"></i>
-              <span>신고접수 목록</span>
-            </a>
-            <span id="report-desc" class="sr-only">사용자 신고 접수 현황을 확인하고 관리합니다</span>
-          </li>
-          
-          <li class="nav-item">
-            <a href="businessReq.html" class="nav-link" aria-describedby="business-desc">
-              <i class="fas fa-building nav-icon" aria-hidden="true"></i>
-              <span>업체요청 목록</span>
-            </a>
-            <span id="business-desc" class="sr-only">업체 등록 요청을 검토하고 승인합니다</span>
-          </li>
-          
-          <li class="nav-item">
-            <a href="bannerUpdate.html" class="nav-link" aria-describedby="banner-desc">
-              <i class="fas fa-image nav-icon" aria-hidden="true"></i>
-              <span>메인배너 수정</span>
-            </a>
-            <span id="banner-desc" class="sr-only">메인 페이지 배너 이미지를 업데이트합니다</span>
-          </li>
-          
-          <li class="nav-item">
-            <a href="noticeUpdate.html" class="nav-link" aria-describedby="notice-desc">
-              <i class="fas fa-bullhorn nav-icon" aria-hidden="true"></i>
-              <span>공지등록</span>
-            </a>
-            <span id="notice-desc" class="sr-only">새로운 공지사항을 작성하고 게시합니다</span>
-          </li>
-        </ul>
-      </nav>
-    </aside>
+	<!-- 관리자 레이아웃 -->
+	<div class="admin-layout">
+		<!-- 사이드바 -->
+		<aside class="sidebar" role="navigation" aria-label="관리자 메뉴">
+			<div class="sidebar-header">
+				<img src="images/needitAdmin.png" alt="Needit 관리자" class="sidebar-logo">
+				<h1 class="sidebar-title">관리자 대시보드</h1>
+			</div>
 
-    <!-- 메인 콘텐츠 -->
-    <main class="main-content">
-      <!-- 헤더 -->
-      <header class="admin-header">
-        <h2 class="page-title" id="page-title">관리자 페이지</h2>
-        <div class="admin-actions">
-          <button type="button" class="btn btn-outline" id="sidebar-toggle" aria-label="사이드바 토글" aria-expanded="true">
-            <i class="fas fa-bars" aria-hidden="true"></i>
-          </button>
-          <a href="main.html" class="btn btn-primary">
-            <i class="fas fa-home" aria-hidden="true"></i>
-            <span>메인으로</span>
-          </a>
-        </div>
-      </header>
+			<nav class="sidebar-nav">
+				<ul role="list">
+					<li class="nav-item">
+						<a href="admin-dashboard.html" class="nav-link" aria-describedby="dashboard-desc">
+							<i class="fas fa-tachometer-alt nav-icon" aria-hidden="true"></i>
+							<span>대시보드</span>
+						</a>
+						<span id="dashboard-desc" class="sr-only">관리자 대시보드 메인 화면입니다</span>
+					</li>
 
-      <!-- 콘텐츠 영역 -->
-      <div class="content-area" id="admin-content">
-        <!-- 여기에 각 페이지별 콘텐츠가 들어갑니다 -->
-      </div>
-    </main>
-  </div>
+					<li class="nav-item">
+						<a href="reportList.html" class="nav-link" aria-describedby="report-desc">
+							<i class="fas fa-exclamation-triangle nav-icon" aria-hidden="true"></i>
+							<span>신고접수 목록</span>
+						</a>
+						<span id="report-desc" class="sr-only">사용자 신고 접수 현황을 확인하고 관리합니다</span>
+					</li>
 
-  <!-- JavaScript -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-  
-  <script>
-    // 사이드바 토글 기능
-    document.getElementById('sidebar-toggle').addEventListener('click', function() {
-      const sidebar = document.querySelector('.sidebar');
-      const isOpen = sidebar.classList.contains('open');
-      
-      if (window.innerWidth <= 1024) {
-        sidebar.classList.toggle('open');
-        this.setAttribute('aria-expanded', !isOpen);
-      }
-    });
+					<li class="nav-item">
+						<a href="businessReq.html" class="nav-link" aria-describedby="business-desc">
+							<i class="fas fa-building nav-icon" aria-hidden="true"></i>
+							<span>업체요청 목록</span>
+						</a>
+						<span id="business-desc" class="sr-only">업체 등록 요청을 검토하고 승인합니다</span>
+					</li>
 
-    // 반응형 처리
-    function handleResize() {
-      const sidebar = document.querySelector('.sidebar');
-      const toggleBtn = document.getElementById('sidebar-toggle');
-      
-      if (window.innerWidth > 1024) {
-        sidebar.classList.remove('open');
-        toggleBtn.setAttribute('aria-expanded', 'true');
-      }
-    }
+					<li class="nav-item">
+						<a href="bannerUpdate.html" class="nav-link" aria-describedby="banner-desc">
+							<i class="fas fa-image nav-icon" aria-hidden="true"></i>
+							<span>메인배너 수정</span>
+						</a>
+						<span id="banner-desc" class="sr-only">메인 페이지 배너 이미지를 업데이트합니다</span>
+					</li>
 
-    window.addEventListener('resize', handleResize);
-    handleResize(); // 초기 실행
+					<li class="nav-item">
+						<a href="noticeUpdate.html" class="nav-link" aria-describedby="notice-desc">
+							<i class="fas fa-bullhorn nav-icon" aria-hidden="true"></i>
+							<span>공지등록</span>
+						</a>
+						<span id="notice-desc" class="sr-only">새로운 공지사항을 작성하고 게시합니다</span>
+					</li>
+				</ul>
+			</nav>
+		</aside>
 
-    // 키보드 네비게이션 개선
-    document.addEventListener('keydown', function(e) {
-      // ESC 키로 사이드바 닫기
-      if (e.key === 'Escape') {
-        const sidebar = document.querySelector('.sidebar');
-        const toggleBtn = document.getElementById('sidebar-toggle');
-        
-        if (sidebar.classList.contains('open')) {
-          sidebar.classList.remove('open');
-          toggleBtn.setAttribute('aria-expanded', 'false');
-          toggleBtn.focus();
-        }
-      }
-    });
+		<!-- 메인 콘텐츠 -->
+		<main class="main-content">
+			<!-- 헤더 -->
+			<header class="admin-header">
+				<h2 class="page-title" id="page-title">관리자 페이지</h2>
+				<div class="admin-actions">
+					<button type="button" class="btn btn-outline" id="sidebar-toggle" aria-label="사이드바 토글"
+						aria-expanded="true">
+						<i class="fas fa-bars" aria-hidden="true"></i>
+					</button>
+					<a href="main.html" class="btn btn-primary">
+						<i class="fas fa-home" aria-hidden="true"></i>
+						<span>메인으로</span>
+					</a>
+				</div>
+			</header>
 
-    // 접근성: 포커스 트랩 (모바일에서 사이드바 열렸을 때)
-    function trapFocus(element) {
-      const focusableElements = element.querySelectorAll(
-        'a[href], button, textarea, input[type="text"], input[type="radio"], input[type="checkbox"], select'
-      );
-      const firstFocusableElement = focusableElements[0];
-      const lastFocusableElement = focusableElements[focusableElements.length - 1];
+			<!-- 콘텐츠 영역 -->
+			<div class="content-area" id="admin-content">
+				<!-- 여기에 각 페이지별 콘텐츠가 들어갑니다 -->
+			</div>
+		</main>
+	</div>
 
-      element.addEventListener('keydown', function(e) {
-        if (e.key === 'Tab') {
-          if (e.shiftKey) {
-            if (document.activeElement === firstFocusableElement) {
-              lastFocusableElement.focus();
-              e.preventDefault();
-            }
-          } else {
-            if (document.activeElement === lastFocusableElement) {
-              firstFocusableElement.focus();
-              e.preventDefault();
-            }
-          }
-        }
-      });
-    }
+	<!-- JavaScript -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+		crossorigin="anonymous"></script>
 
-    // 모바일에서 사이드바가 열렸을 때 포커스 트랩 적용
-    const sidebar = document.querySelector('.sidebar');
-    if (window.innerWidth <= 1024) {
-      trapFocus(sidebar);
-    }
-  </script>
+	<script>
+		// 사이드바 토글 기능
+		document.getElementById('sidebar-toggle').addEventListener('click', function () {
+			const sidebar = document.querySelector('.sidebar');
+			const isOpen = sidebar.classList.contains('open');
+
+			if (window.innerWidth <= 1024) {
+				sidebar.classList.toggle('open');
+				this.setAttribute('aria-expanded', !isOpen);
+			}
+		});
+
+		// 반응형 처리
+		function handleResize() {
+			const sidebar = document.querySelector('.sidebar');
+			const toggleBtn = document.getElementById('sidebar-toggle');
+
+			if (window.innerWidth > 1024) {
+				sidebar.classList.remove('open');
+				toggleBtn.setAttribute('aria-expanded', 'true');
+			}
+		}
+
+		window.addEventListener('resize', handleResize);
+		handleResize(); // 초기 실행
+
+		// 키보드 네비게이션 개선
+		document.addEventListener('keydown', function (e) {
+			// ESC 키로 사이드바 닫기
+			if (e.key === 'Escape') {
+				const sidebar = document.querySelector('.sidebar');
+				const toggleBtn = document.getElementById('sidebar-toggle');
+
+				if (sidebar.classList.contains('open')) {
+					sidebar.classList.remove('open');
+					toggleBtn.setAttribute('aria-expanded', 'false');
+					toggleBtn.focus();
+				}
+			}
+		});
+
+		// 접근성: 포커스 트랩 (모바일에서 사이드바 열렸을 때)
+		function trapFocus(element) {
+			const focusableElements = element.querySelectorAll(
+				'a[href], button, textarea, input[type="text"], input[type="radio"], input[type="checkbox"], select'
+			);
+			const firstFocusableElement = focusableElements[0];
+			const lastFocusableElement = focusableElements[focusableElements.length - 1];
+
+			element.addEventListener('keydown', function (e) {
+				if (e.key === 'Tab') {
+					if (e.shiftKey) {
+						if (document.activeElement === firstFocusableElement) {
+							lastFocusableElement.focus();
+							e.preventDefault();
+						}
+					} else {
+						if (document.activeElement === lastFocusableElement) {
+							firstFocusableElement.focus();
+							e.preventDefault();
+						}
+					}
+				}
+			});
+		}
+
+		// 모바일에서 사이드바가 열렸을 때 포커스 트랩 적용
+		const sidebar = document.querySelector('.sidebar');
+		if (window.innerWidth <= 1024) {
+			trapFocus(sidebar);
+		}
+	</script>
 </body>
+
 </html>
