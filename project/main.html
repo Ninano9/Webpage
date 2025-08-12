@@ -538,6 +538,7 @@
         .search-container {
             display: flex;
             justify-content: center;
+            right: 0;
             align-items: center;
             padding: var(--spacing-xl) 0;
             max-width: var(--container-max-width);
@@ -1243,12 +1244,32 @@
             background-color: #6c757d;
         }
 
+        /* 인기 게시글과 지도 가로 배치 */
+        .posts-and-map-container {
+            display: flex;
+            gap: var(--spacing-xl);
+            padding: var(--spacing-xl);
+        }
+
+        .popular-posts-section {
+            flex: 1;
+        }
+
+        .map-section {
+            flex: 1;
+        }
+
+        .popular-posts-section .section-header,
+        .map-section .section-header {
+            padding: 0 0 var(--spacing-lg) 0;
+            font-size: var(--font-size-xl);
+        }
+
         /* 인기 게시글 스타일 */
         .popular-posts-container {
             display: flex;
             flex-direction: column;
-            gap: var(--spacing-lg);
-            padding: var(--spacing-xl);
+            gap: var(--spacing-md);
         }
 
         .popular-post {
@@ -1275,20 +1296,24 @@
 
         /* 지도 컨테이너 스타일 */
         .map-container {
-            padding: var(--spacing-xl);
             display: flex;
             justify-content: center;
         }
 
         #map {
             width: 100%;
-            max-width: 800px;
             height: 400px;
             border-radius: var(--border-radius);
             box-shadow: var(--box-shadow);
         }
 
+        /* 반응형 - 모바일에서는 세로 배치 */
         @media (max-width: 768px) {
+            .posts-and-map-container {
+                flex-direction: column;
+                gap: var(--spacing-lg);
+            }
+            
             #map {
                 height: 300px;
             }
@@ -1532,42 +1557,46 @@
         </section>
         <div id="textMargin"></div>
 
-        <!-- 인기 게시글(추천수) -->
-        <!-- 인기 게시글 -->
+        <!-- 인기 게시글과 지도 -->
         <section class="content-section">
-            <div class="section-header"><strong>오늘의 인기 게시글</strong></div>
-            <div class="popular-posts-container">
-                <div class="popular-post">
-                    <h4 class="post-title">첫 번째 인기 게시글</h4>
-                    <p class="post-content">어머님, 나 어디에서 그대 꽃잎을 헤일 향해 흘리우리다. 때 노래, 슬프게 슬퍼하는 밤을 그리워 패, 아니라 좋을까 아름따다 말 죽은 사랑과 별이 보내 하늘을 찾지 했다.</p>
+            <div class="posts-and-map-container">
+                <!-- 인기 게시글 -->
+                <div class="popular-posts-section">
+                    <div class="section-header"><strong>오늘의 인기 게시글</strong></div>
+                    <div class="popular-posts-container">
+                        <div class="popular-post">
+                            <h4 class="post-title">첫 번째 인기 게시글</h4>
+                            <p class="post-content">어머님, 나 어디에서 그대 꽃잎을 헤일 향해 흘리우리다. 때 노래, 슬프게 슬퍼하는 밤을 그리워 패, 아니라 좋을까 아름따다 말 죽은 사랑과 별이 보내 하늘을 찾지 했다.</p>
+                        </div>
+                        <div class="popular-post">
+                            <h4 class="post-title">두 번째 인기 게시글</h4>
+                            <p class="post-content">이렇게 나는 앉아서 강이 멀리 이국 것을 소멸시키는 이름자를 어미들 바라보는 이국 지나고 꽃밭에 너는 별이 가실 뜨겁게 자신을 보내 봅니다.</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="popular-post">
-                    <h4 class="post-title">두 번째 인기 게시글</h4>
-                    <p class="post-content">이렇게 나는 앉아서 강이 멀리 이국 것을 소멸시키는 이름자를 어미들 바라보는 이국 지나고 꽃밭에 너는 별이 가실 뜨겁게 자신을 보내 봅니다.</p>
+                
+                <!-- 지도 -->
+                <div class="map-section">
+                    <div class="section-header"><strong>내 주변 지도</strong></div>
+                    <div class="map-container">
+                        <div id="map"></div>
+                    </div>
                 </div>
             </div>
         </section>
+        <script type="text/javascript"
+            src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7b3f0d951065994a496da70090c542f4"></script>
+        <script>
+            var container = document.getElementById('map');
+            var options = {
+                center: new kakao.maps.LatLng(33.450701, 126.570667),
+                level: 3
+            };
 
-        <!-- 주변 지도 -->
-        <section class="content-section">
-            <div class="section-header"><strong>내 주변 지도</strong></div>
-            <div class="map-container">
-                <div id="map"></div>
-            </div>
-        </section>
-            <script type="text/javascript"
-                src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7b3f0d951065994a496da70090c542f4"></script>
-            <script>
-                var container = document.getElementById('map');
-                var options = {
-                    center: new kakao.maps.LatLng(33.450701, 126.570667),
-                    level: 3
-                };
+            var map = new kakao.maps.Map(container, options);
+        </script>
 
-                var map = new kakao.maps.Map(container, options);
-            </script>
-
-        </div><!-- #mainMap -->
+    </div><!-- #mainMap -->
 
     </div><!-- #container -->
 
