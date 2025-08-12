@@ -1,4 +1,4 @@
 /.metadata/
-task.*
-requirements.*
-design.*
+
+# Kiro specs 디렉토리 제외
+.kiro/specs/color-unification-refactor/
