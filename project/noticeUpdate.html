@@ -40,15 +40,23 @@
             // 페이지 제목 변경
             document.getElementById('page-title').textContent = '공지등록';
 
-            // 현재 메뉴 활성화 (DOM 로드 후 실행)
-            setTimeout(() => {
-                document.querySelectorAll('.nav-link').forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('href') === 'noticeUpdate.html') {
-                        link.classList.add('active');
-                    }
-                });
-            }, 100);
+            // 현재 메뉴 활성화
+            const activateMenu = () => {
+                const navLinks = document.querySelectorAll('.nav-link');
+                if (navLinks.length > 0) {
+                    navLinks.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href') === 'noticeUpdate.html') {
+                            link.classList.add('active');
+                            console.log('공지등록 메뉴 활성화됨');
+                        }
+                    });
+                } else {
+                    setTimeout(activateMenu, 100);
+                }
+            };
+            // DOM 로드 완료 후 메뉴 활성화
+            setTimeout(activateMenu, 300);
 
             // admin-content에 정적 내용 추가
             const adminContent = document.getElementById('admin-content');
