@@ -6,20 +6,20 @@
 <link rel="icon" href="images/favicon.ico">
 
 <style>
-/* CSS 변수 시스템 */
-:root {
-  --color-primary: #ff533f;
-  --color-primary-light: #ff7a66;
-  --color-primary-dark: #e63c28;
-  --color-secondary: #6c757d;
-  --color-neutral-100: #f8f9fa;
-  --color-neutral-200: #e9ecef;
-  --color-neutral-300: #dee2e6;
-  --color-neutral-500: #adb5bd;
-  --color-neutral-700: #495057;
-  --color-neutral-800: #343a40;
-  --color-neutral-900: #212529;
-}
+    /* CSS 변수 시스템 */
+    :root {
+        --color-primary: #ff533f;
+        --color-primary-light: #ff7a66;
+        --color-primary-dark: #e63c28;
+        --color-secondary: #6c757d;
+        --color-neutral-100: #f8f9fa;
+        --color-neutral-200: #e9ecef;
+        --color-neutral-300: #dee2e6;
+        --color-neutral-500: #adb5bd;
+        --color-neutral-700: #495057;
+        --color-neutral-800: #343a40;
+        --color-neutral-900: #212529;
+    }
 </style>
 
 <div id="adminpage-container"></div>
@@ -28,10 +28,10 @@
         .then(response => response.text())
         .then(data => {
             document.getElementById('adminpage-container').innerHTML = data;
-            
+
             // 페이지 제목 변경
             document.getElementById('page-title').textContent = '메인배너 수정';
-            
+
             // 현재 메뉴 활성화
             document.querySelectorAll('.nav-link').forEach(link => {
                 link.classList.remove('active');
@@ -39,13 +39,13 @@
                     link.classList.add('active');
                 }
             });
-            
+
             // admin-content에 정적 내용 추가
             const adminContent = document.getElementById('admin-content');
             if (adminContent) {
                 adminContent.innerHTML = document.getElementById('adminContent').innerHTML;
             }
-            
+
             // 작성 버튼 이벤트 리스너 추가
             document.getElementById('btnWrite').addEventListener('click', function (event) {
                 event.preventDefault();
@@ -69,7 +69,7 @@
                 alert('이미지 파일만 업로드 가능합니다.');
                 return;
             }
-            
+
             const reader = new FileReader();
             reader.onload = function (e) {
                 const img = document.createElement('img');
@@ -79,7 +79,7 @@
             }
             reader.readAsDataURL(file);
         });
-        
+
         alert('이미지 미리보기가 생성되었습니다.');
     }
 </script>
