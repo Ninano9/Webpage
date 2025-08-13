@@ -316,11 +316,10 @@
         .tooltip-container {
             position: relative;
             display: inline-block;
-            cursor: help;
         }
 
         .tooltip-text {
-            visibility: hidden;
+            display: none;
             width: 400px;
             background-color: var(--color-neutral-800);
             color: white;
@@ -351,7 +350,7 @@
         }
 
         .tooltip-container:hover .tooltip-text {
-            visibility: visible;
+            display: block;
         }
 
         /* 테이블 내 툴팁 위치 조정 */
@@ -361,6 +360,11 @@
             left: 0;
             margin-left: 0;
             width: 350px;
+            display: none;
+        }
+
+        .modern-table .tooltip-container:hover .tooltip-text {
+            display: block;
         }
 
         .modern-table .tooltip-container .tooltip-text::after {
