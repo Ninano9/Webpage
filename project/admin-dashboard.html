@@ -11,23 +11,17 @@
     integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 
   <style>
-    /* CSS 변수 시스템 - 접근성 및 브라우저 호환성 개선 */
+    /* CSS 변수 시스템 */
     :root {
-      /* 색상 시스템 - WCAG 2.1 AA 기준 준수 */
       --color-primary: #ff533f;
       --color-primary-light: #ff7a66;
       --color-primary-dark: #e63c28;
-      --color-primary-accessible: #d63384;
-      /* 더 높은 대비율 */
       --color-secondary: #6c757d;
       --color-success: #198754;
-      /* 더 어두운 녹색으로 대비 개선 */
       --color-warning: #fd7e14;
-      /* 더 어두운 주황색으로 대비 개선 */
       --color-danger: #dc3545;
       --color-info: #0dcaf0;
 
-      /* 중성 색상 - 더 나은 대비율 */
       --color-neutral-50: #fafafa;
       --color-neutral-100: #f8f9fa;
       --color-neutral-200: #e9ecef;
@@ -39,13 +33,11 @@
       --color-neutral-800: #343a40;
       --color-neutral-900: #212529;
 
-      /* 텍스트 색상 - 접근성 개선 */
       --text-primary: #212529;
       --text-secondary: #495057;
       --text-muted: #6c757d;
       --text-light: #ffffff;
 
-      /* 간격 시스템 */
       --spacing-xs: 0.25rem;
       --spacing-sm: 0.5rem;
       --spacing-md: 1rem;
@@ -53,7 +45,6 @@
       --spacing-xl: 2rem;
       --spacing-xxl: 3rem;
 
-      /* 타이포그래피 */
       --font-size-xs: 0.75rem;
       --font-size-sm: 0.875rem;
       --font-size-base: 1rem;
@@ -62,10 +53,7 @@
       --font-size-xxl: 1.5rem;
       --font-size-xxxl: 2rem;
       --line-height-base: 1.6;
-      --line-height-sm: 1.4;
-      --line-height-lg: 1.8;
 
-      /* 레이아웃 */
       --border-radius: 8px;
       --border-radius-sm: 4px;
       --border-radius-lg: 12px;
@@ -73,23 +61,14 @@
       --box-shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.15);
       --box-shadow-focus: 0 0 0 3px rgba(255, 83, 63, 0.25);
 
-      /* 애니메이션 */
       --transition-base: 0.2s ease;
-      --transition-fast: 0.1s ease;
-      --transition-slow: 0.3s ease;
-
-      /* 레이아웃 변수 */
       --sidebar-width: 280px;
       --header-height: 70px;
-
-      /* 터치 타겟 최소 크기 (접근성) */
       --touch-target-min: 44px;
     }
 
-    /* 전역 스타일 - 접근성 및 브라우저 호환성 개선 */
-    *,
-    *::before,
-    *::after {
+    /* 전역 스타일 */
+    *, *::before, *::after {
       box-sizing: border-box;
     }
 
@@ -100,21 +79,7 @@
 
     html {
       font-size: 16px;
-      /* 기본 폰트 크기 명시 */
       scroll-behavior: smooth;
-    }
-
-    /* prefers-reduced-motion 지원 */
-    @media (prefers-reduced-motion: reduce) {
-
-      *,
-      *::before,
-      *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-        scroll-behavior: auto !important;
-      }
     }
 
     body {
@@ -128,7 +93,7 @@
       text-rendering: optimizeLegibility;
     }
 
-    /* 포커스 스타일 - 접근성 개선 */
+    /* 포커스 스타일 */
     :focus {
       outline: 2px solid var(--color-primary);
       outline-offset: 2px;
@@ -154,15 +119,6 @@
       clip: rect(0, 0, 0, 0);
       white-space: nowrap;
       border: 0;
-    }
-
-    /* 고대비 모드 지원 */
-    @media (prefers-contrast: high) {
-      :root {
-        --color-primary: #cc0000;
-        --color-neutral-700: #000000;
-        --color-neutral-300: #666666;
-      }
     }
 
     /* 관리자 레이아웃 */
@@ -494,171 +450,6 @@
       opacity: 0.9;
     }
 
-    /* 반응형 */
-    @media (max-width: 1024px) {
-      .sidebar {
-        transform: translateX(-100%);
-        transition: var(--transition-base);
-      }
-
-      .sidebar.open {
-        transform: translateX(0);
-      }
-
-      .main-content {
-        margin-left: 0;
-      }
-
-      .stats-grid {
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      }
-    }
-
-    @media (max-width: 768px) {
-      .admin-header {
-        padding: var(--spacing-md);
-      }
-
-      .content-area {
-        padding: var(--spacing-md);
-      }
-
-      .stats-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .table-header {
-        flex-direction: column;
-        gap: var(--spacing-md);
-        align-items: stretch;
-      }
-
-      .data-table {
-        font-size: var(--font-size-sm);
-      }
-
-      .data-table th,
-      .data-table td {
-        padding: var(--spacing-sm);
-      }
-    }
-
-    /* 로딩 애니메이션 */
-    .loading {
-      display: inline-block;
-      width: 20px;
-      height: 20px;
-      border: 3px solid rgba(255, 255, 255, 0.3);
-      border-radius: 50%;
-      border-top-color: white;
-      animation: spin 1s ease-in-out infinite;
-    }
-
-    @keyframes spin {
-      to {
-        transform: rotate(360deg);
-      }
-    }
-
-    /* 알림 표시 */
-    .notification-badge {
-      position: absolute;
-      top: -8px;
-      right: -8px;
-      background: var(--color-danger);
-      color: white;
-      border-radius: 50%;
-      width: 20px;
-      height: 20px;
-      font-size: var(--font-size-xs);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: bold;
-    }
-
-    /* 스크롤바 스타일 - 브라우저 호환성 개선 */
-    ::-webkit-scrollbar {
-      width: 8px;
-    }
-
-    ::-webkit-scrollbar-track {
-      background: var(--color-neutral-100);
-    }
-
-    ::-webkit-scrollbar-thumb {
-      background: var(--color-neutral-400);
-      border-radius: var(--border-radius-sm);
-    }
-
-    ::-webkit-scrollbar-thumb:hover {
-      background: var(--color-neutral-600);
-    }
-
-    /* Firefox 스크롤바 */
-    * {
-      scrollbar-width: thin;
-      scrollbar-color: var(--color-neutral-400) var(--color-neutral-100);
-    }
-
-    /* 키보드 네비게이션 개선 */
-    .nav-link:focus,
-    .btn:focus,
-    button:focus,
-    a:focus {
-      box-shadow: var(--box-shadow-focus);
-      z-index: 1;
-    }
-
-    /* 터치 디바이스 최적화 */
-    @media (hover: none) and (pointer: coarse) {
-
-      .nav-link,
-      .btn,
-      .action-btn {
-        min-height: var(--touch-target-min);
-        min-width: var(--touch-target-min);
-      }
-    }
-
-    /* Internet Explorer 11 폴백 */
-    @media screen and (-ms-high-contrast: active),
-    (-ms-high-contrast: none) {
-      .admin-layout {
-        display: block;
-      }
-
-      .sidebar {
-        float: left;
-      }
-
-      .main-content {
-        margin-left: var(--sidebar-width);
-        display: block;
-      }
-
-      .stats-grid {
-        display: block;
-      }
-
-      .stat-card {
-        display: block;
-        margin-bottom: var(--spacing-lg);
-      }
-    }
-
-    /* 다크 모드 지원 */
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --color-neutral-50: #1a1a1a;
-        --color-neutral-100: #2d2d2d;
-        --color-neutral-200: #404040;
-        --color-neutral-300: #525252;
-        --text-primary: #ffffff;
-        --text-secondary: #e5e5e5;
-      }
-    }
-
     /* 현대적인 테이블 컨테이너 */
     .table-container {
       background: white;
@@ -666,29 +457,6 @@
       box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
       overflow: hidden;
       margin-bottom: 2rem;
-    }
-
-    .table-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1.5rem;
-      background: linear-gradient(135deg, var(--color-neutral-50) 0%, var(--color-neutral-100) 100%);
-      border-bottom: 1px solid var(--color-neutral-200);
-    }
-
-    .table-title {
-      margin: 0;
-      font-size: 1.25rem;
-      font-weight: 600;
-      color: var(--color-neutral-800);
-      display: flex;
-      align-items: center;
-    }
-
-    .table-actions {
-      display: flex;
-      gap: 0.5rem;
     }
 
     .table-wrapper {
@@ -780,30 +548,6 @@
       text-decoration: underline;
     }
 
-    /* 상태 배지 */
-    .status-badge {
-      display: inline-flex;
-      align-items: center;
-      padding: 0.375rem 0.75rem;
-      border-radius: 20px;
-      font-size: 0.75rem;
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 0.025em;
-    }
-
-    .status-pending {
-      background: rgba(251, 191, 36, 0.1);
-      color: var(--color-warning);
-      border: 1px solid rgba(251, 191, 36, 0.2);
-    }
-
-    .status-approved {
-      background: rgba(16, 185, 129, 0.1);
-      color: var(--color-success);
-      border: 1px solid rgba(16, 185, 129, 0.2);
-    }
-
     /* 액션 버튼 */
     .action-buttons {
       display: flex;
@@ -832,18 +576,55 @@
       box-shadow: 0 4px 8px rgba(239, 68, 68, 0.3);
     }
 
-    .delete-btn {
-      background: var(--color-danger);
-      color: white;
+    /* 반응형 */
+    @media (max-width: 1024px) {
+      .sidebar {
+        transform: translateX(-100%);
+        transition: var(--transition-base);
+      }
+
+      .sidebar.open {
+        transform: translateX(0);
+      }
+
+      .main-content {
+        margin-left: 0;
+      }
+
+      .stats-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      }
     }
 
-    .delete-btn:hover {
-      background: #dc2626;
-      transform: translateY(-1px);
-      box-shadow: 0 4px 8px rgba(239, 68, 68, 0.3);
+    @media (max-width: 768px) {
+      .admin-header {
+        padding: var(--spacing-md);
+      }
+
+      .content-area {
+        padding: var(--spacing-md);
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .table-header {
+        flex-direction: column;
+        gap: var(--spacing-md);
+        align-items: stretch;
+      }
+
+      .data-table {
+        font-size: var(--font-size-sm);
+      }
+
+      .data-table th,
+      .data-table td {
+        padding: var(--spacing-sm);
+      }
     }
   </style>
-
 </head>
 
 <body>
@@ -875,7 +656,7 @@
           </li>
 
           <li class="nav-item">
-            <a href="businessReq.html" class="nav-link" data-page="businessReq" aria-describedby="business-desc">
+            <a href="#" class="nav-link" data-page="businessReq" aria-describedby="business-desc">
               <i class="fas fa-building nav-icon" aria-hidden="true"></i>
               <span>업체요청 목록</span>
             </a>
@@ -883,7 +664,7 @@
           </li>
 
           <li class="nav-item">
-            <a href="bannerUpdate.html" class="nav-link" data-page="bannerUpdate" aria-describedby="banner-desc">
+            <a href="#" class="nav-link" data-page="bannerUpdate" aria-describedby="banner-desc">
               <i class="fas fa-image nav-icon" aria-hidden="true"></i>
               <span>메인배너 수정</span>
             </a>
@@ -891,7 +672,7 @@
           </li>
 
           <li class="nav-item">
-            <a href="noticeUpdate.html" class="nav-link" data-page="noticeUpdate" aria-describedby="notice-desc">
+            <a href="#" class="nav-link" data-page="noticeUpdate" aria-describedby="notice-desc">
               <i class="fas fa-bullhorn nav-icon" aria-hidden="true"></i>
               <span>공지등록</span>
             </a>
@@ -929,7 +710,6 @@
   <script>
     // DOM이 로드된 후 실행
     document.addEventListener('DOMContentLoaded', function() {
-
       // SPA 네비게이션 시스템
       const contentArea = document.querySelector('.content-area');
       const pageTitle = document.querySelector('.page-title');
@@ -985,9 +765,6 @@
           pageTitle.textContent = title;
           contentArea.innerHTML = content;
 
-          // 페이지별 초기화 함수 실행
-          initializePage(page);
-
         } catch (error) {
           console.error('페이지 로드 오류:', error);
           contentArea.innerHTML = '<div class="alert alert-danger">페이지를 불러오는 중 오류가 발생했습니다.</div>';
@@ -1008,441 +785,45 @@
         }
       }
 
-    function getBusinessReqContent() {
-      return `
-        <div class="table-container">
-          <div class="table-header">
-            <h3 class="table-title">
-              <i class="fas fa-building text-info me-2"></i>
-              업체 등록 요청 목록
-            </h3>
-            <div class="table-actions">
-              <button class="btn btn-outline-secondary btn-sm">
-                <i class="fas fa-filter me-1"></i>필터
-              </button>
-              <button class="btn btn-outline-primary btn-sm">
-                <i class="fas fa-download me-1"></i>내보내기
-              </button>
-            </div>
-          </div>
-          <div class="table-wrapper">
-            <table class="modern-table">
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>업체명</th>
-                  <th>주소</th>
-                  <th>연락처</th>
-                  <th>웹사이트</th>
-                  <th>상태</th>
-                  <th>작업</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><span class="badge bg-primary">#001</span></td>
-                  <td>
-                    <div class="business-info">
-                      <div class="business-name">기술 혁신가들</div>
-                      <div class="business-category">IT/기술</div>
-                    </div>
-                  </td>
-                  <td class="text-truncate" style="max-width: 200px;">경기도 성남시 분당구 판교로 123</td>
-                  <td>
-                    <div class="contact-info">
-                      <i class="fas fa-phone text-muted me-1"></i>
-                      (031) 123-4567
-                    </div>
-                  </td>
-                  <td>
-                    <a href="#" class="website-link" target="_blank">
-                      <i class="fas fa-external-link-alt me-1"></i>
-                      techinnovators.com
-                    </a>
-                  </td>
-                  <td><span class="status-badge status-pending">검토중</span></td>
-                  <td>
-                    <div class="action-buttons">
-                      <button class="action-btn approve-btn" title="승인">
-                        <i class="fas fa-check"></i>
-                      </button>
-                      <button class="action-btn reject-btn" title="거부">
-                        <i class="fas fa-times"></i>
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      `;
+      function getBusinessReqContent() {
+        return '<div class="table-container"><div class="table-header"><h3 class="table-title"><i class="fas fa-building text-info me-2"></i>업체 등록 요청 목록</h3><div class="table-actions"><button class="btn btn-outline-secondary btn-sm"><i class="fas fa-filter me-1"></i>필터</button><button class="btn btn-outline-primary btn-sm"><i class="fas fa-download me-1"></i>내보내기</button></div></div><div class="table-wrapper"><table class="modern-table"><thead><tr><th>ID</th><th>업체명</th><th>주소</th><th>연락처</th><th>웹사이트</th><th>상태</th><th>작업</th></tr></thead><tbody><tr><td><span class="badge bg-primary">#001</span></td><td><div class="business-info"><div class="business-name">기술 혁신가들</div><div class="business-category">IT/기술</div></div></td><td class="text-truncate" style="max-width: 200px;">경기도 성남시 분당구 판교로 123</td><td><div class="contact-info"><i class="fas fa-phone text-muted me-1"></i>(031) 123-4567</div></td><td><a href="#" class="website-link" target="_blank"><i class="fas fa-external-link-alt me-1"></i>techinnovators.com</a></td><td><span class="status-badge status-pending">검토중</span></td><td><div class="action-buttons"><button class="action-btn approve-btn" title="승인"><i class="fas fa-check"></i></button><button class="action-btn reject-btn" title="거부"><i class="fas fa-times"></i></button></div></td></tr></tbody></table></div></div>';
       }
 
       function getBannerUpdateContent() {
-        return `
-          <div class="table-container">
-            <div class="table-header">
-              <h3 class="table-title">
-                <i class="fas fa-image text-primary me-2"></i>
-                메인 배너 관리
-              </h3>
-            </div>
-            <div style="padding: 2rem;">
-              <div class="mb-4">
-                <label for="bannerFile" class="form-label">새 배너 이미지 업로드</label>
-                <input type="file" class="form-control" id="bannerFile" accept="image/*">
-              </div>
-              <div class="mb-4">
-                <label for="bannerTitle" class="form-label">배너 제목</label>
-                <input type="text" class="form-control" id="bannerTitle" placeholder="배너 제목을 입력하세요">
-              </div>
-              <div class="mb-4">
-                <label for="bannerDescription" class="form-label">배너 설명</label>
-                <textarea class="form-control" id="bannerDescription" rows="3" placeholder="배너 설명을 입력하세요"></textarea>
-              </div>
-              <button class="btn btn-primary">
-                <i class="fas fa-save me-1"></i>배너 업데이트
-              </button>
-            </div>
-          </div>
-        `;
+        return '<div class="table-container"><div class="table-header"><h3 class="table-title"><i class="fas fa-image text-primary me-2"></i>메인 배너 관리</h3></div><div style="padding: 2rem;"><div class="mb-4"><label for="bannerFile" class="form-label">새 배너 이미지 업로드</label><input type="file" class="form-control" id="bannerFile" accept="image/*"></div><div class="mb-4"><label for="bannerTitle" class="form-label">배너 제목</label><input type="text" class="form-control" id="bannerTitle" placeholder="배너 제목을 입력하세요"></div><div class="mb-4"><label for="bannerDescription" class="form-label">배너 설명</label><textarea class="form-control" id="bannerDescription" rows="3" placeholder="배너 설명을 입력하세요"></textarea></div><button class="btn btn-primary"><i class="fas fa-save me-1"></i>배너 업데이트</button></div></div>';
       }
 
       function getNoticeUpdateContent() {
-        return `
-          <div class="table-container">
-            <div class="table-header">
-              <h3 class="table-title">
-                <i class="fas fa-bullhorn text-warning me-2"></i>
-                공지사항 등록
-              </h3>
-            </div>
-            <div style="padding: 2rem;">
-              <div class="mb-4">
-                <label for="noticeTitle" class="form-label">공지 제목</label>
-                <input type="text" class="form-control" id="noticeTitle" placeholder="공지 제목을 입력하세요">
-              </div>
-              <div class="mb-4">
-                <label for="noticeContent" class="form-label">공지 내용</label>
-                <textarea class="form-control" id="noticeContent" rows="8" placeholder="공지 내용을 입력하세요"></textarea>
-              </div>
-              <div class="mb-4">
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" id="noticeImportant">
-                  <label class="form-check-label" for="noticeImportant">
-                    중요 공지로 설정
-                  </label>
-                </div>
-              </div>
-              <button class="btn btn-primary">
-                <i class="fas fa-paper-plane me-1"></i>공지 등록
-              </button>
-            </div>
-          </div>
-        `;
+        return '<div class="table-container"><div class="table-header"><h3 class="table-title"><i class="fas fa-bullhorn text-warning me-2"></i>공지사항 등록</h3></div><div style="padding: 2rem;"><div class="mb-4"><label for="noticeTitle" class="form-label">공지 제목</label><input type="text" class="form-control" id="noticeTitle" placeholder="공지 제목을 입력하세요"></div><div class="mb-4"><label for="noticeContent" class="form-label">공지 내용</label><textarea class="form-control" id="noticeContent" rows="8" placeholder="공지 내용을 입력하세요"></textarea></div><div class="mb-4"><div class="form-check"><input class="form-check-input" type="checkbox" id="noticeImportant"><label class="form-check-label" for="noticeImportant">중요 공지로 설정</label></div></div><button class="btn btn-primary"><i class="fas fa-paper-plane me-1"></i>공지 등록</button></div></div>';
       }
 
       function getDashboardContent() {
-        return `
-          <!-- 통계 카드 -->
-          <div class="stats-grid">
-            <div class="stat-card">
-              <div class="stat-icon primary">
-                <i class="fas fa-users"></i>
-              </div>
-              <div class="stat-content">
-                <h3>총 사용자</h3>
-                <div class="stat-number">1,234</div>
-              </div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-icon success">
-                <i class="fas fa-building"></i>
-              </div>
-              <div class="stat-content">
-                <h3>등록 업체</h3>
-                <div class="stat-number">567</div>
-              </div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-icon warning">
-                <i class="fas fa-exclamation-triangle"></i>
-              </div>
-              <div class="stat-content">
-                <h3>신고 접수</h3>
-                <div class="stat-number">23</div>
-              </div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-icon info">
-                <i class="fas fa-chart-line"></i>
-              </div>
-              <div class="stat-content">
-                <h3>월간 방문</h3>
-                <div class="stat-number">8,901</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- 최근 활동 -->
-          <div class="data-table-container">
-            <div class="table-header">
-              <h3 class="table-title">최근 활동</h3>
-              <div class="table-actions">
-                <button class="btn btn-outline-primary btn-sm">
-                  <i class="fas fa-refresh"></i>
-                  새로고침
-                </button>
-              </div>
-            </div>
-            <table class="data-table">
-              <thead>
-                <tr>
-                  <th>시간</th>
-                  <th>활동</th>
-                  <th>사용자</th>
-                  <th>상태</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>10분 전</td>
-                  <td>새 업체 등록 요청</td>
-                  <td>김철수</td>
-                  <td><span class="status-badge status-pending">대기중</span></td>
-                </tr>
-                <tr>
-                  <td>25분 전</td>
-                  <td>신고 접수</td>
-                  <td>이영희</td>
-                  <td><span class="status-badge status-active">처리완료</span></td>
-                </tr>
-                <tr>
-                  <td>1시간 전</td>
-                  <td>사용자 가입</td>
-                  <td>박민수</td>
-                  <td><span class="status-badge status-active">완료</span></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        `;
+        return '<div class="stats-grid"><div class="stat-card"><div class="stat-icon primary"><i class="fas fa-users"></i></div><div class="stat-content"><h3>총 사용자</h3><div class="stat-number">1,234</div></div></div><div class="stat-card"><div class="stat-icon success"><i class="fas fa-building"></i></div><div class="stat-content"><h3>등록 업체</h3><div class="stat-number">567</div></div></div><div class="stat-card"><div class="stat-icon warning"><i class="fas fa-exclamation-triangle"></i></div><div class="stat-content"><h3>신고 접수</h3><div class="stat-number">23</div></div></div><div class="stat-card"><div class="stat-icon info"><i class="fas fa-chart-line"></i></div><div class="stat-content"><h3>월간 방문</h3><div class="stat-number">8,901</div></div></div></div><div class="data-table-container"><div class="table-header"><h3 class="table-title">최근 활동</h3><div class="table-actions"><button class="btn btn-outline-primary btn-sm"><i class="fas fa-refresh"></i>새로고침</button></div></div><table class="data-table"><thead><tr><th>시간</th><th>활동</th><th>사용자</th><th>상태</th></tr></thead><tbody><tr><td>10분 전</td><td>새 업체 등록 요청</td><td>김철수</td><td><span class="status-badge status-pending">대기중</span></td></tr><tr><td>25분 전</td><td>신고 접수</td><td>이영희</td><td><span class="status-badge status-active">처리완료</span></td></tr><tr><td>1시간 전</td><td>사용자 가입</td><td>박민수</td><td><span class="status-badge status-active">완료</span></td></tr></tbody></table></div>';
       }
 
-      // 페이지별 초기화 함수
-      function initializePage(page) {
-        // 각 페이지별 특별한 초기화 로직이 필요한 경우 여기에 추가
-        console.log(`${page} 페이지가 로드되었습니다.`);
+      // URL 해시 기반 네비게이션 처리
+      function handleHashChange() {
+        const hash = window.location.hash.substring(1);
+        if (hash) {
+          // 해당 메뉴 활성화
+          document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+          const targetLink = document.querySelector(`[data-page="${hash}"]`);
+          if (targetLink) {
+            targetLink.classList.add('active');
+            loadPage(hash);
+          } else {
+            loadPage('dashboard');
+          }
+        } else {
+          loadPage('dashboard');
+        }
       }
+
+      // 해시 변경 이벤트 리스너
+      window.addEventListener('hashchange', handleHashChange);
 
       // 초기 페이지 로드
-      loadPage('dashboard');
-    });
-  </script>>
-                        <i class="fas fa-check"></i>
-                      </button>
-                      <button class="action-btn reject-btn" title="거절">
-                        <i class="fas fa-times"></i>
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      `;
-    }
-
-    function getBannerUpdateContent() {
-      return `
-        <form action="./bannerUpdate" method="post" enctype="multipart/form-data">
-          <div class="form-group mb-3 ms-3">
-            <label class="form-label" for="file">첨부파일</label>
-            <input type="file" class="form-control" name="file" id="file" multiple="multiple">
-          </div>
-          <div class="ms-3">
-            <button class="btn btn-primary" id="btnWrite">작성</button>
-            <button type="reset" class="btn btn-danger" id="btnCancel">취소</button>
-          </div>
-        </form>
-        <br>
-        <div id="bannerImgPre"></div>
-      `;
-    }
-
-    function getNoticeUpdateContent() {
-      return `
-        <div class="col-10 ms-3 mb-4">
-          <form id="noticeForm">
-            <div class="form-group mb-3">
-              <label class="form-label" for="title">제목</label>
-              <input type="text" class="form-control" name="title" id="title">
-            </div>
-            <div class="form-group mb-3">
-              <label class="form-label" for="content">본문</label>
-              <textarea class="form-control" name="content" id="content"></textarea>
-            </div>
-            <div>
-              <button type="button" class="btn btn-primary" id="btnWrite">작성</button>
-              <button type="reset" class="btn btn-danger" id="btnCancel">취소</button>
-            </div>
-          </form>
-        </div>
-        <hr>
-        <div class="table-container">
-          <div class="table-header">
-            <h3 class="table-title">
-              <i class="fas fa-bullhorn text-info me-2"></i>
-              공지사항 목록
-            </h3>
-            <div class="table-actions">
-              <button class="btn btn-outline-secondary btn-sm">
-                <i class="fas fa-filter me-1"></i>필터
-              </button>
-              <button class="btn btn-outline-primary btn-sm">
-                <i class="fas fa-download me-1"></i>내보내기
-              </button>
-            </div>
-          </div>
-          <div class="table-wrapper">
-            <table class="modern-table">
-              <thead>
-                <tr>
-                  <th>제목</th>
-                  <th>내용</th>
-                  <th>작성날짜</th>
-                  <th>삭제</th>
-                </tr>
-              </thead>
-              <tbody id="noticeTableBody">
-                <tr>
-                  <td>2024년 정기 점검 안내</td>
-                  <td class="text-truncate" style="max-width: 300px;">2024년 10월 15일부터 10월 20일까지 시스템 정기 점검이 진행됩니다.</td>
-                  <td>2024-10-15</td>
-                  <td>
-                    <button class="action-btn delete-btn" data-id="1" title="삭제">
-                      <i class="fas fa-trash"></i>
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      `;
-    }
-
-    // 페이지별 초기화 함수
-    function initializePage(page) {
-      switch (page) {
-        case 'bannerUpdate':
-          initBannerUpdate();
-          break;
-        case 'noticeUpdate':
-          initNoticeUpdate();
-          break;
-        case 'businessReq':
-          initBusinessReq();
-          break;
-      }
-    }
-
-    function initBannerUpdate() {
-      const btnWrite = document.getElementById('btnWrite');
-      if (btnWrite) {
-        btnWrite.addEventListener('click', function (e) {
-          e.preventDefault();
-          previewImages();
-        });
-      }
-    }
-
-    function initNoticeUpdate() {
-      const btnWrite = document.getElementById('btnWrite');
-      if (btnWrite) {
-        btnWrite.addEventListener('click', function (e) {
-          e.preventDefault();
-          addNotice();
-        });
-      }
-    }
-
-    function initBusinessReq() {
-      // 업체요청 관련 이벤트 리스너 추가
-    }
-
-    // 유틸리티 함수들
-    function previewImages() {
-      const fileInput = document.getElementById('file');
-      const bannerImgPre = document.getElementById('bannerImgPre');
-
-      if (!fileInput.files.length) {
-        alert('파일을 선택해주세요.');
-        return;
-      }
-
-      bannerImgPre.innerHTML = '';
-
-      Array.from(fileInput.files).forEach(file => {
-        if (!file.type.startsWith('image/')) {
-          alert('이미지 파일만 업로드 가능합니다.');
-          return;
-        }
-
-        const reader = new FileReader();
-        reader.onload = function (e) {
-          const img = document.createElement('img');
-          img.src = e.target.result;
-          img.alt = '배너 미리보기';
-          img.style.width = '250px';
-          img.style.height = 'auto';
-          img.style.marginRight = '10px';
-          img.style.border = '1px solid #ccc';
-          bannerImgPre.appendChild(img);
-        }
-        reader.readAsDataURL(file);
-      });
-
-      alert('이미지 미리보기가 생성되었습니다.');
-    }
-
-    function addNotice() {
-      const title = document.getElementById('title').value;
-      const content = document.getElementById('content').value;
-      const date = new Date().toLocaleDateString();
-
-      if (!title || !content) {
-        alert('제목과 내용을 모두 입력해주세요.');
-        return;
-      }
-
-      const tableBody = document.getElementById('noticeTableBody');
-      const newRow = document.createElement('tr');
-      const rowCount = tableBody.children.length + 1;
-
-      newRow.innerHTML = `
-        <td>${title}</td>
-        <td class="text-truncate" style="max-width: 300px;" title="${content}">${content}</td>
-        <td>${date}</td>
-        <td>
-          <button class="action-btn delete-btn" data-id="${rowCount}" title="삭제">
-            <i class="fas fa-trash"></i>
-          </button>
-        </td>
-      `;
-
-      tableBody.insertBefore(newRow, tableBody.firstChild);
-      document.getElementById('title').value = '';
-      document.getElementById('content').value = '';
-
-      alert('공지사항이 등록되었습니다.');
-    }
-
-    // 페이지 로드 시 기본 대시보드 표시
-    document.addEventListener('DOMContentLoaded', function() {
-      loadPage('dashboard');
+      handleHashChange();
     });
   </script>
 </body>
