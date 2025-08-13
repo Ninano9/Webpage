@@ -161,16 +161,7 @@
       padding: 2rem;
     }
 
-    .row {
-      display: flex;
-      gap: 2rem;
-      margin: -1rem;
-    }
 
-    .col {
-      flex: 1;
-      padding: 1rem;
-    }
 
     .table-container {
       background: white;
@@ -386,125 +377,119 @@
 
       <!-- 콘텐츠 영역 -->
       <div class="content-area">
-        <div class="row">
-          <!-- 공지 등록 폼 -->
-          <div class="col">
-            <div class="table-container">
-              <div class="table-header">
-                <h3 class="table-title">
-                  <i class="fas fa-bullhorn text-warning me-2"></i>
-                  새 공지사항 등록
-                </h3>
-              </div>
-              <div class="form-container">
-                <form id="noticeForm">
-                  <div class="form-group">
-                    <label for="noticeTitle" class="form-label">공지 제목</label>
-                    <input type="text" class="form-control" id="noticeTitle" placeholder="공지 제목을 입력하세요" required>
-                  </div>
-
-                  <div class="form-group">
-                    <label for="noticeContent" class="form-label">공지 내용</label>
-                    <textarea class="form-control" id="noticeContent" rows="8" placeholder="공지 내용을 입력하세요" required></textarea>
-                  </div>
-
-                  <div class="form-group">
-                    <div class="form-check">
-                      <input class="form-check-input" type="checkbox" id="noticeImportant">
-                      <label class="form-check-label" for="noticeImportant">
-                        중요 공지로 설정
-                      </label>
-                    </div>
-                  </div>
-
-                  <button type="button" class="btn btn-primary" onclick="addNotice()">
-                    <i class="fas fa-paper-plane me-1"></i>공지 등록
-                  </button>
-                </form>
-              </div>
-            </div>
+        <!-- 공지 등록 폼 -->
+        <div class="table-container">
+          <div class="table-header">
+            <h3 class="table-title">
+              <i class="fas fa-bullhorn text-warning me-2"></i>
+              새 공지사항 등록
+            </h3>
           </div>
+          <div class="form-container">
+            <form id="noticeForm">
+              <div class="form-group">
+                <label for="noticeTitle" class="form-label">공지 제목</label>
+                <input type="text" class="form-control" id="noticeTitle" placeholder="공지 제목을 입력하세요" required>
+              </div>
 
-          <!-- 등록된 공지사항 목록 -->
-          <div class="col">
-            <div class="table-container">
-              <div class="table-header">
-                <h3 class="table-title">
-                  <i class="fas fa-list text-info me-2"></i>
-                  등록된 공지사항
-                </h3>
+              <div class="form-group">
+                <label for="noticeContent" class="form-label">공지 내용</label>
+                <textarea class="form-control" id="noticeContent" rows="6" placeholder="공지 내용을 입력하세요" required></textarea>
               </div>
-              <div class="table-wrapper">
-                <table class="modern-table">
-                  <thead>
-                    <tr>
-                      <th>제목</th>
-                      <th>내용</th>
-                      <th>등록일</th>
-                      <th>중요도</th>
-                      <th>작업</th>
-                    </tr>
-                  </thead>
-                  <tbody id="noticeTableBody">
-                    <tr>
-                      <td>시스템 점검 안내</td>
-                      <td class="text-truncate" style="max-width: 200px;" title="2024년 1월 15일 오전 2시부터 4시까지 시스템 점검이 진행됩니다.">2024년 1월 15일 오전 2시부터 4시까지 시스템 점검이 진행됩니다.</td>
-                      <td>2024-01-10</td>
-                      <td><span class="badge badge-important">중요</span></td>
-                      <td>
-                        <button class="action-btn delete-btn" onclick="deleteNotice(this)" title="삭제">
-                          <i class="fas fa-trash"></i>
-                        </button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>새로운 기능 업데이트</td>
-                      <td class="text-truncate" style="max-width: 200px;" title="사용자 편의성 개선을 위한 새로운 기능들이 추가되었습니다.">사용자 편의성 개선을 위한 새로운 기능들이 추가되었습니다.</td>
-                      <td>2024-01-08</td>
-                      <td><span class="badge badge-normal">일반</span></td>
-                      <td>
-                        <button class="action-btn delete-btn" onclick="deleteNotice(this)" title="삭제">
-                          <i class="fas fa-trash"></i>
-                        </button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>개인정보 처리방침 변경</td>
-                      <td class="text-truncate" style="max-width: 200px;" title="개인정보 처리방침이 일부 변경되었습니다. 자세한 내용은 공지사항을 확인해주세요.">개인정보 처리방침이 일부 변경되었습니다. 자세한 내용은 공지사항을 확인해주세요.</td>
-                      <td>2024-01-05</td>
-                      <td><span class="badge badge-important">중요</span></td>
-                      <td>
-                        <button class="action-btn delete-btn" onclick="deleteNotice(this)" title="삭제">
-                          <i class="fas fa-trash"></i>
-                        </button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>서비스 이용약관 개정</td>
-                      <td class="text-truncate" style="max-width: 200px;" title="서비스 이용약관이 개정되었습니다. 2024년 1월 20일부터 적용됩니다.">서비스 이용약관이 개정되었습니다. 2024년 1월 20일부터 적용됩니다.</td>
-                      <td>2024-01-03</td>
-                      <td><span class="badge badge-normal">일반</span></td>
-                      <td>
-                        <button class="action-btn delete-btn" onclick="deleteNotice(this)" title="삭제">
-                          <i class="fas fa-trash"></i>
-                        </button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>고객센터 운영시간 변경</td>
-                      <td class="text-truncate" style="max-width: 200px;" title="고객센터 운영시간이 평일 9시-18시로 변경됩니다.">고객센터 운영시간이 평일 9시-18시로 변경됩니다.</td>
-                      <td>2024-01-01</td>
-                      <td><span class="badge badge-normal">일반</span></td>
-                      <td>
-                        <button class="action-btn delete-btn" onclick="deleteNotice(this)" title="삭제">
-                          <i class="fas fa-trash"></i>
-                        </button>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+
+              <div class="form-group">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="noticeImportant">
+                  <label class="form-check-label" for="noticeImportant">
+                    중요 공지로 설정
+                  </label>
+                </div>
               </div>
-            </div>
+
+              <button type="button" class="btn btn-primary" onclick="addNotice()">
+                <i class="fas fa-paper-plane me-1"></i>공지 등록
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <!-- 등록된 공지사항 목록 -->
+        <div class="table-container">
+          <div class="table-header">
+            <h3 class="table-title">
+              <i class="fas fa-list text-info me-2"></i>
+              등록된 공지사항
+            </h3>
+          </div>
+          <div class="table-wrapper">
+            <table class="modern-table">
+              <thead>
+                <tr>
+                  <th>제목</th>
+                  <th>내용</th>
+                  <th>등록일</th>
+                  <th>중요도</th>
+                  <th>작업</th>
+                </tr>
+              </thead>
+              <tbody id="noticeTableBody">
+                <tr>
+                  <td>시스템 점검 안내</td>
+                  <td class="text-truncate" style="max-width: 300px;" title="2024년 1월 15일 오전 2시부터 4시까지 시스템 점검이 진행됩니다.">2024년 1월 15일 오전 2시부터 4시까지 시스템 점검이 진행됩니다.</td>
+                  <td>2024-01-10</td>
+                  <td><span class="badge badge-important">중요</span></td>
+                  <td>
+                    <button class="action-btn delete-btn" onclick="deleteNotice(this)" title="삭제">
+                      <i class="fas fa-trash"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>새로운 기능 업데이트</td>
+                  <td class="text-truncate" style="max-width: 300px;" title="사용자 편의성 개선을 위한 새로운 기능들이 추가되었습니다.">사용자 편의성 개선을 위한 새로운 기능들이 추가되었습니다.</td>
+                  <td>2024-01-08</td>
+                  <td><span class="badge badge-normal">일반</span></td>
+                  <td>
+                    <button class="action-btn delete-btn" onclick="deleteNotice(this)" title="삭제">
+                      <i class="fas fa-trash"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>개인정보 처리방침 변경</td>
+                  <td class="text-truncate" style="max-width: 300px;" title="개인정보 처리방침이 일부 변경되었습니다. 자세한 내용은 공지사항을 확인해주세요.">개인정보 처리방침이 일부 변경되었습니다. 자세한 내용은 공지사항을 확인해주세요.</td>
+                  <td>2024-01-05</td>
+                  <td><span class="badge badge-important">중요</span></td>
+                  <td>
+                    <button class="action-btn delete-btn" onclick="deleteNotice(this)" title="삭제">
+                      <i class="fas fa-trash"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>서비스 이용약관 개정</td>
+                  <td class="text-truncate" style="max-width: 300px;" title="서비스 이용약관이 개정되었습니다. 2024년 1월 20일부터 적용됩니다.">서비스 이용약관이 개정되었습니다. 2024년 1월 20일부터 적용됩니다.</td>
+                  <td>2024-01-03</td>
+                  <td><span class="badge badge-normal">일반</span></td>
+                  <td>
+                    <button class="action-btn delete-btn" onclick="deleteNotice(this)" title="삭제">
+                      <i class="fas fa-trash"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>고객센터 운영시간 변경</td>
+                  <td class="text-truncate" style="max-width: 300px;" title="고객센터 운영시간이 평일 9시-18시로 변경됩니다.">고객센터 운영시간이 평일 9시-18시로 변경됩니다.</td>
+                  <td>2024-01-01</td>
+                  <td><span class="badge badge-normal">일반</span></td>
+                  <td>
+                    <button class="action-btn delete-btn" onclick="deleteNotice(this)" title="삭제">
+                      <i class="fas fa-trash"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
