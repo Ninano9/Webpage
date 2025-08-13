@@ -8,56 +8,644 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
+    :root {
+      --color-primary: #ff533f;
+      --color-primary-dark: #e63c28;
+      --color-success: #198754;
+      --color-danger: #dc3545;
+      --color-warning: #fd7e14;
+      --color-neutral-100: #f8f9fa;
+      --color-neutral-200: #e9ecef;
+      --color-neutral-500: #adb5bd;
+      --color-neutral-700: #495057;
+      --color-neutral-800: #343a40;
+      --sidebar-width: 280px;
+    }
+
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background-color: #f8f9fa;
+      background-color: var(--color-neutral-100);
       margin: 0;
-      padding: 20px;
+      padding: 0;
     }
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
+
+    .admin-layout {
+      display: flex;
+      min-height: 100vh;
     }
-    .header {
+
+    .sidebar {
+      width: var(--sidebar-width);
+      background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+      color: white;
+      position: fixed;
+      height: 100vh;
+      overflow-y: auto;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+      z-index: 1000;
+    }
+
+    .sidebar-header {
+      padding: 2rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      text-align: center;
+    }
+
+    .sidebar-logo {
+      width: 200px;
+      height: auto;
+      filter: brightness(0) invert(1);
+    }
+
+    .sidebar-title {
+      font-size: 1.125rem;
+      font-weight: 600;
+      margin-top: 1rem;
+      opacity: 0.9;
+    }
+
+    .sidebar-nav {
+      padding: 1.5rem 0;
+    }
+
+    .sidebar-nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .nav-item {
+      margin-bottom: 0.25rem;
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      padding: 1rem 2rem;
+      color: rgba(255, 255, 255, 0.9);
+      text-decoration: none;
+      transition: 0.2s ease;
+      font-weight: 500;
+    }
+
+    .nav-link:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+      color: white;
+      transform: translateX(4px);
+    }
+
+    .nav-link.active {
+      background-color: rgba(255, 255, 255, 0.2);
+      color: white;
+      border-right: 4px solid white;
+    }
+
+    .nav-icon {
+      width: 20px;
+      margin-right: 1rem;
+      text-align: center;
+    }
+
+    .main-content {
+      flex: 1;
+      margin-left: var(--sidebar-width);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .admin-header {
       background: white;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      margin-bottom: 20px;
+      padding: 1.5rem 2rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
       display: flex;
       justify-content: space-between;
       align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
     }
+
+    .page-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--color-neutral-800);
+      margin: 0;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.5rem 1.5rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      text-decoration: none;
+      cursor: pointer;
+      transition: 0.2s ease;
+      gap: 0.5rem;
+    }
+
     .btn-primary {
-      background-color: #ff533f;
-      border-color: #ff533f;
+      background-color: var(--color-primary);
+      color: white;
     }
+
     .btn-primary:hover {
-      background-color: #e63c28;
-      border-color: #e63c28;
+      background-color: var(--color-primary-dark);
+      transform: translateY(-1px);
+    }
+
+    .content-area {
+      flex: 1;
+      padding: 2rem;
+    }
+
+    .row {
+      display: flex;
+      gap: 2rem;
+      margin: -1rem;
+    }
+
+    .col {
+      flex: 1;
+      padding: 1rem;
+    }
+
+    .table-container {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      overflow: hidden;
+      margin-bottom: 2rem;
+    }
+
+    .table-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem;
+      background: linear-gradient(135deg, var(--color-neutral-100) 0%, var(--color-neutral-200) 100%);
+      border-bottom: 1px solid var(--color-neutral-200);
+    }
+
+    .table-title {
+      margin: 0;
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--color-neutral-800);
+      display: flex;
+      align-items: center;
+    }
+
+    .form-container {
+      padding: 2rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      color: var(--color-neutral-700);
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid var(--color-neutral-200);
+      border-radius: 8px;
+      font-size: 0.875rem;
+      transition: border-color 0.2s ease;
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 3px rgba(255, 83, 63, 0.1);
+    }
+
+    .form-check {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .form-check-input {
+      width: 1rem;
+      height: 1rem;
+    }
+
+    .table-wrapper {
+      overflow-x: auto;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+
+    .modern-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.875rem;
+    }
+
+    .modern-table thead th {
+      background: var(--color-neutral-100);
+      color: var(--color-neutral-700);
+      font-weight: 600;
+      padding: 1rem 0.75rem;
+      text-align: left;
+      border-bottom: 2px solid var(--color-neutral-200);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .modern-table tbody tr {
+      transition: all 0.2s ease;
+      border-bottom: 1px solid var(--color-neutral-200);
+    }
+
+    .modern-table tbody tr:hover {
+      background-color: var(--color-neutral-100);
+      transform: translateY(-1px);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    .modern-table tbody td {
+      padding: 1rem 0.75rem;
+      vertical-align: middle;
+    }
+
+    .action-btn {
+      padding: 0.375rem 0.75rem;
+      border: none;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: 0.2s ease;
+      color: white;
+    }
+
+    .delete-btn {
+      background: var(--color-danger);
+    }
+
+    .delete-btn:hover {
+      background: #dc2626;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(239, 68, 68, 0.3);
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 0.25rem 0.5rem;
+      font-size: 0.75rem;
+      font-weight: 500;
+      border-radius: 4px;
+    }
+
+    .badge-important {
+      background-color: var(--color-danger);
+      color: white;
+    }
+
+    .badge-normal {
+      background-color: var(--color-neutral-500);
+      color: white;
     }
   </style>
 </head>
+
 <body>
-  <div class="container">
-    <div class="header">
-      <h1>공지등록</h1>
-      <a href="admin-dashboard.html" class="btn btn-primary">
-        <i class="fas fa-arrow-left me-2"></i>대시보드로 돌아가기
-      </a>
-    </div>
-    
-    <div class="alert alert-info">
-      <i class="fas fa-info-circle me-2"></i>
-      이 페이지는 admin-dashboard.html에서 SPA 방식으로 로드됩니다.
-    </div>
+  <div class="admin-layout">
+    <!-- 사이드바 -->
+    <aside class="sidebar" role="navigation" aria-label="관리자 메뉴">
+      <div class="sidebar-header">
+        <img src="images/needitAdmin.png" alt="Needit 관리자" class="sidebar-logo">
+        <h1 class="sidebar-title">관리자 대시보드</h1>
+      </div>
+
+      <nav class="sidebar-nav">
+        <ul role="list">
+          <li class="nav-item">
+            <a href="admin-dashboard.html" class="nav-link">
+              <i class="fas fa-tachometer-alt nav-icon"></i>
+              <span>대시보드</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="reportList.html" class="nav-link">
+              <i class="fas fa-exclamation-triangle nav-icon"></i>
+              <span>신고접수 목록</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="businessReq.html" class="nav-link">
+              <i class="fas fa-building nav-icon"></i>
+              <span>업체요청 목록</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="bannerUpdate.html" class="nav-link">
+              <i class="fas fa-image nav-icon"></i>
+              <span>메인배너 수정</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="noticeUpdate.html" class="nav-link active">
+              <i class="fas fa-bullhorn nav-icon"></i>
+              <span>공지등록</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- 메인 콘텐츠 -->
+    <main class="main-content">
+      <!-- 헤더 -->
+      <header class="admin-header">
+        <h2 class="page-title">공지등록</h2>
+        <div class="admin-actions">
+          <a href="../index.html" class="btn btn-primary">
+            <i class="fas fa-home"></i>
+            <span>메인으로</span>
+          </a>
+        </div>
+      </header>
+
+      <!-- 콘텐츠 영역 -->
+      <div class="content-area">
+        <div class="row">
+          <!-- 공지 등록 폼 -->
+          <div class="col">
+            <div class="table-container">
+              <div class="table-header">
+                <h3 class="table-title">
+                  <i class="fas fa-bullhorn text-warning me-2"></i>
+                  새 공지사항 등록
+                </h3>
+              </div>
+              <div class="form-container">
+                <form id="noticeForm">
+                  <div class="form-group">
+                    <label for="noticeTitle" class="form-label">공지 제목</label>
+                    <input type="text" class="form-control" id="noticeTitle" placeholder="공지 제목을 입력하세요" required>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="noticeContent" class="form-label">공지 내용</label>
+                    <textarea class="form-control" id="noticeContent" rows="8" placeholder="공지 내용을 입력하세요" required></textarea>
+                  </div>
+
+                  <div class="form-group">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="noticeImportant">
+                      <label class="form-check-label" for="noticeImportant">
+                        중요 공지로 설정
+                      </label>
+                    </div>
+                  </div>
+
+                  <button type="button" class="btn btn-primary" onclick="addNotice()">
+                    <i class="fas fa-paper-plane me-1"></i>공지 등록
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+
+          <!-- 등록된 공지사항 목록 -->
+          <div class="col">
+            <div class="table-container">
+              <div class="table-header">
+                <h3 class="table-title">
+                  <i class="fas fa-list text-info me-2"></i>
+                  등록된 공지사항
+                </h3>
+              </div>
+              <div class="table-wrapper">
+                <table class="modern-table">
+                  <thead>
+                    <tr>
+                      <th>제목</th>
+                      <th>내용</th>
+                      <th>등록일</th>
+                      <th>중요도</th>
+                      <th>작업</th>
+                    </tr>
+                  </thead>
+                  <tbody id="noticeTableBody">
+                    <tr>
+                      <td>시스템 점검 안내</td>
+                      <td class="text-truncate" style="max-width: 200px;" title="2024년 1월 15일 오전 2시부터 4시까지 시스템 점검이 진행됩니다.">2024년 1월 15일 오전 2시부터 4시까지 시스템 점검이 진행됩니다.</td>
+                      <td>2024-01-10</td>
+                      <td><span class="badge badge-important">중요</span></td>
+                      <td>
+                        <button class="action-btn delete-btn" onclick="deleteNotice(this)" title="삭제">
+                          <i class="fas fa-trash"></i>
+                        </button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>새로운 기능 업데이트</td>
+                      <td class="text-truncate" style="max-width: 200px;" title="사용자 편의성 개선을 위한 새로운 기능들이 추가되었습니다.">사용자 편의성 개선을 위한 새로운 기능들이 추가되었습니다.</td>
+                      <td>2024-01-08</td>
+                      <td><span class="badge badge-normal">일반</span></td>
+                      <td>
+                        <button class="action-btn delete-btn" onclick="deleteNotice(this)" title="삭제">
+                          <i class="fas fa-trash"></i>
+                        </button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>개인정보 처리방침 변경</td>
+                      <td class="text-truncate" style="max-width: 200px;" title="개인정보 처리방침이 일부 변경되었습니다. 자세한 내용은 공지사항을 확인해주세요.">개인정보 처리방침이 일부 변경되었습니다. 자세한 내용은 공지사항을 확인해주세요.</td>
+                      <td>2024-01-05</td>
+                      <td><span class="badge badge-important">중요</span></td>
+                      <td>
+                        <button class="action-btn delete-btn" onclick="deleteNotice(this)" title="삭제">
+                          <i class="fas fa-trash"></i>
+                        </button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>서비스 이용약관 개정</td>
+                      <td class="text-truncate" style="max-width: 200px;" title="서비스 이용약관이 개정되었습니다. 2024년 1월 20일부터 적용됩니다.">서비스 이용약관이 개정되었습니다. 2024년 1월 20일부터 적용됩니다.</td>
+                      <td>2024-01-03</td>
+                      <td><span class="badge badge-normal">일반</span></td>
+                      <td>
+                        <button class="action-btn delete-btn" onclick="deleteNotice(this)" title="삭제">
+                          <i class="fas fa-trash"></i>
+                        </button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>고객센터 운영시간 변경</td>
+                      <td class="text-truncate" style="max-width: 200px;" title="고객센터 운영시간이 평일 9시-18시로 변경됩니다.">고객센터 운영시간이 평일 9시-18시로 변경됩니다.</td>
+                      <td>2024-01-01</td>
+                      <td><span class="badge badge-normal">일반</span></td>
+                      <td>
+                        <button class="action-btn delete-btn" onclick="deleteNotice(this)" title="삭제">
+                          <i class="fas fa-trash"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
   </div>
 
   <script>
-    // 페이지 로드 시 admin-dashboard.html로 리다이렉트하고 noticeUpdate 페이지 활성화
-    if (window.location.pathname.includes('noticeUpdate.html')) {
-      window.location.href = 'admin-dashboard.html#noticeUpdate';
+    // 로컬 스토리지에서 공지사항 데이터 로드
+    function loadNotices() {
+      const notices = JSON.parse(localStorage.getItem('notices') || '[]');
+      const tableBody = document.getElementById('noticeTableBody');
+      
+      // 기존 더미 데이터 유지하면서 저장된 공지사항 추가
+      notices.forEach(notice => {
+        const newRow = document.createElement('tr');
+        newRow.innerHTML = `
+          <td>${notice.title}</td>
+          <td class="text-truncate" style="max-width: 200px;" title="${notice.content}">${notice.content}</td>
+          <td>${notice.date}</td>
+          <td><span class="badge ${notice.important ? 'badge-important' : 'badge-normal'}">${notice.important ? '중요' : '일반'}</span></td>
+          <td>
+            <button class="action-btn delete-btn" onclick="deleteNotice(this)" title="삭제">
+              <i class="fas fa-trash"></i>
+            </button>
+          </td>
+        `;
+        tableBody.insertBefore(newRow, tableBody.firstChild);
+      });
     }
+
+    // 공지사항 저장
+    function saveNotices() {
+      const tableBody = document.getElementById('noticeTableBody');
+      const rows = Array.from(tableBody.querySelectorAll('tr'));
+      const notices = [];
+      
+      rows.forEach(row => {
+        const cells = row.querySelectorAll('td');
+        if (cells.length >= 4) {
+          const title = cells[0].textContent;
+          const content = cells[1].getAttribute('title') || cells[1].textContent;
+          const date = cells[2].textContent;
+          const important = cells[3].querySelector('.badge-important') !== null;
+          
+          // 더미 데이터가 아닌 새로 추가된 데이터만 저장
+          if (!isDummyData(title, date)) {
+            notices.push({ title, content, date, important });
+          }
+        }
+      });
+      
+      localStorage.setItem('notices', JSON.stringify(notices));
+    }
+
+    // 더미 데이터 체크
+    function isDummyData(title, date) {
+      const dummyTitles = ['시스템 점검 안내', '새로운 기능 업데이트', '개인정보 처리방침 변경', '서비스 이용약관 개정', '고객센터 운영시간 변경'];
+      const dummyDates = ['2024-01-10', '2024-01-08', '2024-01-05', '2024-01-03', '2024-01-01'];
+      return dummyTitles.includes(title) && dummyDates.includes(date);
+    }
+
+    function addNotice() {
+      const title = document.getElementById('noticeTitle').value.trim();
+      const content = document.getElementById('noticeContent').value.trim();
+      const important = document.getElementById('noticeImportant').checked;
+      const date = new Date().toLocaleDateString('ko-KR', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit'
+      }).replace(/\. /g, '-').replace('.', '');
+
+      if (!title) {
+        alert('공지 제목을 입력해주세요.');
+        document.getElementById('noticeTitle').focus();
+        return;
+      }
+
+      if (!content) {
+        alert('공지 내용을 입력해주세요.');
+        document.getElementById('noticeContent').focus();
+        return;
+      }
+
+      const tableBody = document.getElementById('noticeTableBody');
+      const newRow = document.createElement('tr');
+
+      newRow.innerHTML = `
+        <td>${title}</td>
+        <td class="text-truncate" style="max-width: 200px;" title="${content}">${content}</td>
+        <td>${date}</td>
+        <td><span class="badge ${important ? 'badge-important' : 'badge-normal'}">${important ? '중요' : '일반'}</span></td>
+        <td>
+          <button class="action-btn delete-btn" onclick="deleteNotice(this)" title="삭제">
+            <i class="fas fa-trash"></i>
+          </button>
+        </td>
+      `;
+
+      // 새 공지사항을 맨 위에 추가
+      tableBody.insertBefore(newRow, tableBody.firstChild);
+
+      // 폼 초기화
+      document.getElementById('noticeForm').reset();
+
+      // 로컬 스토리지에 저장
+      saveNotices();
+
+      alert('공지사항이 성공적으로 등록되었습니다.');
+    }
+
+    function deleteNotice(button) {
+      if (confirm('정말로 이 공지사항을 삭제하시겠습니까?')) {
+        const row = button.closest('tr');
+        row.remove();
+        
+        // 로컬 스토리지 업데이트
+        saveNotices();
+        
+        alert('공지사항이 삭제되었습니다.');
+      }
+    }
+
+    // 페이지 로드 시 저장된 공지사항 불러오기
+    document.addEventListener('DOMContentLoaded', function() {
+      loadNotices();
+    });
+
+    // 폼 유효성 검사
+    document.getElementById('noticeTitle').addEventListener('input', function() {
+      if (this.value.length > 100) {
+        this.value = this.value.substring(0, 100);
+        alert('제목은 100자를 초과할 수 없습니다.');
+      }
+    });
+
+    document.getElementById('noticeContent').addEventListener('input', function() {
+      if (this.value.length > 1000) {
+        this.value = this.value.substring(0, 1000);
+        alert('내용은 1000자를 초과할 수 없습니다.');
+      }
+    });
   </script>
 </body>
 </html>
