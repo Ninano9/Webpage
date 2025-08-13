@@ -40,6 +40,12 @@
                 }
             });
             
+            // admin-content에 정적 내용 추가
+            const adminContent = document.getElementById('admin-content');
+            if (adminContent) {
+                adminContent.innerHTML = document.getElementById('adminContent').innerHTML;
+            }
+            
             // 작성 버튼 이벤트 리스너 추가
             document.getElementById('btnWrite').addEventListener('click', function (event) {
                 event.preventDefault();

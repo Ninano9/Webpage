@@ -8,12 +8,30 @@
     <link rel="icon" href="images/favicon.ico">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin=:root {
-        --color-primary: #4f46e5; --color-primary-light: #6366f1; --color-primary-dark: #3730a3; --color-secondary:
-        #64748b; --color-success: #10b981; --color-warning: #f59e0b; --color-danger: #ef4444; --color-info: #06b6d4;
-        --color-neutral-50: #f8fafc; --color-neutral-100: #f1f5f9; --color-neutral-200: #e2e8f0; --color-neutral-300:
-        #cbd5e1; --color-neutral-400: #94a3b8; --color-neutral-500: #64748b; --color-neutral-600: #475569;
-        --color-neutral-700: #334155; --color-neutral-800: #1e293b; --color-neutral-900: #0f172a; } </style>
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+    <style>
+        :root {
+            --color-primary: #4f46e5;
+            --color-primary-light: #6366f1;
+            --color-primary-dark: #3730a3;
+            --color-secondary: #64748b;
+            --color-success: #10b981;
+            --color-warning: #f59e0b;
+            --color-danger: #ef4444;
+            --color-info: #06b6d4;
+            --color-neutral-50: #f8fafc;
+            --color-neutral-100: #f1f5f9;
+            --color-neutral-200: #e2e8f0;
+            --color-neutral-300: #cbd5e1;
+            --color-neutral-400: #94a3b8;
+            --color-neutral-500: #64748b;
+            --color-neutral-600: #475569;
+            --color-neutral-700: #334155;
+            --color-neutral-800: #1e293b;
+            --color-neutral-900: #0f172a;
+        }
+    </style>
 
     <div id="adminpage-container"></div>
     <script>
@@ -33,6 +51,11 @@
                     }
                 });
 
+                // admin-content에 정적 내용 추가
+                const adminContent = document.getElementById('admin-content');
+                if (adminContent) {
+                    adminContent.innerHTML = document.getElementById('adminContent').innerHTML;
+                }
 
                 // 버튼 이벤트 리스너 추가
                 document.querySelectorAll('.approve-btn').forEach(button => {
@@ -78,22 +101,22 @@
                 // 토스트 메시지 함수
                 function showToast(message, type = 'info') {
                     const toast = document.createElement('div');
-                    toast.className = \`toast-message toast-\${type}\`;
-                toast.textContent = message;
-                document.body.appendChild(toast);
-                
-                setTimeout(() => {
-                    toast.classList.add('show');
-                }, 100);
-                
-                setTimeout(() => {
-                    toast.classList.remove('show');
+                    toast.className = `toast-message toast-${type}`;
+                    toast.textContent = message;
+                    document.body.appendChild(toast);
+
                     setTimeout(() => {
-                        document.body.removeChild(toast);
-                    }, 300);
-                }, 3000);
-            }
-        });
+                        toast.classList.add('show');
+                    }, 100);
+
+                    setTimeout(() => {
+                        toast.classList.remove('show');
+                        setTimeout(() => {
+                            document.body.removeChild(toast);
+                        }, 300);
+                    }, 3000);
+                }
+            });
     </script>
 
     <style>
@@ -396,10 +419,10 @@
                 height: 32px;
             }
         }
-
     </style>
 
 </head>
+
 <body>
     <!-- 안쪽 내용 -->
     <div id="adminContent">
@@ -440,7 +463,8 @@
                                     <div class="business-category">IT/기술</div>
                                 </div>
                             </td>
-                            <td class="text-truncate" style="max-width: 200px;" title="경기도 성남시 분당구 판교로 123">경기도 성남시 분당구 판교로 123</td>
+                            <td class="text-truncate" style="max-width: 200px;" title="경기도 성남시 분당구 판교로 123">경기도 성남시 분당구
+                                판교로 123</td>
                             <td>
                                 <div class="contact-info">
                                     <i class="fas fa-phone text-muted me-1"></i>
@@ -473,7 +497,8 @@
                                     <div class="business-category">환경/에너지</div>
                                 </div>
                             </td>
-                            <td class="text-truncate" style="max-width: 200px;" title="서울특별시 강남구 테헤란로 456">서울특별시 강남구 테헤란로 456</td>
+                            <td class="text-truncate" style="max-width: 200px;" title="서울특별시 강남구 테헤란로 456">서울특별시 강남구
+                                테헤란로 456</td>
                             <td>
                                 <div class="contact-info">
                                     <i class="fas fa-phone text-muted me-1"></i>
@@ -506,7 +531,8 @@
                                     <div class="business-category">금융/핀테크</div>
                                 </div>
                             </td>
-                            <td class="text-truncate" style="max-width: 200px;" title="부산광역시 해운대구 해운대해변로 789">부산광역시 해운대구 해운대해변로 789</td>
+                            <td class="text-truncate" style="max-width: 200px;" title="부산광역시 해운대구 해운대해변로 789">부산광역시 해운대구
+                                해운대해변로 789</td>
                             <td>
                                 <div class="contact-info">
                                     <i class="fas fa-phone text-muted me-1"></i>
@@ -538,4 +564,5 @@
     </div><!-- #adminContent -->
 
 </body>
+
 </html>
