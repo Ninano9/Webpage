@@ -109,6 +109,18 @@
             gap: 2rem;
         }
 
+        /* 진행중인 프로젝트 카드 높이 조정 */
+        .right-panel .card:last-child {
+            min-height: 350px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .right-panel .card:last-child .project-list {
+            flex: 1;
+            justify-content: space-between;
+        }
+
         /* 카드 공통 스타일 */
         .card {
             background: white;
@@ -323,14 +335,16 @@
         .project-list {
             display: flex;
             flex-direction: column;
-            gap: 1rem;
+            gap: 1.5rem;
+            flex: 1;
+            justify-content: space-evenly;
         }
 
         .project-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1rem;
+            padding: 1.5rem 1rem;
             background: #f8f9fa;
             border-radius: 12px;
         }
