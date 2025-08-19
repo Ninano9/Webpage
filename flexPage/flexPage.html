@@ -64,6 +64,7 @@
             font-weight: 700;
             background: linear-gradient(45deg, #667eea, #764ba2);
             -webkit-background-clip: text;
+            background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
@@ -83,6 +84,24 @@
             justify-content: center;
             color: white;
             font-size: 16px;
+        }
+
+        .home-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: transform 0.2s ease;
+        }
+
+        .home-btn:hover {
+            transform: translateY(-2px);
         }
 
         /* 메인 컨테이너 */
@@ -109,17 +128,7 @@
             gap: 2rem;
         }
 
-        /* 진행중인 프로젝트 카드 높이 조정 */
-        .right-panel .card:last-child {
-            min-height: 350px;
-            display: flex;
-            flex-direction: column;
-        }
 
-        .right-panel .card:last-child .project-list {
-            flex: 1;
-            justify-content: space-between;
-        }
 
         /* 카드 공통 스타일 */
         .card {
@@ -444,6 +453,10 @@
                 <div class="logo-text">TaskFlow</div>
             </div>
             <div class="user-info">
+                <button class="home-btn" onclick="window.location.href='../index.html'">
+                    <i class="fas fa-home"></i>
+                    메인으로
+                </button>
                 <span>안녕하세요, 사용자님!</span>
                 <div class="user-avatar">
                     <i class="fas fa-user"></i>

@@ -105,6 +105,27 @@
             opacity: 0.9;
         }
 
+        .main-btn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: linear-gradient(135deg, #667eea, #764ba2);            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            transition: background 0.2s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .main-btn:hover {
+            background: rgba(255, 255, 255, 0.4);
+        }
+
         /* 기능 카드들 */
         .feature-grid {
             display: grid;
@@ -374,6 +395,10 @@
             <div class="app-content">
                 <!-- 헤더 -->
                 <div class="app-header">
+                    <button class="main-btn" onclick="window.location.href='../index.html'">
+                        <i class="fas fa-home"></i>
+                        메인으로
+                    </button>
                     <div class="app-title">TaskFlow</div>
                     <div class="app-subtitle">생산성 관리 앱</div>
                 </div>
