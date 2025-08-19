@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Creative Portfolio - Frontend Developer</title>
+    <title>TaskFlow - 생산성 관리 앱</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
         * {
@@ -15,25 +15,24 @@
         }
 
         body {
-            font-family: 'Poppins', sans-serif;
-            line-height: 1.6;
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
             color: #333;
-            overflow-x: hidden;
         }
 
-        /* 네비게이션 */
-        .navbar {
-            position: fixed;
-            top: 0;
-            width: 100%;
+        /* 헤더 */
+        .header {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
             padding: 1rem 0;
-            z-index: 1000;
-            transition: all 0.3s ease;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
-        .nav-container {
+        .header-container {
             max-width: 1200px;
             margin: 0 auto;
             display: flex;
@@ -43,379 +42,631 @@
         }
 
         .logo {
-            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+        }
+
+        .logo-text {
+            font-size: 24px;
             font-weight: 700;
             background: linear-gradient(45deg, #667eea, #764ba2);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        .nav-menu {
+        .user-info {
             display: flex;
-            list-style: none;
-            gap: 2rem;
+            align-items: center;
+            gap: 15px;
         }
 
-        .nav-link {
-            text-decoration: none;
-            color: #333;
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
-
-        .nav-link:hover {
-            color: #667eea;
-        }
-
-        /* 히어로 섹션 */
-        .hero {
-            height: 100vh;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
             display: flex;
             align-items: center;
             justify-content: center;
-            text-align: center;
             color: white;
+            font-size: 16px;
         }
 
-        .hero h1 {
-            font-size: 3.5rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            opacity: 0.9;
-        }
-
-        .cta-button {
-            display: inline-block;
-            padding: 1rem 2rem;
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            text-decoration: none;
-            border-radius: 50px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .cta-button:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: translateY(-2px);
-        }
-
-        /* 섹션 공통 */
-        .section {
-            padding: 5rem 0;
-        }
-
-        .container {
+        /* 메인 컨테이너 */
+        .main-container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 3rem;
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        /* About 섹션 */
-        .about {
-            background: #f8f9fa;
-        }
-
-        .about-content {
+            padding: 2rem;
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
-        }
-
-        .skills {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-            margin-top: 2rem;
-        }
-
-        .skill-tag {
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 25px;
-            font-size: 0.9rem;
-        }
-
-        .profile-card {
-            background: white;
-            padding: 2rem;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
-
-        .profile-img {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            margin: 0 auto 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
-            color: white;
-        }
-
-        /* 프로젝트 섹션 */
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 2rem;
         }
 
-        .project-card {
+        /* 왼쪽 패널 */
+        .left-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        /* 오른쪽 패널 */
+        .right-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        /* 카드 공통 스타일 */
+        .card {
             background: white;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease;
         }
 
-        .project-card:hover {
-            transform: translateY(-10px);
+        .card:hover {
+            transform: translateY(-5px);
         }
 
-        .project-image {
-            height: 200px;
-            background: linear-gradient(45deg, #667eea, #764ba2);
+        .card-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-icon {
+            width: 30px;
+            height: 30px;
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 3rem;
+            font-size: 14px;
         }
 
-        .project-content {
-            padding: 1.5rem;
-        }
-
-        .project-tech {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin: 1rem 0;
-        }
-
-        .tech-tag {
-            background: #f1f3f4;
-            padding: 0.3rem 0.8rem;
-            border-radius: 15px;
-            font-size: 0.8rem;
-        }
-
-        /* 연락처 섹션 */
-        .contact {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        /* 웰컴 카드 */
+        .welcome-card {
+            background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
             text-align: center;
         }
 
-        .contact-info {
-            display: flex;
-            justify-content: center;
-            gap: 3rem;
-            margin-top: 2rem;
+        .welcome-card h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 10px;
         }
 
-        .contact-item {
+        .welcome-card p {
+            font-size: 16px;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+
+        .welcome-time {
+            font-size: 48px;
+            font-weight: 300;
+            margin-bottom: 10px;
+        }
+
+        .welcome-date {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        /* 기능 그리드 */
+        .features-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .feature-item {
+            background: #f8f9fa;
+            border-radius: 16px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .feature-item:hover {
+            background: #e9ecef;
+            transform: translateY(-2px);
+        }
+
+        .feature-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            font-size: 20px;
+            color: white;
+        }
+
+        .feature-icon.blue { background: linear-gradient(135deg, #4facfe, #00f2fe); }
+        .feature-icon.purple { background: linear-gradient(135deg, #a8edea, #fed6e3); color: #333; }
+        .feature-icon.orange { background: linear-gradient(135deg, #ffecd2, #fcb69f); color: #333; }
+        .feature-icon.green { background: linear-gradient(135deg, #a8e6cf, #dcedc1); color: #333; }
+
+        .feature-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .feature-desc {
+            font-size: 14px;
+            color: #666;
+        }
+
+        /* 통계 카드 */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 1.5rem;
+            text-align: center;
+        }
+
+        .stat-item {
+            background: #f8f9fa;
+            border-radius: 16px;
+            padding: 1.5rem;
+        }
+
+        .stat-number {
+            font-size: 32px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* 활동 리스트 */
+        .activity-list {
             display: flex;
             flex-direction: column;
-            align-items: center;
-            gap: 0.5rem;
+            gap: 1rem;
         }
 
-        .contact-icon {
-            width: 60px;
-            height: 60px;
-            background: rgba(255, 255, 255, 0.2);
+        .activity-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 12px;
+            transition: background 0.2s ease;
+        }
+
+        .activity-item:hover {
+            background: #e9ecef;
+        }
+
+        .activity-avatar {
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
+            color: white;
+            font-size: 16px;
+            margin-right: 15px;
+        }
+
+        .activity-content {
+            flex: 1;
+        }
+
+        .activity-title {
+            font-size: 16px;
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 3px;
+        }
+
+        .activity-time {
+            font-size: 14px;
+            color: #999;
+        }
+
+        .activity-badge {
+            background: #e9ecef;
+            color: #666;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .activity-badge.completed {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .activity-badge.pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        /* 프로젝트 카드 */
+        .project-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .project-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 12px;
+        }
+
+        .project-info h4 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 3px;
+        }
+
+        .project-info p {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .project-progress {
+            text-align: right;
+        }
+
+        .progress-bar {
+            width: 100px;
+            height: 6px;
+            background: #e9ecef;
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 5px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 3px;
+        }
+
+        .progress-text {
+            font-size: 12px;
+            color: #666;
         }
 
         /* 반응형 */
         @media (max-width: 768px) {
-            .nav-menu { display: none; }
-            .hero h1 { font-size: 2.5rem; }
-            .about-content { grid-template-columns: 1fr; }
-            .contact-info { flex-direction: column; gap: 2rem; }
-            .projects-grid { grid-template-columns: 1fr; }
+            .main-container {
+                grid-template-columns: 1fr;
+                padding: 1rem;
+                gap: 1rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header-container {
+                padding: 0 1rem;
+            }
+
+            .logo-text {
+                font-size: 20px;
+            }
         }
+
+        /* 애니메이션 */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .card:nth-child(1) { animation-delay: 0.1s; }
+        .card:nth-child(2) { animation-delay: 0.2s; }
+        .card:nth-child(3) { animation-delay: 0.3s; }
+        .card:nth-child(4) { animation-delay: 0.4s; }
     </style>
 </head>
 
 <body>
-    <!-- 네비게이션 -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="logo">Portfolio</div>
-            <ul class="nav-menu">
-                <li><a href="#home" class="nav-link">Home</a></li>
-                <li><a href="#about" class="nav-link">About</a></li>
-                <li><a href="#projects" class="nav-link">Projects</a></li>
-                <li><a href="#contact" class="nav-link">Contact</a></li>
-            </ul>
+    <!-- 헤더 -->
+    <header class="header">
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-tasks"></i>
+                </div>
+                <div class="logo-text">TaskFlow</div>
+            </div>
+            <div class="user-info">
+                <span>안녕하세요, 사용자님!</span>
+                <div class="user-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+            </div>
         </div>
-    </nav>
+    </header>
 
-    <!-- 히어로 섹션 -->
-    <section id="home" class="hero">
-        <div>
-            <h1>Frontend Developer</h1>
-            <p>창의적이고 사용자 중심의 웹 경험을 만들어갑니다</p>
-            <a href="#projects" class="cta-button">
-                <i class="fas fa-rocket"></i> 프로젝트 보기
-            </a>
-        </div>
-    </section>
+    <!-- 메인 컨테이너 -->
+    <div class="main-container">
+        <!-- 왼쪽 패널 -->
+        <div class="left-panel">
+            <!-- 웰컴 카드 -->
+            <div class="card welcome-card">
+                <h1>TaskFlow</h1>
+                <p>생산성 관리 앱</p>
+                <div class="welcome-time" id="current-time">9:41</div>
+                <div class="welcome-date" id="current-date">2024년 8월 19일 화요일</div>
+            </div>
 
-    <!-- About 섹션 -->
-    <section id="about" class="section about">
-        <div class="container">
-            <h2 class="section-title">About Me</h2>
-            <div class="about-content">
-                <div>
-                    <h3>안녕하세요! 프론트엔드 개발자입니다.</h3>
-                    <p>사용자 경험을 최우선으로 생각하며, 깔끔하고 직관적인 인터페이스를 만드는 것을 좋아합니다. 
-                    최신 웹 기술을 활용하여 반응형이고 접근성이 뛰어난 웹사이트를 개발합니다.</p>
+            <!-- 기능 카드 -->
+            <div class="card">
+                <div class="card-title">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #4facfe, #00f2fe);">
+                        <i class="fas fa-th-large"></i>
+                    </div>
+                    주요 기능
+                </div>
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <div class="feature-icon blue">
+                            <i class="fas fa-tasks"></i>
+                        </div>
+                        <div class="feature-title">할일 관리</div>
+                        <div class="feature-desc">효율적인 작업 관리</div>
+                    </div>
                     
-                    <div class="skills">
-                        <span class="skill-tag">HTML5</span>
-                        <span class="skill-tag">CSS3</span>
-                        <span class="skill-tag">JavaScript</span>
-                        <span class="skill-tag">React</span>
-                        <span class="skill-tag">Vue.js</span>
-                        <span class="skill-tag">Node.js</span>
+                    <div class="feature-item">
+                        <div class="feature-icon purple">
+                            <i class="fas fa-calendar"></i>
+                        </div>
+                        <div class="feature-title">일정 관리</div>
+                        <div class="feature-desc">스마트 스케줄링</div>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <div class="feature-icon orange">
+                            <i class="fas fa-chart-pie"></i>
+                        </div>
+                        <div class="feature-title">분석</div>
+                        <div class="feature-desc">생산성 통계</div>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <div class="feature-icon green">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="feature-title">팀 협업</div>
+                        <div class="feature-desc">실시간 공유</div>
                     </div>
                 </div>
-                <div>
-                    <div class="profile-card">
-                        <div class="profile-img">
-                            <i class="fas fa-user"></i>
-                        </div>
-                        <h4>Frontend Developer</h4>
-                        <p>2+ Years Experience</p>
+            </div>
+
+            <!-- 통계 카드 -->
+            <div class="card">
+                <div class="card-title">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #a8e6cf, #dcedc1);">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    오늘의 성과
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-number">12</div>
+                        <div class="stat-label">완료</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">5</div>
+                        <div class="stat-label">진행중</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">85%</div>
+                        <div class="stat-label">달성률</div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
 
-    <!-- 프로젝트 섹션 -->
-    <section id="projects" class="section">
-        <div class="container">
-            <h2 class="section-title">My Projects</h2>
-            <div class="projects-grid">
-                <div class="project-card">
-                    <div class="project-image">
-                        <i class="fas fa-shopping-cart"></i>
+        <!-- 오른쪽 패널 -->
+        <div class="right-panel">
+            <!-- 최근 활동 -->
+            <div class="card">
+                <div class="card-title">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #ffecd2, #fcb69f);">
+                        <i class="fas fa-clock"></i>
                     </div>
-                    <div class="project-content">
-                        <h3>E-Commerce Platform</h3>
-                        <p>React와 Node.js를 사용한 풀스택 이커머스 플랫폼입니다.</p>
-                        <div class="project-tech">
-                            <span class="tech-tag">React</span>
-                            <span class="tech-tag">Node.js</span>
-                            <span class="tech-tag">MongoDB</span>
+                    최근 활동
+                </div>
+                <div class="activity-list">
+                    <div class="activity-item">
+                        <div class="activity-avatar">
+                            <i class="fas fa-check"></i>
                         </div>
+                        <div class="activity-content">
+                            <div class="activity-title">프로젝트 기획서 작성 완료</div>
+                            <div class="activity-time">2분 전</div>
+                        </div>
+                        <div class="activity-badge completed">완료</div>
+                    </div>
+                    
+                    <div class="activity-item">
+                        <div class="activity-avatar">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="activity-content">
+                            <div class="activity-title">팀 미팅 일정 추가</div>
+                            <div class="activity-time">15분 전</div>
+                        </div>
+                        <div class="activity-badge pending">예정</div>
+                    </div>
+                    
+                    <div class="activity-item">
+                        <div class="activity-avatar">
+                            <i class="fas fa-comment"></i>
+                        </div>
+                        <div class="activity-content">
+                            <div class="activity-title">디자인 리뷰 댓글 작성</div>
+                            <div class="activity-time">1시간 전</div>
+                        </div>
+                        <div class="activity-badge completed">완료</div>
+                    </div>
+                    
+                    <div class="activity-item">
+                        <div class="activity-avatar">
+                            <i class="fas fa-upload"></i>
+                        </div>
+                        <div class="activity-content">
+                            <div class="activity-title">문서 업로드</div>
+                            <div class="activity-time">2시간 전</div>
+                        </div>
+                        <div class="activity-badge completed">완료</div>
                     </div>
                 </div>
+            </div>
 
-                <div class="project-card">
-                    <div class="project-image">
-                        <i class="fas fa-tasks"></i>
+            <!-- 진행중인 프로젝트 -->
+            <div class="card">
+                <div class="card-title">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #a8edea, #fed6e3);">
+                        <i class="fas fa-project-diagram"></i>
                     </div>
-                    <div class="project-content">
-                        <h3>Task Management App</h3>
-                        <p>Vue.js로 개발한 할일 관리 애플리케이션입니다.</p>
-                        <div class="project-tech">
-                            <span class="tech-tag">Vue.js</span>
-                            <span class="tech-tag">Vuex</span>
-                            <span class="tech-tag">Firebase</span>
+                    진행중인 프로젝트
+                </div>
+                <div class="project-list">
+                    <div class="project-item">
+                        <div class="project-info">
+                            <h4>웹사이트 리뉴얼</h4>
+                            <p>UI/UX 개선 작업</p>
+                        </div>
+                        <div class="project-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 75%;"></div>
+                            </div>
+                            <div class="progress-text">75% 완료</div>
                         </div>
                     </div>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-image">
-                        <i class="fas fa-chart-line"></i>
+                    
+                    <div class="project-item">
+                        <div class="project-info">
+                            <h4>모바일 앱 개발</h4>
+                            <p>React Native 프로젝트</p>
+                        </div>
+                        <div class="project-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 45%;"></div>
+                            </div>
+                            <div class="progress-text">45% 완료</div>
+                        </div>
                     </div>
-                    <div class="project-content">
-                        <h3>Data Visualization</h3>
-                        <p>D3.js를 활용한 인터랙티브 데이터 시각화 대시보드입니다.</p>
-                        <div class="project-tech">
-                            <span class="tech-tag">JavaScript</span>
-                            <span class="tech-tag">D3.js</span>
-                            <span class="tech-tag">Chart.js</span>
+                    
+                    <div class="project-item">
+                        <div class="project-info">
+                            <h4>API 문서화</h4>
+                            <p>백엔드 API 가이드</p>
+                        </div>
+                        <div class="project-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 90%;"></div>
+                            </div>
+                            <div class="progress-text">90% 완료</div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-
-    <!-- 연락처 섹션 -->
-    <section id="contact" class="section contact">
-        <div class="container">
-            <h2 class="section-title" style="color: white;">Get In Touch</h2>
-            <p>새로운 프로젝트나 협업 기회에 대해 이야기해보세요!</p>
-            
-            <div class="contact-info">
-                <div class="contact-item">
-                    <div class="contact-icon">
-                        <i class="fas fa-envelope"></i>
-                    </div>
-                    <span>contact@portfolio.com</span>
-                </div>
-                <div class="contact-item">
-                    <div class="contact-icon">
-                        <i class="fas fa-phone"></i>
-                    </div>
-                    <span>+82 10-1234-5678</span>
-                </div>
-                <div class="contact-item">
-                    <div class="contact-icon">
-                        <i class="fas fa-map-marker-alt"></i>
-                    </div>
-                    <span>Seoul, Korea</span>
-                </div>
-            </div>
-        </div>
-    </section>
+    </div>
 
     <script>
-        // 부드러운 스크롤
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth'
-                    });
-                }
+        // 실시간 시간 업데이트
+        function updateTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('ko-KR', {
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: false
+            });
+            const dateString = now.toLocaleDateString('ko-KR', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                weekday: 'long'
+            });
+            
+            document.getElementById('current-time').textContent = timeString;
+            document.getElementById('current-date').textContent = dateString;
+        }
+
+        updateTime();
+        setInterval(updateTime, 1000);
+
+        // 기능 카드 클릭 효과
+        document.querySelectorAll('.feature-item').forEach(item => {
+            item.addEventListener('click', function() {
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 150);
+            });
+        });
+
+        // 활동 아이템 클릭 효과
+        document.querySelectorAll('.activity-item').forEach(item => {
+            item.addEventListener('click', function() {
+                this.style.background = '#dee2e6';
+                setTimeout(() => {
+                    this.style.background = '';
+                }, 200);
             });
         });
     </script>
